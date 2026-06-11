@@ -3,7 +3,7 @@ name: Pre-commit checks
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [master, main]
 
 permissions:
   contents: write
@@ -34,8 +34,6 @@ jobs:
               - 'build.sh'
               - '.hugo-version'
               - '.hugo-archive-checksum'
-            images:
-              - 'content/content/poses/**'
 
       - name: Set up Git
         run: |
@@ -100,13 +98,6 @@ jobs:
             'content/hugo.yaml') }}
           restore-keys: |
             ${{ runner.os }}-hugo-resources-
-
-      - name: Install system dependencies
-        run: |
-          if ! command -v ffmpeg &> /dev/null; then
-            sudo apt-get update -y
-            sudo apt-get install -y ffmpeg
-          fi
 
       - name: Install root npm dependencies
         if: steps.npm-lockfiles.outputs.has_root_lockfile == 'true'
@@ -231,13 +222,6 @@ jobs:
           cd ..
           echo "Build successful"
 
-      - name: Validate photo links
-        if: >-
-          steps.changes.outputs.site == 'true' &&
-          (steps.pre-commit.outcome != 'failure' ||
-          (steps.pre-commit.outcome == 'failure' && github.event_name == 'push'))
-        run: bash scripts/validate-photo-links.sh
-
       - name: Validate HTML structure
         if: steps.changes.outputs.site == 'true' && steps.pre-commit.outcome != 'failure'
         run: |
@@ -257,8 +241,3 @@ jobs:
         if: steps.changes.outputs.site == 'true' && steps.pre-commit.outcome != 'failure'
         run: bash scripts/validate-links.sh
 
-      - name: Run BATS tests
-        if: steps.changes.outputs.site == 'true' && steps.pre-commit.outcome != 'failure'
-        run: |
-          npm install -g bats
-          bats tests/validate-photo-links.bats

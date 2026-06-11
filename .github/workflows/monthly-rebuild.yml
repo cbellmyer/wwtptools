@@ -13,10 +13,10 @@ jobs:
   trigger-rebuild:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main branch
+      - name: Checkout master branch
         uses: actions/checkout@v6
         with:
-          ref: main
+          ref: master
 
       - name: Configure Git
         run: |
@@ -27,4 +27,4 @@ jobs:
         run: |
           # Create an empty commit to trigger Cloudflare Pages rebuild
           git commit --allow-empty -m "chore: trigger monthly site rebuild"
-          git push origin main
+          git push origin master

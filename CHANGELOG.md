@@ -18,9 +18,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Weather widget alarm states** — Amber glow (warn) and pulsing red glow (alarm) applied dynamically when heat index exceeds thresholds or NWS alerts reach Severe/Extreme severity. Two independent signals combined via `Math.max()`.
 - **Guides index banner** — "Under Development" status bar added to the guides index page matching the Matrix page SCADA aesthetic.
 - **Individual guide draft banners** — Conditional draft notice rendered on each field guide page when `status: draft` is set in front matter.
-- **GitHub Actions — CI** (`.github/workflows/ci.yml`): runs pre-commit hooks and Hugo build on every push/PR to master or main.
-- **GitHub Actions — Preview** (`.github/workflows/preview.yml`): deploys a Cloudflare Workers preview per PR, runs Lighthouse against four pages, and posts/updates a PR comment with the preview URL table and Lighthouse score table.
-- **GitHub Actions — Cleanup** (`.github/workflows/cleanup.yml`): deletes the Cloudflare preview worker when a PR is closed.
+- **GitHub Actions — Pre-commit** (`.github/workflows/pre-commit.yml`): runs pre-commit checks on every push/PR with auto-fix commits, Hugo build validation, HTML structure checks, and config and link validation.
+- **GitHub Actions — Lighthouse** (`.github/workflows/lighthouse.yml`): runs Lighthouse CI on PRs for content changes and posts scores as a PR comment.
+- **GitHub Actions — Monthly Rebuild** (`.github/workflows/monthly-rebuild.yml`): triggers a Cloudflare Pages rebuild on the 1st of each month to pick up any external data changes.
 - **Lighthouse CI config** (`.lighthouserc.yml`): accessibility errors block at ≥0.90; performance, best practices, and SEO warn at 0.80/0.85/0.90 respectively.
 
 ### Changed
@@ -31,6 +31,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Inner pages (Calculators, Reference, Guides) use compact `page-header` with breadcrumb navigation.
 - Matrix nav entry added between Guides and About.
 - **Theme renamed** from `hypercat-theme` to `scada-theme` across all config, templates, service worker, and documentation.
+- **Deployment migrated from Cloudflare Workers to Cloudflare Pages** — removed wrangler-action-based PR preview and cleanup workflows; Pages handles preview deployments and teardown automatically.
 
 ---
 
