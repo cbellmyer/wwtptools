@@ -37,7 +37,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.1.0] — Initial Release
 
-### Added
+### Added (Initial Release)
 
 - 12 process calculators across three sections: Activated Sludge & Hydraulics, Solids Handling, Digester Operations
   - SVI, F/M Ratio, MCRT, RAS Rate, Surface Loading Rate, HRT, Weir Overflow Rate, Mass Loading, Chemical Dosing, Solids Loading Rate, VSR, VS Loading Rate, Digester Detention Time

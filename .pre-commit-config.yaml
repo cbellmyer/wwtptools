@@ -16,7 +16,9 @@ repos:
         stages: [pre-push]
         args: ['--branch', 'main']
       - id: trailing-whitespace
+        exclude: ^\.github/workflows/
       - id: end-of-file-fixer
+        exclude: ^\.github/workflows/
       - id: check-json
       - id: check-toml
       - id: check-merge-conflict
@@ -24,6 +26,7 @@ repos:
       - id: check-executables-have-shebangs
       - id: mixed-line-ending
         args: ['--fix=lf']
+        exclude: ^\.github/workflows/
 
   # YAML linting (covers syntax + style; replaces check-yaml)
   - repo: https://github.com/adrienverge/yamllint
