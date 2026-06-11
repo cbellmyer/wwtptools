@@ -1,6 +1,3 @@
 {
-  "extends": "stylelint-config-standard",
-  "rules": {
-    "max-line-length": null
-  }
+  "extends": "stylelint-config-standard"
 }

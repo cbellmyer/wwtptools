@@ -240,4 +240,3 @@ jobs:
       - name: Validate internal links
         if: steps.changes.outputs.site == 'true' && steps.pre-commit.outcome != 'failure'
         run: bash scripts/validate-links.sh
-
