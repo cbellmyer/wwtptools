@@ -28,7 +28,7 @@ Hydraulic upsets — wet weather events, influent pump failures, clarifier short
 
 Common indicators: sudden SVI spike, blanket rise in secondary clarifiers without change in MLSS, effluent turbidity increase without change in F/M.
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
 
 <div id="biological" class="story-chapter-label">[ Biological Upsets ]</div>
 
@@ -36,8 +36,8 @@ Biological upsets — toxic industrial loads, sudden temperature swings, nutrien
 
 Early warning signs: DO demand dropping despite no load change (toxic), VSS:TSS ratio shifting, filamentous growth in microscopy, alkalinity declining faster than expected.
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
 
 <div id="triage" class="story-chapter-label">[ Triage Protocol ]</div>
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
