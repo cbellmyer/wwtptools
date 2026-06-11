@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+
 - **Matrix page** — Dedicated page for the Process Decision Matrix (interactive diagnostic in development). Removed from Calculators page, now lives at `/matrix/`.
 - **About page** — Builder background, site mission, and contribution guide at `/about/`.
 - **README** — Full project documentation with stack, local dev, and dual-license explanation.
@@ -23,6 +24,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Lighthouse CI config** (`.lighthouserc.yml`): accessibility errors block at ≥0.90; performance, best practices, and SEO warn at 0.80/0.85/0.90 respectively.
 
 ### Changed
+
 - Site redesign: deep navy (slate-900) base palette, sky-blue (#38bdf8) primary accent, Inter typography replacing Barlow Condensed.
 - Home page restructured: centered hero → stats strip → module cards → about section.
 - About section on home page refocused on site mission; personal bio moved to `/about/`.
