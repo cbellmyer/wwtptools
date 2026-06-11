@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="dark">
+<head>
+    {{- partial "head.html" . }}
+</head>
+<body class="guides" id="top">
+    {{- partial "header.html" . -}}
+
+    <div class="page-header">
+        <div class="page-header-inner">
+            <nav class="page-breadcrumb">
+                <a href="/">WWTP Tools</a>
+                <span class="breadcrumb-sep">→</span>
+                <a href="/guides/">Guides</a>
+                <span class="breadcrumb-sep">→</span>
+                <span>{{ .Title }}</span>
+            </nav>
+            <h1 class="page-title">{{ .Title }}</h1>
+            {{ with .Params.description }}<p class="page-desc">{{ . }}</p>{{ end }}
+        </div>
+    </div>
+
+    <div class="story-section">
+        <div class="story-inner">
+            <div class="story-sidebar">
+                <div class="section-label">[ Contents ]</div>
+                <nav class="story-nav">
+                    {{ range $i, $ch := .Params.chapters }}
+                    <a href="#{{ $ch.id }}" class="story-nav-item{{ if eq $i 0 }} active{{ end }}">
+                        <div class="story-nav-dot"></div>
+                        <span class="story-nav-text">{{ $ch.label }}</span>
+                    </a>
+                    {{ end }}
+                </nav>
+                <div class="guide-back-link">
+                    <a href="/guides/">← All guides</a>
+                </div>
+            </div>
+            <div class="story-content">
+                {{ .Content }}
+            </div>
+        </div>
+    </div>
+
+    {{- partial "footer.html" . -}}
+
+    <script>
+    (function () {
+        var navItems = document.querySelectorAll('.story-nav-item');
+        var chapters = document.querySelectorAll('.story-chapter-label');
+        if (!navItems.length || !chapters.length) return;
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    var id = entry.target.id;
+                    navItems.forEach(function (item) {
+                        item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+        chapters.forEach(function (ch) { if (ch.id) observer.observe(ch); });
+    }());
+    </script>
+</body>
+</html>

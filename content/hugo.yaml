@@ -33,6 +33,12 @@ menu:
     - name: Guides
       url: /guides/
       weight: 15
+    - name: Matrix
+      url: /matrix/
+      weight: 16
+    - name: About
+      url: /about/
+      weight: 18
     - name: GitHub
       url: "https://github.com/cbellmyer/wwtptools"
       weight: 20

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="dark">
+<head>
+    {{- partial "head.html" . }}
+</head>
+<body class="matrix" id="top">
+    {{- partial "header.html" . -}}
+
+    <div class="page-header">
+        <div class="page-header-inner">
+            <nav class="page-breadcrumb">
+                <a href="/">WWTP Tools</a>
+                <span class="breadcrumb-sep">→</span>
+                <span>Matrix</span>
+            </nav>
+            <h1 class="page-title">Process <span>Decision Matrix</span></h1>
+            <p class="page-desc">Symptom-driven troubleshooting across all treatment zones — select a symptom, follow the diagnostic path to causes and corrective actions.</p>
+        </div>
+    </div>
+
+    <div class="matrix-body">
+        <div class="matrix-body-inner">
+
+            <div class="matrix-status-bar">
+                <span class="matrix-status-dot"></span>
+                <span class="matrix-status-label">[ Under Development ]</span>
+                <span class="matrix-status-desc">Interactive diagnostic coming in a future release. See below for what's planned and how to contribute.</span>
+            </div>
+
+            <div class="matrix-overview">
+                <div class="matrix-overview-label">[ What This Will Be ]</div>
+                <p>The Process Decision Matrix is a structured troubleshooting tool designed for field use. You start with an observable symptom — rising effluent TSS, dropping DO, digester foaming, polymer not holding — and the matrix walks you through a decision tree of possible causes and corrective actions, weighted by frequency and severity.</p>
+                <p>Unlike static reference tables, the matrix is interactive: branch points narrow the diagnostic path based on what you observe, what you've already ruled out, and what your process data shows. The goal is to get from "something's wrong" to "here's what to check and in what order" in under two minutes.</p>
+            </div>
+
+            <div class="matrix-zones-section">
+                <div class="matrix-overview-label">[ Treatment Zones Covered ]</div>
+                <div class="matrix-zones-grid">
+                    <div class="mx-zone-card">
+                        <div class="mx-zone-code">HW</div>
+                        <div class="mx-zone-name">Headworks</div>
+                        <div class="mx-zone-desc">Screening, grit removal, influent metering</div>
+                    </div>
+                    <div class="mx-zone-card">
+                        <div class="mx-zone-code">INF</div>
+                        <div class="mx-zone-name">Influent</div>
+                        <div class="mx-zone-desc">Flow characterization, industrial loads, wet weather</div>
+                    </div>
+                    <div class="mx-zone-card">
+                        <div class="mx-zone-code">PRI</div>
+                        <div class="mx-zone-name">Primary Treatment</div>
+                        <div class="mx-zone-desc">Primary clarifier performance, scum and sludge removal</div>
+                    </div>
+                    <div class="mx-zone-card">
+                        <div class="mx-zone-code">AER</div>
+                        <div class="mx-zone-name">Aeration</div>
+                        <div class="mx-zone-desc">DO control, MLSS, biological process upsets, foaming</div>
+                    </div>
+                    <div class="mx-zone-card">
+                        <div class="mx-zone-code">SEC</div>
+                        <div class="mx-zone-name">Secondary Clarifier</div>
+                        <div class="mx-zone-desc">Sludge blanket, solids carryover, RAS/WAS management</div>
+                    </div>
+                    <div class="mx-zone-card">
+                        <div class="mx-zone-code">SOL</div>
+                        <div class="mx-zone-name">Solids Handling</div>
+                        <div class="mx-zone-desc">Thickening, dewatering, polymer conditioning</div>
+                    </div>
+                    <div class="mx-zone-card">
+                        <div class="mx-zone-code">DNF</div>
+                        <div class="mx-zone-name">DN Filters</div>
+                        <div class="mx-zone-desc">Denitrification filter performance, backwash, effluent nitrate</div>
+                    </div>
+                    <div class="mx-zone-card">
+                        <div class="mx-zone-code">DIS</div>
+                        <div class="mx-zone-name">Disinfection</div>
+                        <div class="mx-zone-desc">UV/chlorine dosing, contact time, effluent compliance</div>
+                    </div>
+                    <div class="mx-zone-card">
+                        <div class="mx-zone-code">ANA</div>
+                        <div class="mx-zone-name">Anaerobic Digestion</div>
+                        <div class="mx-zone-desc">pH, alkalinity, VS loading, foaming, biogas production</div>
+                    </div>
+                    <div class="mx-zone-card">
+                        <div class="mx-zone-code">EFF</div>
+                        <div class="mx-zone-name">Final Effluent</div>
+                        <div class="mx-zone-desc">Permit parameters, compliance trending, discharge events</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-contribute">
+                <div class="matrix-overview-label">[ Help Build It ]</div>
+                <p>The matrix is only as good as the operational experience behind it. If you've worked through a process upset and know the diagnostic path — what you checked, what the cause turned out to be, what actually fixed it — that's exactly what this tool needs.</p>
+                <p>Open a <a href="https://github.com/cbellmyer/wwtptools/issues" target="_blank" rel="noopener">GitHub Issue</a> to suggest diagnostic paths, common failure modes, or zones that should be prioritized. You don't need to know how to code — describe the symptom, the causes you've seen, and the corrective actions that worked.</p>
+            </div>
+
+        </div>
+    </div>
+
+    {{- partial "footer.html" . -}}
+</body>
+</html>

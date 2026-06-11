@@ -41,12 +41,12 @@ body.toolkit {
 }
 
 .tk-masthead-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-family: Inter, sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
   color: var(--primary);
-  line-height: 1;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
 }
 
 .tk-masthead-tagline {
@@ -122,10 +122,10 @@ body.toolkit {
 }
 
 .tk-panel-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
   color: var(--primary);
   text-transform: uppercase;
   white-space: nowrap;
@@ -191,9 +191,9 @@ body.toolkit {
 }
 
 .tk-wx-condition {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--primary);
   margin-top: 0.5rem;
 }
@@ -214,6 +214,77 @@ body.toolkit {
   padding: 0.25rem 0.5rem;
   display: inline-block;
   width: fit-content;
+}
+
+.tk-wx-alerts {
+  border-top: 1px solid var(--tk-border);
+}
+
+.tk-wx-alerts-hdr {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.42rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tk-label);
+  padding: 0.5rem 1rem 0.4rem;
+  background: var(--tk-hdr);
+  border-bottom: 1px solid var(--tk-border);
+}
+
+.tk-wx-alert {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--tk-border);
+  border-left: 3px solid transparent;
+}
+
+.tk-wx-alert:last-child { border-bottom: none; }
+
+.tk-wx-alert--extreme  { border-left-color: var(--red);       background: rgba(248,113,113,0.06); }
+.tk-wx-alert--severe   { border-left-color: var(--amber);     background: rgba(251,191,36,0.06);  }
+.tk-wx-alert--moderate { border-left-color: var(--secondary); background: rgba(148,163,184,0.06); }
+
+.tk-wx-alert-body { flex: 1; }
+
+.tk-wx-alert-event {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.48rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.tk-wx-alert--extreme  .tk-wx-alert-event { color: var(--red);       }
+.tk-wx-alert--severe   .tk-wx-alert-event { color: var(--amber);     }
+.tk-wx-alert--moderate .tk-wx-alert-event { color: var(--secondary); }
+
+.tk-wx-alert-headline {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.44rem;
+  color: var(--tk-label);
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+}
+
+.tk-wx-alert-dismiss {
+  background: none;
+  border: 1px solid var(--tk-border);
+  color: var(--tk-label);
+  cursor: pointer;
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 0.15rem 0.4rem;
+  flex-shrink: 0;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tk-wx-alert-dismiss:hover {
+  color: var(--primary);
+  border-color: var(--secondary);
 }
 
 .tk-wx-grid {
@@ -278,11 +349,11 @@ body.toolkit {
 }
 
 .tk-section-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: var(--primary);
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
 }
 
 /* ---- Calculator Grid ---- */
@@ -320,11 +391,11 @@ body.toolkit {
 }
 
 .tk-calc-name {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: var(--primary);
-  letter-spacing: 0.04em;
+  letter-spacing: -0.01em;
 }
 
 .tk-calc-desc {
@@ -401,6 +472,30 @@ body.toolkit {
   color: var(--gray-dim);
   letter-spacing: 0.1em;
   margin-top: 0.25rem;
+}
+
+.tk-calc-formula {
+  padding: 0.5rem 0.8rem;
+  border-top: 1px solid var(--tk-sub);
+  background: var(--tk-notes-bg);
+}
+
+.tk-formula-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.38rem;
+  letter-spacing: 0.15em;
+  color: var(--yellow-dim);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.tk-formula-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.5rem;
+  color: var(--primary);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
 }
 
 .tk-calc-impact {

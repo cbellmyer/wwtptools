@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="dark">
+<head>
+    {{- partial "head.html" . }}
+</head>
+<body class="about" id="top">
+    {{- partial "header.html" . -}}
+
+    <div class="page-header">
+        <div class="page-header-inner">
+            <nav class="page-breadcrumb">
+                <a href="/">WWTP Tools</a>
+                <span class="breadcrumb-sep">→</span>
+                <span>About</span>
+            </nav>
+            <h1 class="page-title">About <span>This Site</span></h1>
+            <p class="page-desc">Who built it, why it exists, and how to contribute.</p>
+        </div>
+    </div>
+
+    <div class="story-section">
+        <div class="story-inner">
+            <div class="story-sidebar">
+                <div class="section-label">[ Contents ]</div>
+                <nav class="story-nav">
+                    <a href="#builder" class="story-nav-item active">
+                        <div class="story-nav-dot"></div>
+                        <span class="story-nav-text">The Builder</span>
+                    </a>
+                    <a href="#why" class="story-nav-item">
+                        <div class="story-nav-dot"></div>
+                        <span class="story-nav-text">Why It Exists</span>
+                    </a>
+                    <a href="#contribute" class="story-nav-item">
+                        <div class="story-nav-dot"></div>
+                        <span class="story-nav-text">Contribute</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="story-content">
+
+                <div id="builder" class="story-chapter-label">[ The Builder ]</div>
+                <p>My name is Chris Bellmyer. I hold a <strong>Maryland Class 5A Wastewater License</strong> — the highest operator certification grade in the state — earned a year ahead of the standard three-year track. Before that: environmental field work, GIS analysis, and emergency response mapping during <strong>Hurricane Maria</strong>. A career built on the principle that the right information at the right time changes outcomes.</p>
+                <p>I work on the floor. I run processes, respond to upsets, manage solids, and do the math that tells me whether things are trending toward trouble or staying stable. These tools are the ones I reach for during a shift — the calculators, reference tables, and guides that I built because I needed them and couldn't find them collected in one place.</p>
+                <p>The <strong>5A license</strong> covers the full scope of wastewater treatment: activated sludge, biological nutrient removal, anaerobic digestion, solids dewatering, and effluent compliance. Everything on this site falls within that operational scope.</p>
+
+                <div id="why" class="story-chapter-label">[ Why It Exists ]</div>
+                <p>The wastewater industry has a documentation problem. Most of the "technical resources" available online are vendor-produced: equipment manuals written to upsell service contracts, "educational guides" that exist to move chemicals or consulting hours, peer-reviewed research that's paywalled or written for academics rather than operators. The information exists, but it's scattered, biased, or inaccessible.</p>
+                <p>This site exists outside that model. There are no products to sell here, no vendor relationships, no sponsored content, no affiliate programs. The calculators aren't ads for process chemicals. The reference tables aren't equipment brochures. The guides don't end with a call-to-action to contact a sales team.</p>
+                <p>The goal is simple: a free, open resource that operators can actually use on the job. Written the way you wish someone had explained it earlier. Built to work on a phone in the middle of a process upset, at a plant where the WiFi is spotty and the clock is running.</p>
+
+                <div id="contribute" class="story-chapter-label">[ How to Contribute ]</div>
+                <p>This site is open source and welcomes contributions from operators, engineers, and anyone with field experience. The codebase lives on <strong><a href="https://github.com/cbellmyer/wwtptools" target="_blank" rel="noopener">GitHub</a></strong>.</p>
+                <p><strong>What's useful:</strong> corrections to reference data, formulas you've found to be wrong or edge-case broken, new calculator requests, process parameters you'd add to the reference tables, operational context that would improve the field guides, or entire sections that should exist but don't.</p>
+                <p><strong>How to contribute:</strong> Open a <a href="https://github.com/cbellmyer/wwtptools/issues" target="_blank" rel="noopener">GitHub Issue</a> for suggestions, corrections, or requests. Submit a Pull Request if you want to contribute content or code directly. You don't need to know how to code to open an issue — plain text describing what's missing or wrong is exactly what's needed.</p>
+                <p>If you're an operator with process knowledge and want to contribute field guide content, that's especially valuable. The guides section is the least complete part of the site and the hardest to write without direct operational experience.</p>
+                <p><a href="/guides/contribute/" class="about-cta-link">Step-by-step guide to contributing on GitHub →</a></p>
+
+            </div>
+        </div>
+    </div>
+
+    {{- partial "footer.html" . -}}
+
+    <script>
+    (function () {
+        var navItems = document.querySelectorAll('.story-nav-item');
+        var chapters = document.querySelectorAll('.story-chapter-label');
+        if (!navItems.length || !chapters.length) return;
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    var id = entry.target.id;
+                    navItems.forEach(function (item) {
+                        item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+        chapters.forEach(function (ch) { if (ch.id) observer.observe(ch); });
+    }());
+    </script>
+</body>
+</html>

@@ -9,7 +9,11 @@
     <div class="toolkit-masthead">
         <div class="toolkit-masthead-inner">
             <div>
-                <div class="tk-eyebrow">[ WWTP Tools ]</div>
+                <nav class="page-breadcrumb">
+                    <a href="/">WWTP Tools</a>
+                    <span class="breadcrumb-sep">→</span>
+                    <span>Calculators</span>
+                </nav>
                 <h1 class="tk-masthead-title">Process Reference &amp; Calculators</h1>
                 <div class="tk-masthead-tagline">Wastewater Operations · Open Source · Operator Built</div>
             </div>
@@ -38,47 +42,56 @@
                 <process-calculator type="svi"
                     title="Sludge Volume Index (SVI)"
                     desc="Settling characteristics of activated sludge — mL/g."
-                    importance="Monitors sludge compaction and identifies biological foaming or bulking trends before they cause solids wash-out.">
+                    importance="Monitors sludge compaction and identifies biological foaming or bulking trends before they cause solids wash-out."
+                    formula="SVI = (SSV × 1000) ÷ MLSS">
                 </process-calculator>
                 <process-calculator type="fm"
                     title="F/M Ratio"
                     desc="Food-to-Microorganism ratio — lbs BOD / lb MLVSS / day."
-                    importance="Guides wasting strategies by balancing incoming BOD load with active biomass inventory for stable biological treatment.">
+                    importance="Guides wasting strategies by balancing incoming BOD load with active biomass inventory for stable biological treatment."
+                    formula="F/M = (Q × BOD) ÷ (V × MLVSS)   [8.34 factors cancel — units: lbs/lbs/day]">
                 </process-calculator>
                 <process-calculator type="mcrt"
                     title="MCRT — Mean Cell Residence Time"
                     desc="Sludge age — days."
-                    importance="Dictates dominant microorganism populations; critical for maintaining consistent nitrification and nutrient removal.">
+                    importance="Dictates dominant microorganism populations; critical for maintaining consistent nitrification and nutrient removal."
+                    formula="MCRT = (V × MLSS) ÷ [(Q_WAS × TSS_WAS) + (Q_eff × TSS_eff)]">
                 </process-calculator>
                 <process-calculator type="rasRate"
                     title="RAS Rate"
                     desc="Return activated sludge as a percentage of influent flow — %."
-                    importance="Controls sludge blanket depth in secondary clarifiers. Low RAS leads to rising sludge; high RAS dilutes MLSS and can cause hydraulic overload.">
+                    importance="Controls sludge blanket depth in secondary clarifiers. Low RAS leads to rising sludge; high RAS dilutes MLSS and can cause hydraulic overload."
+                    formula="RAS% = (Q_RAS ÷ Q_inf) × 100">
                 </process-calculator>
                 <process-calculator type="slr"
                     title="Surface Loading Rate"
                     desc="Hydraulic load on clarifier surface area — gpd / ft²."
-                    importance="Monitors hydraulic stress on secondary clarifiers to prevent sludge blanket failure and effluent TSS violations during peak flows.">
+                    importance="Monitors hydraulic stress on secondary clarifiers to prevent sludge blanket failure and effluent TSS violations during peak flows."
+                    formula="SLR = (Q × 1,000,000) ÷ A   [Q in MGD, A in ft²]">
                 </process-calculator>
                 <process-calculator type="hrt"
                     title="Hydraulic Retention Time"
                     desc="Contact time between wastewater and active biomass — hours."
-                    importance="Ensures adequate contact time for complete biological degradation and permit compliance.">
+                    importance="Ensures adequate contact time for complete biological degradation and permit compliance."
+                    formula="HRT = (V ÷ Q) × 24   [V in MG, Q in MGD → hours]">
                 </process-calculator>
                 <process-calculator type="wor"
                     title="Weir Overflow Rate"
                     desc="Hydraulic velocity over clarifier weirs — gpd / ft."
-                    importance="Identifies excessive velocities that pull solids into the final effluent and cause permit exceedances.">
+                    importance="Identifies excessive velocities that pull solids into the final effluent and cause permit exceedances."
+                    formula="WOR = (Q × 1,000,000) ÷ L   [Q in MGD, L in linear ft]">
                 </process-calculator>
                 <process-calculator type="bodLoad"
                     title="Mass Loading (BOD / TSS)"
                     desc="Total mass load entering the system — lbs / day."
-                    importance="Critical for anticipating increased oxygen demand and preventing aeration basins from becoming septic during high-strength industrial dumps.">
+                    importance="Critical for anticipating increased oxygen demand and preventing aeration basins from becoming septic during high-strength industrial dumps."
+                    formula="Load = Q × C × 8.34   [Q in MGD, C in mg/L → lbs/day]">
                 </process-calculator>
                 <process-calculator type="dosing"
                     title="Chemical Dosing"
                     desc="Chemical mass applied at a given flow and concentration — lbs / day."
-                    importance="Optimizes chemical usage for phosphorus precipitation and solids conditioning, preventing over-dosing and process toxicity.">
+                    importance="Optimizes chemical usage for phosphorus precipitation and solids conditioning, preventing over-dosing and process toxicity."
+                    formula="Dose = Q × C × 8.34   [Q in MGD, C in mg/L → lbs/day]">
                 </process-calculator>
             </div>
         </div>
@@ -93,7 +106,8 @@
                 <process-calculator type="solidsLoad"
                     title="Solids Loading Rate"
                     desc="Mass load on clarifier or thickener surface — lbs / day / ft²."
-                    importance="Ensures thickening mechanisms aren't overloaded, preventing torque faults and maintaining consistent sludge blanket depths.">
+                    importance="Ensures thickening mechanisms aren't overloaded, preventing torque faults and maintaining consistent sludge blanket depths."
+                    formula="SLR = (Q × TSS × 8.34) ÷ A   [Q in MGD, TSS in mg/L, A in ft²]">
                 </process-calculator>
             </div>
         </div>
@@ -108,46 +122,22 @@
                 <process-calculator type="vsr"
                     title="Volatile Solids Reduction (VSR)"
                     desc="Percent VSR via Van Kleeck formula — %."
-                    importance="Mandatory regulatory metric for anaerobic digesters to prove vector attraction reduction and pathogen destruction for biosolids land application.">
+                    importance="Mandatory regulatory metric for anaerobic digesters to prove vector attraction reduction and pathogen destruction for biosolids land application."
+                    formula="VSR = (f − d) ÷ (f − f×d) × 100   Van Kleeck   f = raw VS/TS, d = digested VS/TS">
                 </process-calculator>
                 <process-calculator type="vsLoading"
                     title="VS Loading Rate"
                     desc="Volatile solids fed per unit digester volume — lbs VS / day / ft³."
-                    importance="Prevents organic overloading which leads to digester souring (acid accumulation) and foaming.">
+                    importance="Prevents organic overloading which leads to digester souring (acid accumulation) and foaming."
+                    formula="OLR = VS_feed ÷ V   [lbs VS/day ÷ ft³]">
                 </process-calculator>
                 <process-calculator type="digDt"
                     title="Digester Detention Time"
                     desc="Hydraulic retention time in the digester — days."
-                    importance="Ensures sufficient time for methanogens to break down volatile acids into methane gas and stabilize the sludge.">
+                    importance="Ensures sufficient time for methanogens to break down volatile acids into methane gas and stabilize the sludge."
+                    formula="DT = V ÷ Q   [MG ÷ MGD = days]">
                 </process-calculator>
             </div>
-        </div>
-
-        <!-- PROCESS DECISION MATRIX — coming soon -->
-        <div class="tk-section">
-            <div class="tk-section-hdr">
-                <span class="tk-section-label">[ Troubleshooting Guide ]</span>
-                <span class="tk-section-title">Interactive Process Decision Matrix</span>
-            </div>
-            <a href="/guides/" class="mx-toolkit-cta">
-                <div class="mx-cta-text">
-                    <div class="mx-cta-label">[ Interactive Diagnostic — Coming Soon ]</div>
-                    <div class="mx-cta-title">Process Decision Matrix</div>
-                    <div class="mx-cta-desc">Symptom-driven troubleshooting across all treatment zones &mdash; headworks through final effluent. Select a symptom and follow the diagnostic path to causes and corrective actions.</div>
-                    <div class="mx-cta-zones">
-                        <span class="mx-cta-zone-chip">HW &middot; Headworks</span>
-                        <span class="mx-cta-zone-chip">INF &middot; Influent</span>
-                        <span class="mx-cta-zone-chip">PRI &middot; Primary</span>
-                        <span class="mx-cta-zone-chip">AER &middot; Aeration</span>
-                        <span class="mx-cta-zone-chip">SEC &middot; Clarifier</span>
-                        <span class="mx-cta-zone-chip">SOL &middot; Solids</span>
-                        <span class="mx-cta-zone-chip">DNF &middot; DN Filters</span>
-                        <span class="mx-cta-zone-chip">DIS &middot; Disinfection</span>
-                        <span class="mx-cta-zone-chip">EFF &middot; Effluent</span>
-                    </div>
-                </div>
-                <div class="mx-cta-arrow">&rarr;</div>
-            </a>
         </div>
 
         <!-- QUICK REFERENCE -->
@@ -249,6 +239,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tk-wx-alerts" id="wx-alerts" style="display:none">
+                        <div class="tk-wx-alerts-hdr">[ Active Alerts ]</div>
+                        <div id="wx-alerts-list"></div>
+                    </div>
                 </div>
             `;
             this.getLocation();
@@ -262,16 +256,19 @@
                         var lon = pos.coords.longitude.toFixed(4);
                         this.shadowId('wx-location').textContent = 'Your Location · ' + lat + ', ' + lon;
                         this.fetchWeather(lat, lon);
+                        this.fetchAlerts(lat, lon);
                     },
                     () => {
                         this.shadowId('wx-location').textContent = 'Location unavailable';
                         this.fetchWeather(39.1404, -76.8455);
+                        this.fetchAlerts(39.1404, -76.8455);
                     },
                     { timeout: 6000 }
                 );
             } else {
                 this.shadowId('wx-location').textContent = 'LPWRP · Savage, MD';
                 this.fetchWeather(39.1404, -76.8455);
+                this.fetchAlerts(39.1404, -76.8455);
             }
         }
 
@@ -372,6 +369,57 @@
                 this.shadowId('wx-loading').textContent = '[ Telemetry offline — unable to fetch weather ]';
             }
         }
+
+        async fetchAlerts(lat, lon) {
+            try {
+                var res = await fetch(
+                    'https://api.weather.gov/alerts/active?point=' + lat + ',' + lon
+                );
+                if (!res.ok) return;
+                var data = await res.json();
+                var features = (data.features || []).filter(function(f) {
+                    var p = f.properties;
+                    return p.urgency !== 'Past' &&
+                           ['Extreme', 'Severe', 'Moderate'].indexOf(p.severity) !== -1;
+                });
+                if (!features.length) return;
+
+                var dismissed = JSON.parse(localStorage.getItem('wx-dismissed-alerts') || '[]');
+                var toShow = features.filter(function(f) { return dismissed.indexOf(f.id) === -1; });
+                if (!toShow.length) return;
+
+                var listEl = this.shadowId('wx-alerts-list');
+                var alertsEl = this.shadowId('wx-alerts');
+
+                listEl.innerHTML = toShow.map(function(f) {
+                    var p = f.properties;
+                    var cls = 'tk-wx-alert--' + p.severity.toLowerCase();
+                    return '<div class="tk-wx-alert ' + cls + '" data-alert-id="' + f.id + '">' +
+                        '<div class="tk-wx-alert-body">' +
+                            '<div class="tk-wx-alert-event">' + p.event + '</div>' +
+                            '<div class="tk-wx-alert-headline">' + (p.headline || '') + '</div>' +
+                        '</div>' +
+                        '<button class="tk-wx-alert-dismiss" aria-label="Dismiss alert">×</button>' +
+                        '</div>';
+                }).join('');
+
+                alertsEl.style.display = 'block';
+
+                listEl.querySelectorAll('.tk-wx-alert-dismiss').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var alertDiv = btn.closest('.tk-wx-alert');
+                        var id = alertDiv.dataset.alertId;
+                        var stored = JSON.parse(localStorage.getItem('wx-dismissed-alerts') || '[]');
+                        stored.push(id);
+                        localStorage.setItem('wx-dismissed-alerts', JSON.stringify(stored));
+                        alertDiv.remove();
+                        if (!listEl.children.length) alertsEl.style.display = 'none';
+                    });
+                });
+            } catch (e) {
+                /* silent fail */
+            }
+        }
     }
     customElements.define('weather-widget', WeatherWidget);
     }
@@ -380,10 +428,11 @@
     if (!customElements.get('process-calculator')) {
     class ProcessCalculator extends HTMLElement {
         connectedCallback() {
-            this._type  = this.getAttribute('type');
-            this._title = this.getAttribute('title');
-            this._desc  = this.getAttribute('desc');
-            this._imp   = this.getAttribute('importance');
+            this._type    = this.getAttribute('type');
+            this._title   = this.getAttribute('title');
+            this._desc    = this.getAttribute('desc');
+            this._imp     = this.getAttribute('importance');
+            this._formula = this.getAttribute('formula');
             this.render();
             this.addEventListener('input', () => this.calculate());
         }
@@ -441,6 +490,10 @@
                         <div class="tk-result-value" id="res-${this._type}">—</div>
                         <div class="tk-result-unit">${this.unit()}</div>
                     </div>
+                    ${this._formula ? `<div class="tk-calc-formula">
+                        <span class="tk-formula-label">[ Formula ]</span>
+                        <div class="tk-formula-text">${this._formula}</div>
+                    </div>` : ''}
                     ${this._imp ? `<div class="tk-calc-impact">
                         <span class="tk-impact-label">[ Process Impact ]</span>
                         <div class="tk-impact-text">${this._imp}</div>
