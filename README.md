@@ -8,12 +8,12 @@ Free process calculators, reference tables, and field guides for wastewater trea
 
 ## What's in the Toolkit
 
-| Section | Description |
-|---------|-------------|
-| **Calculators** | 12+ process calculators — activated sludge, hydraulics, solids handling, digester operations. Live results as you type. |
-| **Reference** | Quick-access process data — DO targets, pH ranges, loading rate benchmarks, unit conversions. |
-| **Field Guides** | Operational guidance for startup, upset response, seasonal adjustments, dewatering, and digester management. |
-| **Decision Matrix** | *(In development)* Symptom-driven process troubleshooting across all treatment zones. |
+| Section             | Description                                                                                                             |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Calculators**     | 12+ process calculators — activated sludge, hydraulics, solids handling, digester operations. Live results as you type. |
+| **Reference**       | Quick-access process data — DO targets, pH ranges, loading rate benchmarks, unit conversions.                           |
+| **Field Guides**    | Operational guidance for startup, upset response, seasonal adjustments, dewatering, and digester management.            |
+| **Decision Matrix** | _(In development)_ Symptom-driven process troubleshooting across all treatment zones.                                   |
 
 ---
 

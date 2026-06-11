@@ -28,12 +28,12 @@ Incoming flows should be confirmed before any biological processes are energized
 
 Check all return lines, recycle pumps, and overflow structures before introducing flow. A hydraulic problem discovered under load is far harder to correct than one found during commissioning walk-through.
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
 
 <div id="biology" class="story-chapter-label">[ Biological Startup ]</div>
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
 
 <div id="solids" class="story-chapter-label">[ Solids Handling ]</div>
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._

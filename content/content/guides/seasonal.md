@@ -28,7 +28,7 @@ Summer operations typically require increased wasting to maintain MCRT targets a
 
 Watch F/M ratio closely during temperature transitions. A stable F/M in spring can become overloaded biology by July if wasting rates aren't adjusted upward to match growth rate.
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
 
 <div id="winter" class="story-chapter-label">[ Winter Operations ]</div>
 
@@ -36,8 +36,8 @@ Winter operations demand attention to minimum DO and extended MCRT to protect ni
 
 A useful rule of thumb: nitrification becomes unreliable below 10°C at typical MCRT targets. Extended MCRT and elevated DO setpoints compensate, but there's a floor below which nitrification simply stops.
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
 
 <div id="transitions" class="story-chapter-label">[ Seasonal Transitions ]</div>
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
