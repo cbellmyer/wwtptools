@@ -7,7 +7,7 @@ on:
       - "build.sh"
       - ".hugo-version"
       - ".hugo-archive-checksum"
-      - ".lighthouserc.json"
+      - ".lighthouserc.yml"
       - ".github/workflows/lighthouse.yml"
 
 permissions:
@@ -50,7 +50,7 @@ jobs:
         id: lighthouse
         uses: treosh/lighthouse-ci-action@v12
         with:
-          configPath: .lighthouserc.json
+          configPath: .lighthouserc.yml
           uploadArtifacts: true
 
       - name: Comment scores on PR

@@ -6,6 +6,8 @@
 <body class="toolkit" id="top">
     {{- partial "header.html" . -}}
 
+    <main>
+
     <div class="toolkit-masthead">
         <div class="toolkit-masthead-inner">
             <div>
@@ -154,6 +156,8 @@
 
     </div><!-- end toolkit-canvas -->
 
+    </main>
+
     {{- partial "footer.html" . -}}
 
     <script>
@@ -287,6 +291,15 @@
             return 'Extreme';
         }
 
+        updateAlarm() {
+            var level = Math.max(this._heatLevel || 0, this._alertLevel || 0);
+            var panel = this.querySelector('.tk-weather-panel');
+            if (!panel) return;
+            panel.classList.remove('tk-weather-panel--warn', 'tk-weather-panel--alarm');
+            if (level >= 2) panel.classList.add('tk-weather-panel--alarm');
+            else if (level >= 1) panel.classList.add('tk-weather-panel--warn');
+        }
+
         weatherCondition(code) {
             var c = {
                 0:'Clear Sky', 1:'Mainly Clear', 2:'Partly Cloudy', 3:'Overcast',
@@ -348,6 +361,9 @@
                     advisory.style.display = 'none';
                 }
 
+                this._heatLevel = feelsLike >= 103 ? 2 : feelsLike >= 80 ? 1 : 0;
+                this.updateAlarm();
+
                 this.shadowId('wx-loading').style.display = 'none';
                 this.shadowId('wx-content').style.display = 'grid';
 
@@ -387,6 +403,12 @@
                 var dismissed = JSON.parse(localStorage.getItem('wx-dismissed-alerts') || '[]');
                 var toShow = features.filter(function(f) { return dismissed.indexOf(f.id) === -1; });
                 if (!toShow.length) return;
+
+                this._alertLevel = toShow.reduce(function(max, f) {
+                    var s = f.properties.severity;
+                    return s === 'Extreme' ? 2 : (s === 'Severe' && max < 2) ? 1 : max;
+                }, 0);
+                this.updateAlarm();
 
                 var listEl = this.shadowId('wx-alerts-list');
                 var alertsEl = this.shadowId('wx-alerts');

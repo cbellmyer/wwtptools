@@ -110,6 +110,22 @@ body.toolkit {
   background: var(--tk-panel);
   border: 1px solid var(--tk-border);
   margin-bottom: 2.5rem;
+  transition: border-color 0.4s, box-shadow 0.4s;
+}
+
+.tk-weather-panel--warn {
+  border-color: var(--amber);
+  box-shadow: 0 0 22px rgb(251 191 36 / 20%);
+}
+
+.tk-weather-panel--alarm {
+  border-color: var(--red);
+  animation: tk-alarm-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes tk-alarm-glow {
+  0%, 100% { box-shadow: 0 0 18px rgb(248 113 113 / 25%); }
+  50%       { box-shadow: 0 0 40px rgb(248 113 113 / 55%); }
 }
 
 .tk-weather-hdr {
@@ -243,9 +259,9 @@ body.toolkit {
 
 .tk-wx-alert:last-child { border-bottom: none; }
 
-.tk-wx-alert--extreme  { border-left-color: var(--red);       background: rgba(248,113,113,0.06); }
-.tk-wx-alert--severe   { border-left-color: var(--amber);     background: rgba(251,191,36,0.06);  }
-.tk-wx-alert--moderate { border-left-color: var(--secondary); background: rgba(148,163,184,0.06); }
+.tk-wx-alert--extreme  { border-left-color: var(--red);       background: rgb(248 113 113 / 6%); }
+.tk-wx-alert--severe   { border-left-color: var(--amber);     background: rgb(251 191 36 / 6%);  }
+.tk-wx-alert--moderate { border-left-color: var(--secondary); background: rgb(148 163 184 / 6%); }
 
 .tk-wx-alert-body { flex: 1; }
 
