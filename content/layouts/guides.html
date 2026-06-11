@@ -20,6 +20,13 @@
 
     <div class="guides-index-body">
         <div class="guides-index-inner">
+
+            <div class="matrix-status-bar">
+                <span class="matrix-status-dot"></span>
+                <span class="matrix-status-label">[ Under Development ]</span>
+                <span class="matrix-status-desc">More field guides are in progress. Check back as new guides are added, or contribute your own operational knowledge.</span>
+            </div>
+
             {{ $all := where site.RegularPages "Section" "guides" }}
             {{ $fieldGuides := where $all ".Params.meta" "ne" true }}
             {{ $metaGuides := where $all ".Params.meta" true }}

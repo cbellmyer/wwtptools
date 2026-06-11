@@ -27,6 +27,9 @@
                 <span class="matrix-status-desc">Interactive diagnostic coming in a future release. See below for what's planned and how to contribute.</span>
             </div>
 
+            <!-- WEATHER WIDGET -->
+            <weather-widget></weather-widget>
+
             <div class="matrix-overview">
                 <div class="matrix-overview-label">[ What This Will Be ]</div>
                 <p>The Process Decision Matrix is a structured troubleshooting tool designed for field use. You start with an observable symptom — rising effluent TSS, dropping DO, digester foaming, polymer not holding — and the matrix walks you through a decision tree of possible causes and corrective actions, weighted by frequency and severity.</p>
@@ -99,5 +102,273 @@
     </div>
 
     {{- partial "footer.html" . -}}
+
+    <script>
+    /* ── Weather Widget ─────────────────────────────────────── */
+    if (!customElements.get('weather-widget')) {
+    class WeatherWidget extends HTMLElement {
+        connectedCallback() {
+            this.innerHTML = `
+                <div class="tk-weather-panel">
+                    <div class="tk-weather-hdr">
+                        <div class="tk-panel-title">Environmental Telemetry</div>
+                        <div class="tk-weather-location" id="wx-location">Acquiring signal…</div>
+                        <div class="tk-weather-live">
+                            <div class="tk-dot-live"></div>
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="tk-weather-loading" id="wx-loading">[ Acquiring GPS signal… ]</div>
+                    <div class="tk-weather-content" id="wx-content" style="display:none">
+                        <div class="tk-wx-main">
+                            <div class="tk-wx-temp" id="wx-temp">--°F</div>
+                            <div class="tk-wx-condition" id="wx-condition">--</div>
+                            <div class="tk-wx-feels" id="wx-feels">Feels like --°F</div>
+                            <div class="tk-wx-advisory" id="wx-advisory" style="display:none"></div>
+                        </div>
+                        <div class="tk-wx-grid">
+                            <div class="tk-wx-cell">
+                                <div class="tk-wx-cell-label">[ Humidity ]</div>
+                                <div class="tk-wx-cell-value" id="wx-humidity">--</div>
+                                <div class="tk-wx-cell-unit">%</div>
+                            </div>
+                            <div class="tk-wx-cell">
+                                <div class="tk-wx-cell-label">[ Dew Point ]</div>
+                                <div class="tk-wx-cell-value" id="wx-dew">--</div>
+                                <div class="tk-wx-cell-unit">°F</div>
+                            </div>
+                            <div class="tk-wx-cell">
+                                <div class="tk-wx-cell-label">[ Wind ]</div>
+                                <div class="tk-wx-cell-value" id="wx-wind">--</div>
+                                <div class="tk-wx-cell-unit" id="wx-wind-unit">mph</div>
+                            </div>
+                            <div class="tk-wx-cell">
+                                <div class="tk-wx-cell-label">[ Gusts ]</div>
+                                <div class="tk-wx-cell-value" id="wx-gusts">--</div>
+                                <div class="tk-wx-cell-unit">mph max</div>
+                            </div>
+                            <div class="tk-wx-cell">
+                                <div class="tk-wx-cell-label">[ Pressure ]</div>
+                                <div class="tk-wx-cell-value" id="wx-pressure">--</div>
+                                <div class="tk-wx-cell-unit">inHg</div>
+                            </div>
+                            <div class="tk-wx-cell">
+                                <div class="tk-wx-cell-label">[ UV Index ]</div>
+                                <div class="tk-wx-cell-value" id="wx-uv">--</div>
+                                <div class="tk-wx-cell-unit" id="wx-uv-risk">--</div>
+                            </div>
+                            <div class="tk-wx-cell">
+                                <div class="tk-wx-cell-label">[ Precip (1hr) ]</div>
+                                <div class="tk-wx-cell-value" id="wx-precip">--</div>
+                                <div class="tk-wx-cell-unit">in</div>
+                            </div>
+                            <div class="tk-wx-cell">
+                                <div class="tk-wx-cell-label">[ Precip Prob ]</div>
+                                <div class="tk-wx-cell-value" id="wx-prob">--</div>
+                                <div class="tk-wx-cell-unit">% next hr</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tk-wx-alerts" id="wx-alerts" style="display:none">
+                        <div class="tk-wx-alerts-hdr">[ Active Alerts ]</div>
+                        <div id="wx-alerts-list"></div>
+                    </div>
+                </div>
+            `;
+            this.getLocation();
+        }
+
+        getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        var lat = pos.coords.latitude.toFixed(4);
+                        var lon = pos.coords.longitude.toFixed(4);
+                        this.shadowId('wx-location').textContent = 'Your Location · ' + lat + ', ' + lon;
+                        this.fetchWeather(lat, lon);
+                        this.fetchAlerts(lat, lon);
+                    },
+                    () => {
+                        this.shadowId('wx-location').textContent = 'Location unavailable';
+                        this.fetchWeather(39.1404, -76.8455);
+                        this.fetchAlerts(39.1404, -76.8455);
+                    },
+                    { timeout: 6000 }
+                );
+            } else {
+                this.shadowId('wx-location').textContent = 'LPWRP · Savage, MD';
+                this.fetchWeather(39.1404, -76.8455);
+                this.fetchAlerts(39.1404, -76.8455);
+            }
+        }
+
+        shadowId(id) { return this.querySelector('#' + id); }
+
+        degToCompass(deg) {
+            var dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+            return dirs[Math.round(deg / 22.5) % 16];
+        }
+
+        uvRisk(uv) {
+            if (uv <= 2) return 'Low';
+            if (uv <= 5) return 'Moderate';
+            if (uv <= 7) return 'High';
+            if (uv <= 10) return 'Very High';
+            return 'Extreme';
+        }
+
+        updateAlarm() {
+            var level = Math.max(this._heatLevel || 0, this._alertLevel || 0);
+            var panel = this.querySelector('.tk-weather-panel');
+            if (!panel) return;
+            panel.classList.remove('tk-weather-panel--warn', 'tk-weather-panel--alarm');
+            if (level >= 2) panel.classList.add('tk-weather-panel--alarm');
+            else if (level >= 1) panel.classList.add('tk-weather-panel--warn');
+        }
+
+        weatherCondition(code) {
+            var c = {
+                0:'Clear Sky', 1:'Mainly Clear', 2:'Partly Cloudy', 3:'Overcast',
+                45:'Fog', 48:'Freezing Fog',
+                51:'Light Drizzle', 53:'Moderate Drizzle', 55:'Dense Drizzle',
+                61:'Slight Rain', 63:'Moderate Rain', 65:'Heavy Rain',
+                66:'Light Freezing Rain', 67:'Heavy Freezing Rain',
+                71:'Slight Snow', 73:'Moderate Snow', 75:'Heavy Snow', 77:'Snow Grains',
+                80:'Rain Showers', 81:'Moderate Showers', 82:'Violent Showers',
+                85:'Snow Showers', 86:'Heavy Snow Showers',
+                95:'Thunderstorm', 96:'Thunderstorm + Hail', 99:'Thunderstorm + Heavy Hail'
+            };
+            return c[code] || 'Unknown';
+        }
+
+        async fetchWeather(lat, lon) {
+            try {
+                var url = 'https://api.open-meteo.com/v1/forecast' +
+                    '?latitude=' + lat + '&longitude=' + lon +
+                    '&current=temperature_2m,apparent_temperature,relative_humidity_2m,' +
+                    'dew_point_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,' +
+                    'weather_code,surface_pressure,uv_index,precipitation' +
+                    '&hourly=precipitation_probability' +
+                    '&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch' +
+                    '&forecast_days=1';
+
+                var res = await fetch(url);
+                var d = await res.json();
+                var c = d.current;
+
+                var feelsLike = Math.round(c.apparent_temperature);
+                var temp = Math.round(c.temperature_2m);
+                var pressure = (c.surface_pressure * 0.02953).toFixed(2);
+                var windDir = this.degToCompass(c.wind_direction_10m);
+                var uv = Math.round(c.uv_index);
+                var precip = c.precipitation.toFixed(2);
+
+                var hour = new Date().getHours();
+                var prob = d.hourly && d.hourly.precipitation_probability
+                    ? d.hourly.precipitation_probability[hour]
+                    : '--';
+
+                var advisory = this.shadowId('wx-advisory');
+                if (feelsLike >= 125) {
+                    advisory.textContent = '⚠ EXTREME DANGER';
+                    advisory.style.cssText = 'display:inline-block;color:#e01090;background:rgb(224 16 144/12%);border:1px solid #e01090';
+                } else if (feelsLike >= 103) {
+                    advisory.textContent = '⚠ DANGER';
+                    advisory.style.cssText = 'display:inline-block;color:#e03030;background:rgb(224 48 48/12%);border:1px solid #e03030';
+                } else if (feelsLike >= 90) {
+                    advisory.textContent = '⚠ EXTREME CAUTION';
+                    advisory.style.cssText = 'display:inline-block;color:#e07020;background:rgb(224 112 32/12%);border:1px solid #e07020';
+                } else if (feelsLike >= 80) {
+                    advisory.textContent = '⚠ CAUTION';
+                    advisory.style.cssText = 'display:inline-block;color:#e8b44a;background:rgb(232 180 74/12%);border:1px solid #e8b44a';
+                } else {
+                    advisory.style.display = 'none';
+                }
+
+                this._heatLevel = feelsLike >= 103 ? 2 : feelsLike >= 80 ? 1 : 0;
+                this.updateAlarm();
+
+                this.shadowId('wx-loading').style.display = 'none';
+                this.shadowId('wx-content').style.display = 'grid';
+
+                this.shadowId('wx-temp').textContent = temp + '°F';
+                this.shadowId('wx-condition').textContent = this.weatherCondition(c.weather_code);
+                this.shadowId('wx-feels').textContent = 'Feels like ' + feelsLike + '°F';
+                this.shadowId('wx-humidity').textContent = c.relative_humidity_2m;
+                this.shadowId('wx-dew').textContent = Math.round(c.dew_point_2m);
+                this.shadowId('wx-wind').textContent = Math.round(c.wind_speed_10m);
+                this.shadowId('wx-wind-unit').textContent = 'mph · ' + windDir;
+                this.shadowId('wx-gusts').textContent = Math.round(c.wind_gusts_10m);
+                this.shadowId('wx-pressure').textContent = pressure;
+                this.shadowId('wx-uv').textContent = uv;
+                this.shadowId('wx-uv-risk').textContent = this.uvRisk(uv);
+                this.shadowId('wx-precip').textContent = precip;
+                this.shadowId('wx-prob').textContent = prob;
+
+            } catch (e) {
+                this.shadowId('wx-loading').textContent = '[ Telemetry offline — unable to fetch weather ]';
+            }
+        }
+
+        async fetchAlerts(lat, lon) {
+            try {
+                var res = await fetch(
+                    'https://api.weather.gov/alerts/active?point=' + lat + ',' + lon
+                );
+                if (!res.ok) return;
+                var data = await res.json();
+                var features = (data.features || []).filter(function(f) {
+                    var p = f.properties;
+                    return p.urgency !== 'Past' &&
+                           ['Extreme', 'Severe', 'Moderate'].indexOf(p.severity) !== -1;
+                });
+                if (!features.length) return;
+
+                var dismissed = JSON.parse(localStorage.getItem('wx-dismissed-alerts') || '[]');
+                var toShow = features.filter(function(f) { return dismissed.indexOf(f.id) === -1; });
+                if (!toShow.length) return;
+
+                this._alertLevel = toShow.reduce(function(max, f) {
+                    var s = f.properties.severity;
+                    return s === 'Extreme' ? 2 : (s === 'Severe' && max < 2) ? 1 : max;
+                }, 0);
+                this.updateAlarm();
+
+                var listEl = this.shadowId('wx-alerts-list');
+                var alertsEl = this.shadowId('wx-alerts');
+
+                listEl.innerHTML = toShow.map(function(f) {
+                    var p = f.properties;
+                    var cls = 'tk-wx-alert--' + p.severity.toLowerCase();
+                    return '<div class="tk-wx-alert ' + cls + '" data-alert-id="' + f.id + '">' +
+                        '<div class="tk-wx-alert-body">' +
+                            '<div class="tk-wx-alert-event">' + p.event + '</div>' +
+                            '<div class="tk-wx-alert-headline">' + (p.headline || '') + '</div>' +
+                        '</div>' +
+                        '<button class="tk-wx-alert-dismiss" aria-label="Dismiss alert">×</button>' +
+                        '</div>';
+                }).join('');
+
+                alertsEl.style.display = 'block';
+
+                listEl.querySelectorAll('.tk-wx-alert-dismiss').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var alertDiv = btn.closest('.tk-wx-alert');
+                        var id = alertDiv.dataset.alertId;
+                        var stored = JSON.parse(localStorage.getItem('wx-dismissed-alerts') || '[]');
+                        stored.push(id);
+                        localStorage.setItem('wx-dismissed-alerts', JSON.stringify(stored));
+                        alertDiv.remove();
+                        if (!listEl.children.length) alertsEl.style.display = 'none';
+                    });
+                });
+            } catch (e) {
+                /* silent fail */
+            }
+        }
+    }
+    customElements.define('weather-widget', WeatherWidget);
+    }
+    </script>
 </body>
 </html>

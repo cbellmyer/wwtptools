@@ -20,7 +20,7 @@ Free process calculators, reference tables, and field guides for wastewater trea
 ## Stack
 
 - [Hugo](https://gohugo.io/) static site generator (v0.160.1 extended)
-- [hypercat-theme](https://github.com/cbellmyer/hypercat-theme) as base theme with project-level layout overrides
+- [scada-theme](https://github.com/cbellmyer/wwtptools) as base theme with project-level layout overrides
 - [Cloudflare Pages](https://pages.cloudflare.com/) for deployment
 - Vanilla JavaScript Web Components for calculators and weather widget (no framework, no bundler)
 - [Open-Meteo](https://open-meteo.com/) for the live weather widget (free, no API key required)
@@ -59,7 +59,7 @@ wwtptools/
 │   ├── assets/css/extended/  # Custom CSS
 │   │   ├── wwtptools.css     # Site styles and palette
 │   │   └── toolkit.css       # Calculator interface (SCADA panel UI)
-│   └── themes/hypercat-theme/
+│   └── themes/scada-theme/
 ├── build.sh
 ├── CHANGELOG.md
 └── README.md

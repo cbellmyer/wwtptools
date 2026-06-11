@@ -1,7 +1,7 @@
 baseURL: "https://wwtptools.com/"
 title: "WWTP Tools"
 copyright: "CC BY-NC 4.0"
-theme: [hypercat-theme]
+theme: [scada-theme]
 
 enableInlineShortcodes: true
 buildDrafts: false

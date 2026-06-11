@@ -1,12 +1,12 @@
 /**
- * Service Worker for hypercat.me
+ * Service Worker for wwtptools.com
  * Enables offline support for the poses page.
  */
 'use strict';
 
 var CACHE_VERSION = 'v1';
-var STATIC_CACHE = 'hypercat-static-' + CACHE_VERSION;
-var RUNTIME_CACHE = 'hypercat-runtime-' + CACHE_VERSION;
+var STATIC_CACHE = 'scada-static-' + CACHE_VERSION;
+var RUNTIME_CACHE = 'scada-runtime-' + CACHE_VERSION;
 
 var IMAGE_PATTERN = /\.(webp|jpg|jpeg|png|gif|svg)(\?.*)?$/;
 var ASSET_PATTERN = /\.(css|js)(\?.*)?$/;
@@ -42,7 +42,7 @@ self.addEventListener('activate', function (event) {
         caches.keys().then(function (cacheNames) {
             return Promise.all(
                 cacheNames.filter(function (name) {
-                    return name.startsWith('hypercat-') &&
+                    return name.startsWith('scada-') &&
                         name !== STATIC_CACHE &&
                         name !== RUNTIME_CACHE;
                 }).map(function (name) {

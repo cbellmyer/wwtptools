@@ -1069,6 +1069,18 @@ body.about .story-sidebar {
    MATRIX PAGE
    ============================================================ */
 
+body.matrix {
+  --tk-panel: #161d2a;
+  --tk-inner: #1a2232;
+  --tk-border: #2d3a50;
+  --tk-sub: #242e40;
+  --tk-hdr: #0d1424;
+  --tk-label: #546878;
+  --tk-notes-bg: #0c1520;
+  --tk-input-bg: #0f1620;
+  --tk-green: #40e060;
+}
+
 .matrix-body {
   background: var(--bg2);
   border-top: 1px solid var(--border);
@@ -1118,6 +1130,10 @@ body.about .story-sidebar {
   font-size: 0.52rem;
   letter-spacing: 0.05em;
   color: var(--gray);
+}
+
+.guide-draft-banner {
+  margin-bottom: 2rem;
 }
 
 .matrix-overview-label {

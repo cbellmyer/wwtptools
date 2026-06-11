@@ -1,0 +1,106 @@
+name: Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  deploy-and-audit:
+    name: Deploy preview & Lighthouse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build site
+        run: bash ./build.sh
+
+      - name: Deploy Cloudflare preview
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --name wwtptools-pr-${{ github.event.number }}
+
+      - name: Run Lighthouse
+        id: lighthouse
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            ${{ steps.deploy.outputs.deployment-url }}/
+            ${{ steps.deploy.outputs.deployment-url }}/calculators/
+            ${{ steps.deploy.outputs.deployment-url }}/guides/
+            ${{ steps.deploy.outputs.deployment-url }}/matrix/
+          configPath: .lighthouserc.yml
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+        continue-on-error: true
+
+      - name: Post PR comment
+        uses: actions/github-script@v7
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.deployment-url }}
+          LH_LINKS: ${{ steps.lighthouse.outputs.links }}
+          LH_MANIFEST: ${{ steps.lighthouse.outputs.manifest }}
+        with:
+          script: |
+            const url = process.env.PREVIEW_URL;
+            const links = JSON.parse(process.env.LH_LINKS || '{}');
+            const manifest = JSON.parse(process.env.LH_MANIFEST || '[]');
+
+            const scoreEmoji = (s) => s >= 0.9 ? '🟢' : s >= 0.7 ? '🟡' : '🔴';
+            const pct = (s) => s != null ? Math.round(s * 100) : '—';
+
+            const lhRows = manifest.map((entry) => {
+              const path = entry.url.replace(url, '') || '/';
+              const c = entry.summary || {};
+              const link = links[entry.url] || entry.url;
+              return `| [${path}](${link}) | ${scoreEmoji(c.performance)}${pct(c.performance)} | ${scoreEmoji(c.accessibility)}${pct(c.accessibility)} | ${scoreEmoji(c['best-practices'])}${pct(c['best-practices'])} | ${scoreEmoji(c.seo)}${pct(c.seo)} |`;
+            }).join('\n');
+
+            const body = [
+              '### 🚀 Preview Deployment',
+              '',
+              `**URL:** ${url}`,
+              '',
+              '| Page | |',
+              '|------|--|',
+              `| Home | [${url}/](${url}/) |`,
+              `| Calculators | [/calculators/](${url}/calculators/) |`,
+              `| Guides | [/guides/](${url}/guides/) |`,
+              `| Matrix | [/matrix/](${url}/matrix/) |`,
+              '',
+              '### 🔍 Lighthouse',
+              '',
+              '| Page | Perf | A11y | Best Practices | SEO |',
+              '|------|------|------|----------------|-----|',
+              lhRows || '| — | — | — | — | — |',
+            ].join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            const existing = comments.find(c => c.body.startsWith('### 🚀 Preview Deployment'));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                comment_id: existing.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              });
+            }

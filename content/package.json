@@ -1,7 +1,7 @@
 {
-  "name": "hypercat-site",
+  "name": "scada-site",
   "version": "1.0.0",
-  "description": "hypercat.me static site",
+  "description": "wwtptools.com static site",
   "scripts": {
     "build": "bash ../build.sh",
     "dev": "hugo server --disableFastRender"
