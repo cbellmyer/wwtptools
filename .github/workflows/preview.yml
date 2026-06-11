@@ -23,6 +23,9 @@ jobs:
       - name: Build site
         run: bash ./build.sh
 
+      - name: Install Wrangler
+        run: npm install -g wrangler
+
       - name: Deploy Cloudflare preview
         id: deploy
         uses: cloudflare/wrangler-action@v3
