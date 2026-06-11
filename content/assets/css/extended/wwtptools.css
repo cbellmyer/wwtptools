@@ -313,7 +313,7 @@ body.home .header #menu .active {
   text-transform: uppercase;
   margin-bottom: 1.5rem;
   opacity: 0;
-  animation: fadeUp 0.5s ease forwards 0.2s;
+  animation: fade-up 0.5s ease forwards 0.2s;
 }
 
 .hero-title {
@@ -325,7 +325,7 @@ body.home .header #menu .active {
   color: var(--primary);
   margin-bottom: 1.25rem;
   opacity: 0;
-  animation: fadeUp 0.5s ease forwards 0.35s;
+  animation: fade-up 0.5s ease forwards 0.35s;
 }
 
 .hero-title span {
@@ -339,7 +339,7 @@ body.home .header #menu .active {
   margin: 0 auto 2rem;
   line-height: 1.75;
   opacity: 0;
-  animation: fadeUp 0.5s ease forwards 0.5s;
+  animation: fade-up 0.5s ease forwards 0.5s;
 }
 
 .hero-actions {
@@ -348,7 +348,7 @@ body.home .header #menu .active {
   justify-content: center;
   flex-wrap: wrap;
   opacity: 0;
-  animation: fadeUp 0.5s ease forwards 0.65s;
+  animation: fade-up 0.5s ease forwards 0.65s;
 }
 
 /* ============================================================
@@ -1242,7 +1242,7 @@ body.matrix {
    ANIMATIONS
    ============================================================ */
 
-@keyframes fadeUp {
+@keyframes fade-up {
   from {
     opacity: 0;
     transform: translateY(18px);
@@ -1254,7 +1254,7 @@ body.matrix {
   }
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
