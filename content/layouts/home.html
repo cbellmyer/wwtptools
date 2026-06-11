@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="dark">
+<head>
+    {{- partial "head.html" . }}
+</head>
+<body class="home" id="top">
+    {{- partial "header.html" . -}}
+
+    <!-- ── HERO ─────────────────────────────────────────────────── -->
+    <div class="home-hero">
+        <div class="hero-divider"></div>
+
+        <div class="hero-left">
+            <div class="hero-eyebrow">[ PROCESS CONTROL TOOLS ]</div>
+            <h1 class="hero-name">
+                WWTP<span>Tools</span>
+            </h1>
+            <p class="hero-hook">
+                Free process calculators and reference materials<br>
+                for wastewater treatment plant operators.
+            </p>
+
+            <div class="hero-tags">
+                <span class="hero-tag highlight">Open Source</span>
+                <span class="hero-tag">No Account Required</span>
+                <span class="hero-tag">Mobile Friendly</span>
+                <span class="hero-tag">Operator Built</span>
+                <span class="hero-tag">Maryland 5A Licensed</span>
+            </div>
+
+            <div class="hero-ctas">
+                <a href="/calculators/" class="btn-primary">Open Calculators</a>
+                <a href="/reference/" class="btn-secondary">Reference Tables</a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-stat-stack">
+                <div class="stat-card yellow">
+                    <div class="stat-label">[ Process Calculators ]</div>
+                    <div class="stat-value">12+</div>
+                    <div class="stat-sub">SVI, F/M, MCRT, HRT, dosing, loading rates &amp; more</div>
+                </div>
+                <div class="stat-card teal">
+                    <div class="stat-label">[ Reference Tables ]</div>
+                    <div class="stat-value">Instant</div>
+                    <div class="stat-sub">DO targets, pH ranges, loading benchmarks, chemical data</div>
+                </div>
+                <div class="stat-card red">
+                    <div class="stat-label">[ Operator Guides ]</div>
+                    <div class="stat-value">Field</div>
+                    <div class="stat-sub">Startup, upset response, seasonal ops, dewatering</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── MODULES ──────────────────────────────────────────────── -->
+    <div class="expertise-section">
+        <div class="section-label">[ Modules ]</div>
+        <h2 class="section-title">What's in the toolkit</h2>
+        <p class="section-intro">Every tool here was built from field experience. No fluff, no paywalls — just the math and reference data you need on the floor.</p>
+
+        <div class="expertise-grid">
+            <a href="/calculators/" class="expertise-card ops" style="text-decoration:none;">
+                <div class="expertise-icon">⚙</div>
+                <div class="expertise-title">Calculators</div>
+                <ul class="expertise-items">
+                    <li>SVI &amp; Settleability</li>
+                    <li>F/M Ratio</li>
+                    <li>MCRT / Sludge Age</li>
+                    <li>Hydraulic Retention Time</li>
+                    <li>Chemical Dosing</li>
+                    <li>Surface &amp; Mass Loading</li>
+                    <li>Digester Operations</li>
+                </ul>
+            </a>
+            <a href="/reference/" class="expertise-card geo" style="text-decoration:none;">
+                <div class="expertise-icon">◎</div>
+                <div class="expertise-title">Reference</div>
+                <ul class="expertise-items">
+                    <li>DO Operating Ranges</li>
+                    <li>pH Targets by Process</li>
+                    <li>Loading Rate Benchmarks</li>
+                    <li>Chemical Properties</li>
+                    <li>Unit Conversions</li>
+                    <li>Regulatory Thresholds</li>
+                </ul>
+            </a>
+            <a href="/guides/" class="expertise-card tech" style="text-decoration:none;">
+                <div class="expertise-icon">⌬</div>
+                <div class="expertise-title">Guides</div>
+                <ul class="expertise-items">
+                    <li>Plant Startup Procedures</li>
+                    <li>Upset Response Protocols</li>
+                    <li>Seasonal Adjustments</li>
+                    <li>Dewatering Operations</li>
+                    <li>Digester Management</li>
+                    <li>Lab QA/QC Practices</li>
+                </ul>
+            </a>
+        </div>
+    </div>
+
+    <!-- ── ABOUT ─────────────────────────────────────────────────── -->
+    <div class="story-section">
+        <div class="story-inner">
+            <div class="story-sidebar">
+                <div class="section-label">[ About ]</div>
+                <h2 class="section-title" style="font-size:1.6rem;">Built from the floor up</h2>
+            </div>
+            <div class="story-content">
+                <span class="story-lead">These tools exist because I needed them and couldn't find them in one place.</span>
+                <p>I hold a <strong>Maryland Class 5A Wastewater License</strong> — the highest operator grade in the state — earned two years ahead of the standard track. Before that: environmental field work, GIS, emergency response mapping during <strong>Hurricane Maria</strong>, and a decade of learning that the right information at the right time is everything.</p>
+                <p>The calculators here are the same ones I use on shift. The reference tables are things I've had to look up enough times that I finally put them somewhere permanent. The guides are written the way I wish someone had explained things to me earlier in my career.</p>
+                <p>Everything is free, open source, and built to work on a phone in the middle of a process upset.</p>
+            </div>
+        </div>
+    </div>
+
+    {{- partial "footer.html" . -}}
+</body>
+</html>

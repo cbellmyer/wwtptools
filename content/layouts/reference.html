@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="dark">
+<head>
+    {{- partial "head.html" . }}
+</head>
+<body class="reference" id="top">
+    {{- partial "header.html" . -}}
+
+    <div class="inner-page-hero">
+        <div class="inner-page-hero-inner">
+            <div class="section-label">[ Reference Tables ]</div>
+            <h1 class="inner-page-title">Quick Reference<br><span>Data</span></h1>
+            <p class="inner-page-subtitle">DO targets, pH ranges, loading rate benchmarks, unit conversions, and chemical data — organized for field use.</p>
+        </div>
+    </div>
+
+    <div class="toolkit-canvas">
+
+        <div class="tk-section">
+            <div class="tk-section-hdr">
+                <span class="tk-section-label">[ Dissolved Oxygen ]</span>
+                <span class="tk-section-title">Operating Ranges by Process Zone</span>
+            </div>
+            <div class="tk-ref-table">
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>Process Zone</th>
+                            <th>Target DO (mg/L)</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Aeration Basin (Nitrification)</td><td class="ref-value">2.0 – 4.0</td><td>Minimum 2.0 for full nitrification</td></tr>
+                        <tr><td>Aeration Basin (General)</td><td class="ref-value">1.5 – 3.0</td><td>Below 1.0 risks filamentous growth</td></tr>
+                        <tr><td>Anoxic Zone (Denitrification)</td><td class="ref-value">&lt; 0.2</td><td>DO inhibits denitrification</td></tr>
+                        <tr><td>Anaerobic Zone (EBPR)</td><td class="ref-value">&lt; 0.05</td><td>Critical for phosphorus release</td></tr>
+                        <tr><td>Secondary Clarifier Effluent</td><td class="ref-value">4.0 – 8.0</td><td>Higher DO indicates good aeration</td></tr>
+                        <tr><td>Digester (Anaerobic)</td><td class="ref-value">0</td><td>Strict anaerobic conditions required</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tk-section">
+            <div class="tk-section-hdr">
+                <span class="tk-section-label">[ pH Targets ]</span>
+                <span class="tk-section-title">Operating Ranges by Process</span>
+            </div>
+            <div class="tk-ref-table">
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>Process</th>
+                            <th>pH Range</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Activated Sludge</td><td class="ref-value">6.5 – 8.5</td><td>Optimal range for biological activity</td></tr>
+                        <tr><td>Nitrification</td><td class="ref-value">7.2 – 8.0</td><td>Below 6.8 significantly inhibits nitrifiers</td></tr>
+                        <tr><td>Denitrification</td><td class="ref-value">6.5 – 8.0</td><td>Less sensitive to pH than nitrification</td></tr>
+                        <tr><td>Anaerobic Digestion</td><td class="ref-value">6.8 – 7.4</td><td>Below 6.5 = acid phase; above 8.0 = inhibited</td></tr>
+                        <tr><td>Chemical Phosphorus Removal</td><td class="ref-value">5.5 – 7.0</td><td>Alum optimal around 6.0–7.0</td></tr>
+                        <tr><td>Effluent Discharge (typical)</td><td class="ref-value">6.0 – 9.0</td><td>Varies by permit</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tk-section">
+            <div class="tk-section-hdr">
+                <span class="tk-section-label">[ Loading Rate Benchmarks ]</span>
+                <span class="tk-section-title">Design &amp; Operational Targets</span>
+            </div>
+            <div class="tk-ref-table">
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Typical Range</th>
+                            <th>Units</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>F/M Ratio (Conventional AS)</td><td class="ref-value">0.2 – 0.4</td><td>lbs BOD / lb MLVSS / day</td></tr>
+                        <tr><td>F/M Ratio (Extended Aeration)</td><td class="ref-value">0.04 – 0.1</td><td>lbs BOD / lb MLVSS / day</td></tr>
+                        <tr><td>MCRT (Nitrification)</td><td class="ref-value">10 – 20</td><td>days (varies with temp)</td></tr>
+                        <tr><td>MCRT (Conventional)</td><td class="ref-value">5 – 15</td><td>days</td></tr>
+                        <tr><td>SVI (Good Settling)</td><td class="ref-value">80 – 150</td><td>mL/g</td></tr>
+                        <tr><td>SVI (Bulking)</td><td class="ref-value">&gt; 200</td><td>mL/g</td></tr>
+                        <tr><td>Surface Loading Rate (Clarifier)</td><td class="ref-value">400 – 800</td><td>gpd/ft²</td></tr>
+                        <tr><td>Solids Loading Rate (Clarifier)</td><td class="ref-value">20 – 30</td><td>lbs/day/ft²</td></tr>
+                        <tr><td>VS Loading Rate (Digester)</td><td class="ref-value">0.1 – 0.3</td><td>lbs VS/day/ft³</td></tr>
+                        <tr><td>Digester Detention Time</td><td class="ref-value">15 – 30</td><td>days</td></tr>
+                        <tr><td>VSR (Anaerobic Digestion)</td><td class="ref-value">38 – 55</td><td>% (Class B minimum 38%)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tk-section">
+            <div class="tk-section-hdr">
+                <span class="tk-section-label">[ Unit Conversions ]</span>
+                <span class="tk-section-title">Common Wastewater Conversions</span>
+            </div>
+            <div class="tk-ref-table">
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Factor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>MGD</td><td>GPM</td><td class="ref-value">× 694.44</td></tr>
+                        <tr><td>MGD</td><td>CFS</td><td class="ref-value">× 1.5472</td></tr>
+                        <tr><td>MGD</td><td>L/s</td><td class="ref-value">× 43.813</td></tr>
+                        <tr><td>MGD × mg/L</td><td>lbs/day</td><td class="ref-value">× 8.34</td></tr>
+                        <tr><td>mg/L</td><td>lbs/MG</td><td class="ref-value">× 8.34</td></tr>
+                        <tr><td>ft³</td><td>gallons</td><td class="ref-value">× 7.481</td></tr>
+                        <tr><td>acres</td><td>ft²</td><td class="ref-value">× 43,560</td></tr>
+                        <tr><td>°F</td><td>°C</td><td class="ref-value">(°F − 32) × 5/9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    {{- partial "footer.html" . -}}
+</body>
+</html>

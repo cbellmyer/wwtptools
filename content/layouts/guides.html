@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="dark">
+<head>
+    {{- partial "head.html" . }}
+</head>
+<body class="guides" id="top">
+    {{- partial "header.html" . -}}
+
+    <div class="inner-page-hero">
+        <div class="inner-page-hero-inner">
+            <div class="section-label">[ Operator Guides ]</div>
+            <h1 class="inner-page-title">Field<br><span>Guides</span></h1>
+            <p class="inner-page-subtitle">Written the way you wish someone explained it earlier in your career — practical, direct, field-tested.</p>
+        </div>
+    </div>
+
+    <div class="story-section">
+        <div class="story-inner">
+            <div class="story-sidebar">
+                <div class="section-label">[ Contents ]</div>
+                <nav class="story-nav">
+                    <a href="#startup" class="story-nav-item active">
+                        <div class="story-nav-dot"></div>
+                        <span class="story-nav-text">Startup</span>
+                    </a>
+                    <a href="#upset" class="story-nav-item">
+                        <div class="story-nav-dot"></div>
+                        <span class="story-nav-text">Upset Response</span>
+                    </a>
+                    <a href="#seasonal" class="story-nav-item">
+                        <div class="story-nav-dot"></div>
+                        <span class="story-nav-text">Seasonal Ops</span>
+                    </a>
+                    <a href="#dewatering" class="story-nav-item">
+                        <div class="story-nav-dot"></div>
+                        <span class="story-nav-text">Dewatering</span>
+                    </a>
+                    <a href="#digester" class="story-nav-item">
+                        <div class="story-nav-dot"></div>
+                        <span class="story-nav-text">Digester</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="story-content">
+                <div id="startup" class="story-chapter-label">[ Plant Startup ]</div>
+                <p>Plant startup — whether after a planned outage, emergency shutdown, or commissioning — follows a consistent logic: <strong>establish hydraulics first, biological processes second, solids handling last</strong>. Rushing biology startup is the most common mistake new operators make.</p>
+                <p>Incoming flows should be confirmed before any biological processes are energized. Verify all influent screening and grit removal is operational. Primary clarifiers should be brought online and producing consistent effluent before aeration basins are seeded.</p>
+                <p><em>This guide is under active development. More content coming soon.</em></p>
+
+                <div id="upset" class="story-chapter-label">[ Upset Response ]</div>
+                <p>Process upsets fall into two categories: <strong>hydraulic</strong> (flow-driven) and <strong>biological</strong> (chemistry-driven). Identifying which you're dealing with within the first 15 minutes determines whether you have hours or days to correct it.</p>
+                <p>Hydraulic upsets — wet weather events, influent pump failures, clarifier short-circuiting — respond to operational adjustments within one hydraulic retention time. Biological upsets — toxic industrial loads, sudden temperature swings, nutrient imbalances — can take days or weeks to recover from.</p>
+                <p><em>This guide is under active development. More content coming soon.</em></p>
+
+                <div id="seasonal" class="story-chapter-label">[ Seasonal Adjustments ]</div>
+                <p>Temperature is the most underestimated variable in biological treatment. Every 10°C rise roughly doubles the rate of most biological reactions — but also changes the balance between organisms competing in your system.</p>
+                <p>Summer operations typically require increased wasting to maintain MCRT targets as biomass grows faster. Winter operations demand attention to minimum DO and extended MCRT to protect nitrification.</p>
+                <p><em>This guide is under active development. More content coming soon.</em></p>
+
+                <div id="dewatering" class="story-chapter-label">[ Dewatering Operations ]</div>
+                <p>Effective dewatering depends on sludge conditioning as much as equipment performance. Belt filter presses and centrifuges will underperform on poorly conditioned sludge regardless of how well the machine is tuned.</p>
+                <p>Polymer selection and dosing are the first variables to optimize. A jar test protocol run weekly will tell you more about conditioning chemistry than any vendor spec sheet.</p>
+                <p><em>This guide is under active development. More content coming soon.</em></p>
+
+                <div id="digester" class="story-chapter-label">[ Digester Management ]</div>
+                <p>Anaerobic digesters are the most sensitive biological process in the plant. The methanogens that produce biogas are slow-growing, easily inhibited by pH swings, and unforgiving of sudden loading changes.</p>
+                <p>The two most common failure modes are: <strong>organic overloading</strong> (VS loading exceeds methanogenic capacity, acids accumulate, pH drops) and <strong>nutrient imbalance</strong> (ammonia toxicity or sulfide inhibition at high OLR). VSR and alkalinity are your leading indicators — watch them more closely than any other digester parameter.</p>
+                <p><em>This guide is under active development. More content coming soon.</em></p>
+            </div>
+        </div>
+    </div>
+
+    {{- partial "footer.html" . -}}
+
+    <script>
+    (function () {
+        var navItems = document.querySelectorAll('.story-nav-item');
+        var chapters = document.querySelectorAll('.story-chapter-label');
+        if (!navItems.length || !chapters.length) return;
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    var id = entry.target.id;
+                    navItems.forEach(function (item) {
+                        item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+        chapters.forEach(function (ch) { if (ch.id) observer.observe(ch); });
+    }());
+    </script>
+</body>
+</html>

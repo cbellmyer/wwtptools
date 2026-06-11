@@ -1,0 +1,14 @@
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": "content/public",
+      "url": [
+        "http://localhost/index.html",
+        "http://localhost/calculators/index.html",
+        "http://localhost/reference/index.html",
+        "http://localhost/guides/index.html"
+      ],
+      "numberOfRuns": 1
+    }
+  }
+}
