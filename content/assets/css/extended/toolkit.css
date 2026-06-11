@@ -259,9 +259,9 @@ body.toolkit {
 
 .tk-wx-alert:last-child { border-bottom: none; }
 
-.tk-wx-alert--extreme  { border-left-color: var(--red);       background: rgba(248,113,113,0.06); }
-.tk-wx-alert--severe   { border-left-color: var(--amber);     background: rgba(251,191,36,0.06);  }
-.tk-wx-alert--moderate { border-left-color: var(--secondary); background: rgba(148,163,184,0.06); }
+.tk-wx-alert--extreme  { border-left-color: var(--red);       background: rgb(248 113 113 / 6%); }
+.tk-wx-alert--severe   { border-left-color: var(--amber);     background: rgb(251 191 36 / 6%);  }
+.tk-wx-alert--moderate { border-left-color: var(--secondary); background: rgb(148 163 184 / 6%); }
 
 .tk-wx-alert-body { flex: 1; }
 
