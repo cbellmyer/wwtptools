@@ -38,8 +38,8 @@ VSR and alkalinity are your leading indicators — watch them more closely than 
 
 **Alkalinity** (bicarbonate, specifically) buffers the system against VFA accumulation. Alkalinity below 1,500 mg/L as CaCO₃ leaves little buffer for a loading event. Keep it above 2,000 mg/L if loading is variable.
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
 
 <div id="loading" class="story-chapter-label">[ Loading Management ]</div>
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._

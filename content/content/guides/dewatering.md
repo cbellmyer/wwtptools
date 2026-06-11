@@ -28,14 +28,14 @@ Polymer selection and dosing are the first variables to optimize. The right poly
 
 Sludge characteristics shift with season, feed blend (primary vs. secondary vs. digested), and industrial contributions. A polymer program that works in January may need adjustment by April.
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
 
 <div id="jar-test" class="story-chapter-label">[ Jar Testing ]</div>
 
 A jar test protocol run weekly will tell you more about conditioning chemistry than any vendor spec sheet. The test is simple: dose a known volume of sludge with increasing polymer concentrations, observe floc formation, and measure drainage rate.
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
 
 <div id="equipment" class="story-chapter-label">[ Equipment Optimization ]</div>
 
-*This section is under active development. More content coming soon.*
+_This section is under active development. More content coming soon._
