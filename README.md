@@ -2,7 +2,7 @@
 
 Free process calculators, reference tables, and field guides for wastewater treatment plant operators. Built by an operator, for operators. No vendor relationships, no ads, no content that exists to sell you something.
 
-**Live site:** [wwtptools.com](https://wwtptools.com)
+**Live site:** [wwtp.tools](https://wwtp.tools)
 
 ---
 
