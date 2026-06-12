@@ -9,6 +9,21 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **Lighthouse desktop CI** — Added `.lighthouserc.desktop.yml` with `preset: desktop` and tighter performance threshold (0.85 warn vs 0.80 mobile). Workflow now runs two Lighthouse passes per PR; PR comment shows separate mobile and desktop score tables in a single updating comment.
+- **Weather widget cold advisories** — Added cold weather advisory levels mirroring the heat advisory structure: COLD ADVISORY (feels like ≤ 15°F, amber), COLD WARNING (≤ 0°F, orange), EXTREME COLD (≤ −20°F, red). Uses `apparent_temperature` from Open-Meteo, which already incorporates wind chill. Panel alarm/warn glow triggers on cold conditions the same as heat. `_coldLevel` tracked independently from `_heatLevel` so both signals feed `updateAlarm()` via `Math.max()`.
+- **Field guide — Emergency Power Interruption** — Placeholder guide added (`power-interruption.md`) with five chapter stubs: Overview, Immediate Response, Generator Operations, Process Priorities, and Power Restoration. Status draft pending content.
+- **Field guides — draft content** — All five operational guides have substantive draft content written for review: Plant Startup (seeding methods, startup sequence, solids handling), Upset Response (hydraulic vs. biological triage protocol), Seasonal Adjustments (summer/winter operations, transition timing), Dewatering Operations (polymer conditioning, jar test procedure, belt press and centrifuge variables), Digester Management (VFA/alkalinity monitoring, loading management, overload recovery). Guides remain in draft status pending review.
+
+### Fixed
+
+- **Pre-commit violations in guide content** — Markdownlint rule violations (line length, list formatting, heading style), Prettier reformatting, codespell corrections, and trailing whitespace fixed across newly written field guide markdown files.
+
+---
+
+## [0.2.0] — 2026-06-12
+
+### Added
+
 - **Matrix page** — Dedicated page for the Process Decision Matrix (interactive diagnostic in development). Removed from Calculators page, now lives at `/matrix/`.
 - **About page** — Builder background, site mission, and contribution guide at `/about/`.
 - **README** — Full project documentation with stack, local dev, and dual-license explanation.

@@ -222,7 +222,7 @@
         }
 
         updateAlarm() {
-            var level = Math.max(this._heatLevel || 0, this._alertLevel || 0);
+            var level = Math.max(this._heatLevel || 0, this._coldLevel || 0, this._alertLevel || 0);
             var panel = this.querySelector('.tk-weather-panel');
             if (!panel) return;
             panel.classList.remove('tk-weather-panel--warn', 'tk-weather-panel--alarm');
@@ -276,20 +276,35 @@
                 if (feelsLike >= 125) {
                     advisory.textContent = '⚠ EXTREME DANGER';
                     advisory.style.cssText = 'display:inline-block;color:#e01090;background:rgb(224 16 144/12%);border:1px solid #e01090';
+                    this._heatLevel = 2; this._coldLevel = 0;
                 } else if (feelsLike >= 103) {
                     advisory.textContent = '⚠ DANGER';
                     advisory.style.cssText = 'display:inline-block;color:#e03030;background:rgb(224 48 48/12%);border:1px solid #e03030';
+                    this._heatLevel = 2; this._coldLevel = 0;
                 } else if (feelsLike >= 90) {
                     advisory.textContent = '⚠ EXTREME CAUTION';
                     advisory.style.cssText = 'display:inline-block;color:#e07020;background:rgb(224 112 32/12%);border:1px solid #e07020';
+                    this._heatLevel = 1; this._coldLevel = 0;
                 } else if (feelsLike >= 80) {
                     advisory.textContent = '⚠ CAUTION';
                     advisory.style.cssText = 'display:inline-block;color:#e8b44a;background:rgb(232 180 74/12%);border:1px solid #e8b44a';
+                    this._heatLevel = 1; this._coldLevel = 0;
+                } else if (feelsLike <= -20) {
+                    advisory.textContent = '⚠ EXTREME COLD';
+                    advisory.style.cssText = 'display:inline-block;color:#e03030;background:rgb(224 48 48/12%);border:1px solid #e03030';
+                    this._heatLevel = 0; this._coldLevel = 2;
+                } else if (feelsLike <= 0) {
+                    advisory.textContent = '⚠ COLD WARNING';
+                    advisory.style.cssText = 'display:inline-block;color:#e07020;background:rgb(224 112 32/12%);border:1px solid #e07020';
+                    this._heatLevel = 0; this._coldLevel = 1;
+                } else if (feelsLike <= 15) {
+                    advisory.textContent = '⚠ COLD ADVISORY';
+                    advisory.style.cssText = 'display:inline-block;color:#e8b44a;background:rgb(232 180 74/12%);border:1px solid #e8b44a';
+                    this._heatLevel = 0; this._coldLevel = 1;
                 } else {
                     advisory.style.display = 'none';
+                    this._heatLevel = 0; this._coldLevel = 0;
                 }
-
-                this._heatLevel = feelsLike >= 103 ? 2 : feelsLike >= 80 ? 1 : 0;
                 this.updateAlarm();
 
                 this.shadowId('wx-loading').style.display = 'none';
