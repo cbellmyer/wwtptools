@@ -81,7 +81,7 @@ These licenses apply to different parts of the project and do not conflict. The 
 
 ## Contributing
 
-All contributions are welcome. The [About page](https://wwtptools.com/about/) has more context on what kinds of contributions are most useful.
+All contributions are welcome. The [About page](https://wwtp.tools/about/) has more context on what kinds of contributions are most useful.
 
 - **Issues** — Use [GitHub Issues](https://github.com/cbellmyer/wwtptools/issues) for data corrections, calculator bugs, missing reference values, or requests for new tools
 - **Pull Requests** — Welcome for content additions, new calculators, bug fixes, and UI improvements
