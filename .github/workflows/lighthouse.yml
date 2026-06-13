@@ -8,6 +8,7 @@ on:
       - ".hugo-version"
       - ".hugo-archive-checksum"
       - ".lighthouserc.yml"
+      - ".lighthouserc.desktop.yml"
       - ".github/workflows/lighthouse.yml"
 
 permissions:
@@ -46,53 +47,73 @@ jobs:
             exit 1
           fi
 
-      - name: Run Lighthouse CI
-        id: lighthouse
+      - name: Run Lighthouse CI (mobile)
+        id: lighthouse-mobile
         uses: treosh/lighthouse-ci-action@v12
         with:
           configPath: .lighthouserc.yml
+          uploadArtifacts: true
+
+      - name: Run Lighthouse CI (desktop)
+        id: lighthouse-desktop
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: .lighthouserc.desktop.yml
           uploadArtifacts: true
 
       - name: Comment scores on PR
         if: github.event.pull_request.head.repo.full_name == github.repository
         uses: actions/github-script@v9
         env:
-          RESULTS_PATH: ${{ steps.lighthouse.outputs.resultsPath }}
+          MOBILE_PATH: ${{ steps.lighthouse-mobile.outputs.resultsPath }}
+          DESKTOP_PATH: ${{ steps.lighthouse-desktop.outputs.resultsPath }}
         with:
           script: |
             const fs = require("fs");
             const path = require("path");
-            const manifestPath = path.join(
-              process.env.RESULTS_PATH, "manifest.json"
-            );
-            if (!fs.existsSync(manifestPath)) {
-              core.warning(`No Lighthouse manifest at ${manifestPath}`);
-              return;
+            function loadManifest(resultsPath) {
+              if (!resultsPath) return [];
+              const manifestPath = path.join(resultsPath, "manifest.json");
+              if (!fs.existsSync(manifestPath)) return [];
+              return JSON.parse(fs.readFileSync(manifestPath, "utf8"));
             }
-            const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
             const fmt = (score) => {
               const value = Math.round(score * 100);
               const icon = value >= 90 ? "🟢" : value >= 50 ? "🟡" : "🔴";
               return `${icon} ${value}`;
             };
-            const rows = manifest
-              .filter((run) => run.isRepresentativeRun)
-              .map((run) => {
-                const path = new URL(run.url).pathname
-                  .replace(/index\.html$/, "");
-                const s = run.summary;
-                return `| \`${path}\` | ${fmt(s.performance)} | ` +
-                  `${fmt(s.accessibility)} | ${fmt(s["best-practices"])} | ` +
-                  `${fmt(s.seo)} |`;
-              });
+            function buildRows(manifest) {
+              return manifest
+                .filter((run) => run.isRepresentativeRun)
+                .map((run) => {
+                  const pagePath = new URL(run.url).pathname
+                    .replace(/index\.html$/, "");
+                  const s = run.summary;
+                  return `| \`${pagePath}\` | ${fmt(s.performance)} | ` +
+                    `${fmt(s.accessibility)} | ${fmt(s["best-practices"])} | ` +
+                    `${fmt(s.seo)} |`;
+                });
+            }
+            const header = [
+              "| Page | Performance | Accessibility | Best Practices | SEO |",
+              "| --- | --- | --- | --- | --- |",
+            ];
+            const mobileRows = buildRows(loadManifest(process.env.MOBILE_PATH));
+            const desktopRows = buildRows(
+              loadManifest(process.env.DESKTOP_PATH)
+            );
             const marker = "<!-- lighthouse-scores -->";
             const body = [
               marker,
-              "### Lighthouse scores (mobile)",
+              "### Lighthouse scores — mobile",
               "",
-              "| Page | Performance | Accessibility | Best Practices | SEO |",
-              "| --- | --- | --- | --- | --- |",
-              ...rows,
+              ...header,
+              ...mobileRows,
+              "",
+              "### Lighthouse scores — desktop",
+              "",
+              ...header,
+              ...desktopRows,
               "",
               "_Advisory only — scores do not block merge. " +
                 "Full reports are attached as workflow artifacts._",
