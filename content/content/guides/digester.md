@@ -59,6 +59,7 @@ Consistent, predictable loading is the most important thing you can do for a dig
 **Co-digestion:** Adding high-strength organic waste (fats, oils, and grease; food waste; industrial organic waste) can dramatically increase biogas production, but also increases overloading risk. Introduce any co-digestion substrate slowly — add no more than 5–10% of total VS load as a new substrate in any given week. Monitor VFA/alkalinity ratio daily during the introduction period.
 
 **Recovering from overload:** If the digester is acidifying (VFA/alkalinity ratio above 0.3, pH below 7.0):
+
 1. Stop or significantly reduce VS loading — buy the methanogens time
 2. Add alkalinity: sodium bicarbonate or lime slurry; target 2,500–3,000 mg/L alkalinity
 3. Do not add lime directly to a primary digester in large doses — rapid pH increase can shock methanogens as severely as acidification

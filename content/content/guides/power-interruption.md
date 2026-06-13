@@ -26,16 +26,16 @@ The first minutes determine how well the rest of the event goes. Plants with pra
 
 <div id="immediate-response" class="story-chapter-label">[ Immediate Response ]</div>
 
-*Content to be written — first-minutes checklist: confirm utility outage vs. internal fault, notify supervisor and on-call ORC, verify generator auto-start, account for all active processes.*
+_Content to be written — first-minutes checklist: confirm utility outage vs. internal fault, notify supervisor and on-call ORC, verify generator auto-start, account for all active processes._
 
 <div id="generator-ops" class="story-chapter-label">[ Generator Operations ]</div>
 
-*Content to be written — generator start sequence, load shed priorities, runtime limits, fuel level monitoring, transfer switch operation, and coordination with the utility for planned restoration.*
+_Content to be written — generator start sequence, load shed priorities, runtime limits, fuel level monitoring, transfer switch operation, and coordination with the utility for planned restoration._
 
 <div id="process-priorities" class="story-chapter-label">[ Process Priorities ]</div>
 
-*Content to be written — which loads must be maintained (influent screening, primary pumping, blowers, UV/chlorination), which can be deferred, and digester temperature protection during extended outages.*
+_Content to be written — which loads must be maintained (influent screening, primary pumping, blowers, UV/chlorination), which can be deferred, and digester temperature protection during extended outages._
 
 <div id="restoration" class="story-chapter-label">[ Power Restoration ]</div>
 
-*Content to be written — utility restoration sequence, transfer switch back to grid, process restart order, post-event inspection checklist, and documentation requirements.*
+_Content to be written — utility restoration sequence, transfer switch back to grid, process restart order, post-event inspection checklist, and documentation requirements._

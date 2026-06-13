@@ -32,7 +32,7 @@ Watch F/M ratio closely during temperature transitions. A stable F/M in spring c
 
 **DO targets in summer:** Higher temperature means lower oxygen saturation at the same partial pressure. Your blowers may be running the same as always while actual DO drops. Check DO against the temperature-corrected saturation curve, not just the probe reading. A reading of 2.0 mg/L at 82°F is a tighter margin than 2.0 mg/L at 59°F.
 
-**Filamentous risk:** Warm temperatures favor low-DO filamentous organisms (Type 1701, *Thiothrix*) if DO dips below 1.0 mg/L in parts of the basin. In summer, run DO targets at the high end of your range (2.0–3.0 mg/L) and check for dead zones in the basin where mixing may be inadequate.
+**Filamentous risk:** Warm temperatures favor low-DO filamentous organisms (Type 1701, _Thiothrix_) if DO dips below 1.0 mg/L in parts of the basin. In summer, run DO targets at the high end of your range (2.0–3.0 mg/L) and check for dead zones in the basin where mixing may be inadequate.
 
 **Denitrification bonus:** Warmer temperatures also mean faster denitrification. If your permit requires nitrogen removal, summer is when your anoxic zones perform best. Use this to your advantage — you may be able to reduce recycle rates slightly and still hit TN limits.
 
@@ -44,7 +44,7 @@ A useful rule of thumb: nitrification becomes unreliable below 50°F at typical 
 
 **MCRT in winter:** For every 9°F drop in temperature, target MCRT roughly 1.5–2× longer to maintain stable nitrification. A plant running 10-day MCRT at 68°F should target 15–20 days at 50°F. Reduce wasting to achieve this — but don't stop wasting entirely. A bloated sludge inventory creates its own problems (poor settling, oxygen demand spikes) that are worse than the nitrification risk you're trying to manage.
 
-**DO targets in winter:** Paradoxically, oxygen saturation is *higher* at cold temperatures, so your blowers have more to work with. The problem isn't saturation — it's that nitrifiers need DO ≥ 2.0 mg/L to function and they compete poorly with heterotrophs when both are stressed. Hold DO at 2.0–3.0 mg/L minimum in the aeration basin during cold weather.
+**DO targets in winter:** Paradoxically, oxygen saturation is _higher_ at cold temperatures, so your blowers have more to work with. The problem isn't saturation — it's that nitrifiers need DO ≥ 2.0 mg/L to function and they compete poorly with heterotrophs when both are stressed. Hold DO at 2.0–3.0 mg/L minimum in the aeration basin during cold weather.
 
 **Effluent ammonia monitoring:** Check effluent ammonia at least daily during the cold months. A step-change increase in effluent ammonia — not gradual, sudden — means you've lost some portion of your nitrifying population. Respond immediately: stop all wasting, raise DO, and check for any industrial discharges that may have affected the system.
 

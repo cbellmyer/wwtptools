@@ -53,6 +53,7 @@ A jar test protocol run weekly will tell you more about conditioning chemistry t
 **What to look for:** The optimal dose is the lowest dose at which you see rapid, strong floc formation (pinhead to pea size), clear supernatant, and drainage rate ≥ 60% of maximum within 30 seconds. Doses above optimal will show the same or worse drainage — polymer that exceeds charge neutralization can re-stabilize the floc.
 
 **Common mistakes:**
+
 - Testing at bench temperature only: cold sludge conditions polymer differently than warm. Test at operating temperature if possible.
 - Not accounting for polymer age: emulsion polymer has a limited pot life after mixing (usually 24–48 hours). Old diluted polymer gives misleading dose results.
 - Using tap water with high hardness to prepare solutions: hardness ions compete with polymer charge sites. Use deionized or softened water for test solutions.
