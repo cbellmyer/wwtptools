@@ -52,14 +52,14 @@ jobs:
         uses: treosh/lighthouse-ci-action@v12
         with:
           configPath: .lighthouserc.yml
-          uploadArtifacts: true
+          uploadArtifacts: false
 
       - name: Run Lighthouse CI (desktop)
         id: lighthouse-desktop
         uses: treosh/lighthouse-ci-action@v12
         with:
           configPath: .lighthouserc.desktop.yml
-          uploadArtifacts: true
+          uploadArtifacts: false
 
       - name: Comment scores on PR
         if: github.event.pull_request.head.repo.full_name == github.repository
