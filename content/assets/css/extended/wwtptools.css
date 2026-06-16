@@ -1003,7 +1003,7 @@ body.about .story-sidebar {
 
 .guide-card-category {
   font-family: 'Space Mono', monospace;
-  font-size: 0.48rem;
+  font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--blue);
@@ -1015,7 +1015,7 @@ body.about .story-sidebar {
 
 .guide-card-status {
   font-family: 'Space Mono', monospace;
-  font-size: 0.44rem;
+  font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--amber);
@@ -1032,7 +1032,7 @@ body.about .story-sidebar {
 
 .guide-card-desc {
   font-family: 'Space Mono', monospace;
-  font-size: 0.48rem;
+  font-size: 0.75rem;
   letter-spacing: 0.03em;
   color: var(--gray-dim);
   line-height: 1.7;
@@ -1041,7 +1041,7 @@ body.about .story-sidebar {
 
 .guide-card-cta {
   font-family: 'Space Mono', monospace;
-  font-size: 0.52rem;
+  font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--blue);
@@ -1058,7 +1058,7 @@ body.about .story-sidebar {
 
 .guides-meta-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.44rem;
+  font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gray-dim);
@@ -1088,7 +1088,7 @@ body.about .story-sidebar {
 
 .guide-back-link a {
   font-family: 'Space Mono', monospace;
-  font-size: 0.52rem;
+  font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--gray-dim);
