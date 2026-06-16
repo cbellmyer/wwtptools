@@ -3,7 +3,7 @@ title: "Settleometer Test — SVI Calculation"
 description: "Step-by-step 30-minute settleometer procedure, SVI calculation, and interpreting results to guide wasting and RAS decisions."
 layout: "guide"
 category: "Laboratory"
-status: "draft"
+status: "published"
 weight: 30
 chapters:
   - id: "overview"

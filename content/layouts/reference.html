@@ -20,200 +20,420 @@
         </div>
     </div>
 
+    <nav class="ref-nav" aria-label="Jump to section">
+        <a class="ref-nav-link" href="#cat-process">[ Process Parameters ]</a>
+        <a class="ref-nav-link" href="#cat-chemistry">[ Chemistry &amp; Dosing ]</a>
+        <a class="ref-nav-link" href="#cat-solids">[ Solids &amp; Biosolids ]</a>
+        <a class="ref-nav-link" href="#cat-laboratory">[ Laboratory ]</a>
+    </nav>
+
     <div class="toolkit-canvas">
 
-        <div class="tk-section">
-            <div class="tk-section-hdr">
-                <span class="tk-section-label">[ Dissolved Oxygen ]</span>
-                <span class="tk-section-title">Operating Ranges by Process Zone</span>
+        <div id="cat-process" class="ref-category">
+            <div class="ref-category-label">Process Parameters</div>
+
+            <div class="ref-grid">
+
+                <div id="do" class="tk-section">
+                    <div class="tk-section-hdr">
+                        <span class="tk-section-label">[ Dissolved Oxygen ]</span>
+                        <span class="tk-section-title">Operating Ranges by Process Zone</span>
+                    </div>
+                    <div class="tk-ref-table">
+                        <table class="ref-table">
+                            <thead>
+                                <tr>
+                                    <th>Process Zone</th>
+                                    <th>Target DO (mg/L)</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Aeration Basin (Nitrification)</td><td class="ref-value">2.0 – 4.0</td><td>Minimum 2.0 for full nitrification</td></tr>
+                                <tr><td>Aeration Basin (General)</td><td class="ref-value">1.5 – 3.0</td><td>Below 1.0 risks filamentous growth</td></tr>
+                                <tr><td>Anoxic Zone (Denitrification)</td><td class="ref-value">&lt; 0.2</td><td>DO inhibits denitrification</td></tr>
+                                <tr><td>Anaerobic Zone (EBPR)</td><td class="ref-value">&lt; 0.05</td><td>Critical for phosphorus release</td></tr>
+                                <tr><td>Secondary Clarifier Effluent</td><td class="ref-value">4.0 – 8.0</td><td>Higher DO indicates good aeration</td></tr>
+                                <tr><td>Digester (Anaerobic)</td><td class="ref-value">0</td><td>Strict anaerobic conditions required</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="ph" class="tk-section">
+                    <div class="tk-section-hdr">
+                        <span class="tk-section-label">[ pH Targets ]</span>
+                        <span class="tk-section-title">Operating Ranges by Process</span>
+                    </div>
+                    <div class="tk-ref-table">
+                        <table class="ref-table">
+                            <thead>
+                                <tr>
+                                    <th>Process</th>
+                                    <th>pH Range</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Activated Sludge</td><td class="ref-value">6.5 – 8.5</td><td>Optimal range for biological activity</td></tr>
+                                <tr><td>Nitrification</td><td class="ref-value">7.2 – 8.0</td><td>Below 6.8 significantly inhibits nitrifiers</td></tr>
+                                <tr><td>Denitrification</td><td class="ref-value">6.5 – 8.0</td><td>Less sensitive to pH than nitrification</td></tr>
+                                <tr><td>Anaerobic Digestion</td><td class="ref-value">6.8 – 7.4</td><td>Below 6.5 = acid phase; above 8.0 = inhibited</td></tr>
+                                <tr><td>Chemical Phosphorus Removal</td><td class="ref-value">5.5 – 7.0</td><td>Alum optimal around 6.0–7.0</td></tr>
+                                <tr><td>Effluent Discharge (typical)</td><td class="ref-value">6.0 – 9.0</td><td>Varies by permit</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
-            <div class="tk-ref-table">
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>Process Zone</th>
-                            <th>Target DO (mg/L)</th>
-                            <th>Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Aeration Basin (Nitrification)</td><td class="ref-value">2.0 – 4.0</td><td>Minimum 2.0 for full nitrification</td></tr>
-                        <tr><td>Aeration Basin (General)</td><td class="ref-value">1.5 – 3.0</td><td>Below 1.0 risks filamentous growth</td></tr>
-                        <tr><td>Anoxic Zone (Denitrification)</td><td class="ref-value">&lt; 0.2</td><td>DO inhibits denitrification</td></tr>
-                        <tr><td>Anaerobic Zone (EBPR)</td><td class="ref-value">&lt; 0.05</td><td>Critical for phosphorus release</td></tr>
-                        <tr><td>Secondary Clarifier Effluent</td><td class="ref-value">4.0 – 8.0</td><td>Higher DO indicates good aeration</td></tr>
-                        <tr><td>Digester (Anaerobic)</td><td class="ref-value">0</td><td>Strict anaerobic conditions required</td></tr>
-                    </tbody>
-                </table>
+
+            <div id="loading" class="tk-section">
+                <div class="tk-section-hdr">
+                    <span class="tk-section-label">[ Loading Rate Benchmarks ]</span>
+                    <span class="tk-section-title">Design &amp; Operational Targets</span>
+                </div>
+                <div class="tk-ref-table">
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Typical Range</th>
+                                <th>Units</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>F/M Ratio (Conventional AS)</td><td class="ref-value">0.2 – 0.4</td><td>lbs BOD / lb MLVSS / day</td></tr>
+                            <tr><td>F/M Ratio (Extended Aeration)</td><td class="ref-value">0.04 – 0.1</td><td>lbs BOD / lb MLVSS / day</td></tr>
+                            <tr><td>MCRT (Nitrification)</td><td class="ref-value">10 – 20</td><td>days (varies with temp)</td></tr>
+                            <tr><td>MCRT (Conventional)</td><td class="ref-value">5 – 15</td><td>days</td></tr>
+                            <tr><td>SVI (Good Settling)</td><td class="ref-value">80 – 150</td><td>mL/g</td></tr>
+                            <tr><td>SVI (Bulking)</td><td class="ref-value">&gt; 200</td><td>mL/g</td></tr>
+                            <tr><td>Surface Loading Rate (Clarifier)</td><td class="ref-value">400 – 800</td><td>gpd/ft²</td></tr>
+                            <tr><td>Solids Loading Rate (Clarifier)</td><td class="ref-value">20 – 30</td><td>lbs/day/ft²</td></tr>
+                            <tr><td>VS Loading Rate (Digester)</td><td class="ref-value">0.1 – 0.3</td><td>lbs VS/day/ft³</td></tr>
+                            <tr><td>Digester Detention Time</td><td class="ref-value">15 – 30</td><td>days</td></tr>
+                            <tr><td>VSR (Anaerobic Digestion)</td><td class="ref-value">38 – 55</td><td>% (Class B minimum 38%)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+            <div id="temperature" class="tk-section">
+                <div class="tk-section-hdr">
+                    <span class="tk-section-label">[ Temperature Effects ]</span>
+                    <span class="tk-section-title">Biological Process Performance by Temperature</span>
+                </div>
+                <div class="tk-ref-table">
+                    <table class="ref-table ref-table--fixed">
+                        <colgroup>
+                            <col style="width: 18%">
+                            <col style="width: 17%">
+                            <col style="width: 32%">
+                            <col style="width: 33%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Temperature</th>
+                                <th>DO Saturation</th>
+                                <th>Nitrification</th>
+                                <th>Notes / Guidance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>&lt; 5°C / &lt; 41°F</td><td class="ref-value">≥ 12.8 mg/L</td><td>Severely inhibited — &lt; 30% of peak rate</td><td>SRT &gt; 25 days; nitrification may fail; digestion near-zero</td></tr>
+                            <tr><td>5–10°C / 41–50°F</td><td class="ref-value">11.3 – 12.4 mg/L</td><td>Significantly reduced — ~30–50% of peak rate</td><td>Increase SRT to 15–25 days; monitor effluent ammonia closely</td></tr>
+                            <tr><td>10–15°C / 50–59°F</td><td class="ref-value">10.1 – 11.3 mg/L</td><td>Reduced — ~50–75% of peak rate</td><td>SRT 12–18 days; watch for seasonal compliance issues</td></tr>
+                            <tr><td>15–20°C / 59–68°F</td><td class="ref-value">9.1 – 10.1 mg/L</td><td>Near-normal</td><td>Standard temperate operating range; standard SRT adequate</td></tr>
+                            <tr><td>20–25°C / 68–77°F</td><td class="ref-value">8.2 – 9.1 mg/L</td><td>Optimal</td><td>Standard design condition; high biological activity</td></tr>
+                            <tr><td>&gt; 25°C / &gt; 77°F</td><td class="ref-value">&lt; 8.2 mg/L</td><td>Good, but O₂ demand rises</td><td>Monitor blower capacity; lower DO saturation tightens margins</td></tr>
+                            <tr><td>35–37°C / 95–99°F</td><td class="ref-value">6.7 – 6.8 mg/L</td><td>N/A — digester range</td><td>Optimal mesophilic anaerobic digestion; target for heated digesters</td></tr>
+                            <tr><td>55°C / 131°F</td><td class="ref-value">~5.5 mg/L</td><td>N/A — digester range</td><td>Optimal thermophilic digestion; PFRP / Class A treatment path</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="conversions" class="tk-section">
+                <div class="tk-section-hdr">
+                    <span class="tk-section-label">[ Unit Conversions ]</span>
+                    <span class="tk-section-title">Common Wastewater Conversions</span>
+                </div>
+                <div class="tk-ref-table">
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Factor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>MGD</td><td>GPM</td><td class="ref-value">× 694.44</td></tr>
+                            <tr><td>MGD</td><td>CFS</td><td class="ref-value">× 1.5472</td></tr>
+                            <tr><td>MGD</td><td>L/s</td><td class="ref-value">× 43.813</td></tr>
+                            <tr><td>MGD × mg/L</td><td>lbs/day</td><td class="ref-value">× 8.34</td></tr>
+                            <tr><td>mg/L</td><td>lbs/MG</td><td class="ref-value">× 8.34</td></tr>
+                            <tr><td>ft³</td><td>gallons</td><td class="ref-value">× 7.481</td></tr>
+                            <tr><td>acres</td><td>ft²</td><td class="ref-value">× 43,560</td></tr>
+                            <tr><td>°F</td><td>°C</td><td class="ref-value">(°F − 32) × 5/9</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
 
-        <div class="tk-section">
-            <div class="tk-section-hdr">
-                <span class="tk-section-label">[ pH Targets ]</span>
-                <span class="tk-section-title">Operating Ranges by Process</span>
+        <div id="cat-chemistry" class="ref-category">
+            <div class="ref-category-label">Chemistry &amp; Dosing</div>
+
+            <div class="ref-grid">
+
+                <div id="alkalinity" class="tk-section">
+                    <div class="tk-section-hdr">
+                        <span class="tk-section-label">[ Alkalinity ]</span>
+                        <span class="tk-section-title">Targets &amp; Nitrification Consumption</span>
+                    </div>
+                    <div class="tk-ref-table">
+                        <table class="ref-table">
+                            <thead>
+                                <tr>
+                                    <th>Parameter / Process</th>
+                                    <th>Target Range</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Aeration Basin Alkalinity</td><td class="ref-value">80 – 120 mg/L as CaCO₃</td><td>Below 80: pH drops, nitrification destabilizes</td></tr>
+                                <tr><td>Effluent Alkalinity (minimum)</td><td class="ref-value">≥ 50 mg/L as CaCO₃</td><td>Residual alkalinity after nitrification; below this risks pH crash</td></tr>
+                                <tr><td>Nitrification consumption</td><td class="ref-value">7.14 mg alk / mg NH₄⁺-N</td><td>Theoretical; actual 6.0–7.0 in practice</td></tr>
+                                <tr><td>Denitrification recovery</td><td class="ref-value">3.57 mg alk / mg NO₃⁻-N</td><td>Denitrification returns ~50% of nitrification alkalinity draw</td></tr>
+                                <tr><td>Sodium bicarbonate addition</td><td class="ref-value">84 g/mol</td><td>1 lb NaHCO₃ adds 0.595 lbs alkalinity as CaCO₃</td></tr>
+                                <tr><td>Hydrated lime addition</td><td class="ref-value">74 g/mol Ca(OH)₂</td><td>More reactive than NaHCO₃; raises pH quickly — dose carefully</td></tr>
+                                <tr><td>pH below which to supplement</td><td class="ref-value">&lt; 6.8 in basin</td><td>Supplement alkalinity; don't wait for effluent pH to drop</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="oxygen" class="tk-section">
+                    <div class="tk-section-hdr">
+                        <span class="tk-section-label">[ Oxygen Demand ]</span>
+                        <span class="tk-section-title">O₂ Requirements &amp; Transfer Factors</span>
+                    </div>
+                    <div class="tk-ref-table">
+                        <table class="ref-table ref-table--fixed">
+                            <colgroup>
+                                <col style="width: 38%">
+                                <col style="width: 24%">
+                                <col style="width: 38%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Value</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>BOD removal O₂ demand (theoretical)</td><td class="ref-value">1.0 lb O₂ / lb BOD₅</td><td>Actual 0.8–1.2 depending on SRT and endogenous demand</td></tr>
+                                <tr><td>Nitrification O₂ demand</td><td class="ref-value">4.57 lb O₂ / lb NH₄⁺-N</td><td>Doubles total aeration load at high ammonia influent</td></tr>
+                                <tr><td>Denitrification O₂ credit</td><td class="ref-value">2.86 lb O₂ / lb NO₃⁻-N</td><td>Reduces net aeration demand; credit for anoxic zone</td></tr>
+                                <tr><td>Endogenous respiration</td><td class="ref-value">0.08 – 0.12 lb O₂ / lb VSS / day</td><td>Add to BOD demand for total basin O₂ requirement</td></tr>
+                                <tr><td>Alpha factor (fine bubble, MLSS)</td><td class="ref-value">0.65 – 0.85</td><td>Reduces clean-water SOTR in mixed liquor; use 0.70–0.75 for design</td></tr>
+                                <tr><td>Beta factor</td><td class="ref-value">0.95 – 0.98</td><td>TDS/salinity correction on DO saturation; near 1.0 for municipal WW</td></tr>
+                                <tr><td>Fine bubble diffuser SOTE</td><td class="ref-value">20 – 35%</td><td>Per meter submergence; decreases with diffuser fouling</td></tr>
+                                <tr><td>Coarse bubble SOTE</td><td class="ref-value">8 – 15%</td><td>Lower efficiency; simpler maintenance; used for mixing</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
-            <div class="tk-ref-table">
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>Process</th>
-                            <th>pH Range</th>
-                            <th>Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Activated Sludge</td><td class="ref-value">6.5 – 8.5</td><td>Optimal range for biological activity</td></tr>
-                        <tr><td>Nitrification</td><td class="ref-value">7.2 – 8.0</td><td>Below 6.8 significantly inhibits nitrifiers</td></tr>
-                        <tr><td>Denitrification</td><td class="ref-value">6.5 – 8.0</td><td>Less sensitive to pH than nitrification</td></tr>
-                        <tr><td>Anaerobic Digestion</td><td class="ref-value">6.8 – 7.4</td><td>Below 6.5 = acid phase; above 8.0 = inhibited</td></tr>
-                        <tr><td>Chemical Phosphorus Removal</td><td class="ref-value">5.5 – 7.0</td><td>Alum optimal around 6.0–7.0</td></tr>
-                        <tr><td>Effluent Discharge (typical)</td><td class="ref-value">6.0 – 9.0</td><td>Varies by permit</td></tr>
-                    </tbody>
-                </table>
+
+            <div id="chemical-feed" class="tk-section">
+                <div class="tk-section-hdr">
+                    <span class="tk-section-label">[ Chemical Feed ]</span>
+                    <span class="tk-section-title">Typical Doses &amp; Application Points</span>
+                </div>
+                <div class="tk-ref-table">
+                    <table class="ref-table ref-table--wide">
+                        <colgroup>
+                            <col class="col-label">
+                            <col class="col-value">
+                            <col class="col-notes">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Chemical</th>
+                                <th>Typical Dose</th>
+                                <th>Application / Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Alum (liquid, 48%)</td><td class="ref-value">5 – 15 mg/L as Al</td><td>Phosphorus precipitation; optimal pH 6.0–7.0; reduces alkalinity</td></tr>
+                            <tr><td>Ferric chloride (liquid, 37–42%)</td><td class="ref-value">5 – 20 mg/L as Fe</td><td>Phosphorus precipitation; effective pH 4.5–8.0; more corrosive than alum</td></tr>
+                            <tr><td>Sodium hypochlorite (12.5%)</td><td class="ref-value">2 – 10 mg/L as Cl₂</td><td>Disinfection; actual dose depends on CT requirement and effluent demand</td></tr>
+                            <tr><td>Polymer (cationic, belt press)</td><td class="ref-value">10 – 25 lbs/dry ton</td><td>Biosolids conditioning; jar-test to optimize; higher dose ≠ better cake</td></tr>
+                            <tr><td>Polymer (cationic, GBT)</td><td class="ref-value">5 – 15 lbs/dry ton</td><td>Lower dose than belt press; inject close to static mixer</td></tr>
+                            <tr><td>Polymer (anionic, DAF)</td><td class="ref-value">2 – 8 lbs/dry ton</td><td>DAF thickening; charge must match sludge — jar-test required</td></tr>
+                            <tr><td>Sodium bisulfite (dechlorination)</td><td class="ref-value">1 mg/L per 1 mg/L Cl₂</td><td>Stoichiometric; slight overdose acceptable; monitor residual</td></tr>
+                            <tr><td>Caustic soda (50% NaOH)</td><td class="ref-value">Varies — pH controlled</td><td>pH adjustment; extremely reactive — use automated dosing with pH feedback</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
 
-        <div class="tk-section">
-            <div class="tk-section-hdr">
-                <span class="tk-section-label">[ Loading Rate Benchmarks ]</span>
-                <span class="tk-section-title">Design &amp; Operational Targets</span>
+        <div id="cat-solids" class="ref-category">
+            <div class="ref-category-label">Solids &amp; Biosolids</div>
+
+            <div id="solids" class="tk-section">
+                <div class="tk-section-hdr">
+                    <span class="tk-section-label">[ Solids Production ]</span>
+                    <span class="tk-section-title">Typical % Solids by Sludge Type</span>
+                </div>
+                <div class="tk-ref-table">
+                    <table class="ref-table ref-table--wide">
+                        <colgroup>
+                            <col class="col-label">
+                            <col class="col-value">
+                            <col class="col-notes">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Sludge Type</th>
+                                <th>Typical % TS</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Raw primary sludge</td><td class="ref-value">4 – 6%</td><td>Higher with longer primary HRT</td></tr>
+                            <tr><td>Waste activated sludge (WAS)</td><td class="ref-value">0.5 – 1.5%</td><td>Dilute; thickening required before digestion</td></tr>
+                            <tr><td>Primary + WAS blend</td><td class="ref-value">2 – 4%</td><td>Blend ratio determines concentration</td></tr>
+                            <tr><td>Aerobically digested sludge</td><td class="ref-value">1 – 3%</td><td>Often thinner than anaerobically digested</td></tr>
+                            <tr><td>Anaerobically digested (liquid)</td><td class="ref-value">2 – 4%</td><td>Reduced VSS; stabilized</td></tr>
+                            <tr><td>GBT thickened WAS</td><td class="ref-value">4 – 7%</td><td>With polymer conditioning</td></tr>
+                            <tr><td>Belt press dewatered cake</td><td class="ref-value">15 – 25%</td><td>Varies by feed solids and polymer dose</td></tr>
+                            <tr><td>Centrifuge dewatered cake</td><td class="ref-value">18 – 28%</td><td>More consistent than belt press</td></tr>
+                            <tr><td>Heat dried biosolids</td><td class="ref-value">90 – 95%</td><td>Pellet or granule form; Class A typical</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="tk-ref-table">
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Typical Range</th>
-                            <th>Units</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>F/M Ratio (Conventional AS)</td><td class="ref-value">0.2 – 0.4</td><td>lbs BOD / lb MLVSS / day</td></tr>
-                        <tr><td>F/M Ratio (Extended Aeration)</td><td class="ref-value">0.04 – 0.1</td><td>lbs BOD / lb MLVSS / day</td></tr>
-                        <tr><td>MCRT (Nitrification)</td><td class="ref-value">10 – 20</td><td>days (varies with temp)</td></tr>
-                        <tr><td>MCRT (Conventional)</td><td class="ref-value">5 – 15</td><td>days</td></tr>
-                        <tr><td>SVI (Good Settling)</td><td class="ref-value">80 – 150</td><td>mL/g</td></tr>
-                        <tr><td>SVI (Bulking)</td><td class="ref-value">&gt; 200</td><td>mL/g</td></tr>
-                        <tr><td>Surface Loading Rate (Clarifier)</td><td class="ref-value">400 – 800</td><td>gpd/ft²</td></tr>
-                        <tr><td>Solids Loading Rate (Clarifier)</td><td class="ref-value">20 – 30</td><td>lbs/day/ft²</td></tr>
-                        <tr><td>VS Loading Rate (Digester)</td><td class="ref-value">0.1 – 0.3</td><td>lbs VS/day/ft³</td></tr>
-                        <tr><td>Digester Detention Time</td><td class="ref-value">15 – 30</td><td>days</td></tr>
-                        <tr><td>VSR (Anaerobic Digestion)</td><td class="ref-value">38 – 55</td><td>% (Class B minimum 38%)</td></tr>
-                    </tbody>
-                </table>
+
+            <div id="biosolids" class="tk-section">
+                <div class="tk-section-hdr">
+                    <span class="tk-section-label">[ Biosolids Classification ]</span>
+                    <span class="tk-section-title">Class A vs. Class B — Federal 503 Standards</span>
+                </div>
+                <div class="tk-ref-table">
+                    <table class="ref-table ref-table--biosolids">
+                        <colgroup>
+                            <col class="col-criterion">
+                            <col class="col-a">
+                            <col class="col-b">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Criterion</th>
+                                <th>Class A</th>
+                                <th>Class B</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Pathogen standard</td><td class="ref-value">Fecal coliform &lt; 1,000 MPN/g TS or Salmonella &lt; 3 MPN/4g TS</td><td class="ref-value">Fecal coliform &lt; 2,000,000 MPN/g TS (geometric mean)</td></tr>
+                            <tr><td>Vector attraction reduction (VAR)</td><td class="ref-value">One of Options 1–8 required</td><td class="ref-value">One of Options 1–10 required</td></tr>
+                            <tr><td>VSR (anaerobic digestion)</td><td class="ref-value">≥ 38% + time/temp requirement</td><td class="ref-value">≥ 38% (Van Kleeck formula)</td></tr>
+                            <tr><td>Common VAR method (anaerobic)</td><td class="ref-value">PFRP: thermophilic digestion (55°C / 15+ days)</td><td class="ref-value">PSRP: mesophilic digestion (35–55°C / 15+ days HRT)</td></tr>
+                            <tr><td>Land application restrictions</td><td class="ref-value">No site access restrictions required</td><td class="ref-value">Site access restrictions: 30-day crop harvest hold, grazing restrictions</td></tr>
+                            <tr><td>Public contact sites</td><td class="ref-value">Allowed without restrictions</td><td class="ref-value">12-month site access restriction</td></tr>
+                            <tr><td>Common treatment paths</td><td class="ref-value">Thermophilic digestion, heat drying, alkaline stabilization (≥ 70°C)</td><td class="ref-value">Mesophilic anaerobic digestion, aerobic digestion, composting</td></tr>
+                            <tr><td>Testing frequency</td><td class="ref-value">More frequent — verify each pathogen batch</td><td class="ref-value">Less frequent once process reliability established</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
 
-        <div class="tk-section">
-            <div class="tk-section-hdr">
-                <span class="tk-section-label">[ Unit Conversions ]</span>
-                <span class="tk-section-title">Common Wastewater Conversions</span>
-            </div>
-            <div class="tk-ref-table">
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Factor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>MGD</td><td>GPM</td><td class="ref-value">× 694.44</td></tr>
-                        <tr><td>MGD</td><td>CFS</td><td class="ref-value">× 1.5472</td></tr>
-                        <tr><td>MGD</td><td>L/s</td><td class="ref-value">× 43.813</td></tr>
-                        <tr><td>MGD × mg/L</td><td>lbs/day</td><td class="ref-value">× 8.34</td></tr>
-                        <tr><td>mg/L</td><td>lbs/MG</td><td class="ref-value">× 8.34</td></tr>
-                        <tr><td>ft³</td><td>gallons</td><td class="ref-value">× 7.481</td></tr>
-                        <tr><td>acres</td><td>ft²</td><td class="ref-value">× 43,560</td></tr>
-                        <tr><td>°F</td><td>°C</td><td class="ref-value">(°F − 32) × 5/9</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <div id="cat-laboratory" class="ref-category">
+            <div class="ref-category-label">Laboratory</div>
 
-        <div class="tk-section">
-            <div class="tk-section-hdr">
-                <span class="tk-section-label">[ Alkalinity ]</span>
-                <span class="tk-section-title">Targets &amp; Nitrification Consumption</span>
+            <div id="filamentous" class="tk-section">
+                <div class="tk-section-hdr">
+                    <span class="tk-section-label">[ Filamentous Organisms ]</span>
+                    <span class="tk-section-title">Common Causes, Symptoms &amp; Control Responses</span>
+                </div>
+                <div class="tk-ref-table">
+                    <table class="ref-table ref-table--fixed">
+                        <colgroup>
+                            <col style="width: 18%">
+                            <col style="width: 24%">
+                            <col style="width: 22%">
+                            <col style="width: 36%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Organism</th>
+                                <th>Associated Conditions</th>
+                                <th>Symptoms</th>
+                                <th>First Response</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Nocardia spp.</td><td>Long SRT; high FOG loading; warm temps</td><td>Stable brown/tan foam; chocolate mousse appearance on basin surface</td><td>Reduce SRT; chlorinate foam; address upstream FOG sources</td></tr>
+                            <tr><td>Microthrix parvicella</td><td>Long SRT; low temp (&lt; 15°C); fat/oil loading</td><td>Brown stable foam; bulking; worsens in winter</td><td>Reduce SRT; foam wasting; control fat and oil loading</td></tr>
+                            <tr><td>Type 021N</td><td>Sulfide in feed; low DO; low F/M</td><td>Tight non-settling floc; high SVI; pin floc possible</td><td>Increase DO; eliminate septic conditions; pre-aerate force main</td></tr>
+                            <tr><td>Thiothrix spp.</td><td>Sulfide or reduced sulfur in influent; low DO</td><td>Bulking; rosette structures visible under microscope</td><td>Eliminate H₂S sources; increase DO; pre-aerate force main</td></tr>
+                            <tr><td>Type 0041 / 0675</td><td>Very low F/M; nutrient deficiency (N or P)</td><td>Viscous / zoogloeal bulking; stringy or gel-like floc</td><td>Increase F/M; verify N:P:BOD ratio; check influent nutrient loading</td></tr>
+                            <tr><td>Type 1701</td><td>Low DO; high soluble substrate</td><td>Diffuse floc growth; poor settling</td><td>Increase DO setpoint; check for anoxic zone bleed-over</td></tr>
+                            <tr><td>Beggiatoa</td><td>High sulfide; anaerobic conditions in basin</td><td>White surface mat; settling interference</td><td>Improve aeration uniformity; address septicity in influent</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="tk-ref-table">
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>Parameter / Process</th>
-                            <th>Target Range</th>
-                            <th>Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Aeration Basin Alkalinity</td><td class="ref-value">80 – 120 mg/L as CaCO₃</td><td>Below 80: pH drops, nitrification destabilizes</td></tr>
-                        <tr><td>Effluent Alkalinity (minimum)</td><td class="ref-value">≥ 50 mg/L as CaCO₃</td><td>Residual alkalinity after nitrification; below this risks pH crash</td></tr>
-                        <tr><td>Nitrification consumption</td><td class="ref-value">7.14 mg alk / mg NH₄⁺-N</td><td>Theoretical; actual 6.0–7.0 in practice</td></tr>
-                        <tr><td>Denitrification recovery</td><td class="ref-value">3.57 mg alk / mg NO₃⁻-N</td><td>Denitrification returns ~50% of nitrification alkalinity draw</td></tr>
-                        <tr><td>Sodium bicarbonate addition</td><td class="ref-value">84 g/mol</td><td>1 lb NaHCO₃ adds 0.595 lbs alkalinity as CaCO₃</td></tr>
-                        <tr><td>Hydrated lime addition</td><td class="ref-value">74 g/mol Ca(OH)₂</td><td>More reactive than NaHCO₃; raises pH quickly — dose carefully</td></tr>
-                        <tr><td>pH below which to supplement</td><td class="ref-value">&lt; 6.8 in basin</td><td>Supplement alkalinity; don't wait for effluent pH to drop</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
-        <div class="tk-section">
-            <div class="tk-section-hdr">
-                <span class="tk-section-label">[ Chemical Feed ]</span>
-                <span class="tk-section-title">Typical Doses &amp; Application Points</span>
+            <div id="methods" class="tk-section">
+                <div class="tk-section-hdr">
+                    <span class="tk-section-label">[ Lab Methods ]</span>
+                    <span class="tk-section-title">Standard Methods Reference — Preservation &amp; Hold Times</span>
+                </div>
+                <div class="tk-ref-table">
+                    <table class="ref-table ref-table--fixed">
+                        <colgroup>
+                            <col style="width: 18%">
+                            <col style="width: 18%">
+                            <col style="width: 32%">
+                            <col style="width: 32%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Standard Method</th>
+                                <th>Preservation &amp; Hold Time</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>BOD₅</td><td class="ref-value">SM 5210B</td><td>Cool 4°C; no acid; 48-hour hold</td><td>Seed per method; dilute to keep depletion 2–8 mg/L DO</td></tr>
+                            <tr><td>TSS</td><td class="ref-value">SM 2540D</td><td>Cool 4°C; 7-day hold</td><td>Glass fiber filter (GF/C); filter within 24h preferred</td></tr>
+                            <tr><td>VSS</td><td class="ref-value">SM 2540E</td><td>Cool 4°C; 7-day hold</td><td>Sequential with TSS using same filter; pre-ignite filters</td></tr>
+                            <tr><td>Total Alkalinity</td><td class="ref-value">SM 2320B</td><td>Cool 4°C; 14-day hold</td><td>Do not acidify; titrate within 15 min of collection when possible</td></tr>
+                            <tr><td>pH</td><td class="ref-value">SM 4500-H⁺ B</td><td>Measure immediately; no hold</td><td>Calibrate with fresh buffers before each session; ATC required</td></tr>
+                            <tr><td>Dissolved Oxygen</td><td class="ref-value">SM 4500-O G</td><td>Measure immediately; no hold</td><td>Membrane or optical sensor; calibrate at start of each shift</td></tr>
+                            <tr><td>Ammonia-N</td><td class="ref-value">SM 4500-NH₃</td><td>H₂SO₄ to pH &lt; 2; cool 4°C; 28-day hold</td><td>Colorimetric or ISE; distill if matrix interference suspected</td></tr>
+                            <tr><td>Nitrate-N</td><td class="ref-value">SM 4500-NO₃⁻</td><td>Cool 4°C; 48-hour hold</td><td>Ion chromatography or cadmium reduction; check chloride interference</td></tr>
+                            <tr><td>Total Phosphorus</td><td class="ref-value">SM 4500-P B/E</td><td>H₂SO₄ to pH &lt; 2; cool 4°C; 28-day hold</td><td>Digest before colorimetric analysis</td></tr>
+                            <tr><td>Total Kjeldahl Nitrogen</td><td class="ref-value">SM 4500-N</td><td>H₂SO₄ to pH &lt; 2; cool 4°C; 28-day hold</td><td>Organic-N + ammonia-N combined; requires digestion step</td></tr>
+                            <tr><td>Fecal Coliform</td><td class="ref-value">SM 9221E / 9222D</td><td>Na₂S₂O₃; cool 4°C; 6-hour hold</td><td>Quench chlorine at collection; strict hold time for permit samples</td></tr>
+                            <tr><td>Chlorine Residual</td><td class="ref-value">SM 4500-Cl</td><td>Measure immediately; no hold</td><td>DPD colorimetric preferred; field measurement at discharge point</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="tk-ref-table">
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>Chemical</th>
-                            <th>Typical Dose</th>
-                            <th>Application / Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Alum (liquid, 48%)</td><td class="ref-value">5 – 15 mg/L as Al</td><td>Phosphorus precipitation; optimal pH 6.0–7.0; reduces alkalinity</td></tr>
-                        <tr><td>Ferric chloride (liquid, 37–42%)</td><td class="ref-value">5 – 20 mg/L as Fe</td><td>Phosphorus precipitation; effective pH 4.5–8.0; more corrosive than alum</td></tr>
-                        <tr><td>Sodium hypochlorite (12.5%)</td><td class="ref-value">2 – 10 mg/L as Cl₂</td><td>Disinfection; actual dose depends on CT requirement and effluent demand</td></tr>
-                        <tr><td>Polymer (cationic, belt press)</td><td class="ref-value">10 – 25 lbs/dry ton</td><td>Biosolids conditioning; jar-test to optimize; higher dose ≠ better cake</td></tr>
-                        <tr><td>Polymer (cationic, GBT)</td><td class="ref-value">5 – 15 lbs/dry ton</td><td>Lower dose than belt press; inject close to static mixer</td></tr>
-                        <tr><td>Polymer (anionic, DAF)</td><td class="ref-value">2 – 8 lbs/dry ton</td><td>DAF thickening; charge must match sludge — jar-test required</td></tr>
-                        <tr><td>Sodium bisulfite (dechlorination)</td><td class="ref-value">1 mg/L per 1 mg/L Cl₂</td><td>Stoichiometric; slight overdose acceptable; monitor residual</td></tr>
-                        <tr><td>Caustic soda (50% NaOH)</td><td class="ref-value">Varies — pH controlled</td><td>pH adjustment; extremely reactive — use automated dosing with pH feedback</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
-        <div class="tk-section">
-            <div class="tk-section-hdr">
-                <span class="tk-section-label">[ Biosolids Classification ]</span>
-                <span class="tk-section-title">Class A vs. Class B — Federal 503 Standards</span>
-            </div>
-            <div class="tk-ref-table">
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>Criterion</th>
-                            <th>Class A</th>
-                            <th>Class B</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Pathogen standard</td><td class="ref-value">Fecal coliform &lt; 1,000 MPN/g TS or Salmonella &lt; 3 MPN/4g TS</td><td>Fecal coliform &lt; 2,000,000 MPN/g TS (geometric mean)</td></tr>
-                        <tr><td>Vector attraction reduction (VAR)</td><td class="ref-value">One of Options 1–8 required</td><td>One of Options 1–10 required</td></tr>
-                        <tr><td>VSR (anaerobic digestion)</td><td class="ref-value">≥ 38% + time/temp requirement</td><td>≥ 38% (Van Kleeck formula)</td></tr>
-                        <tr><td>Common VAR method (anaerobic)</td><td class="ref-value">PFRP: thermophilic digestion (55°C / 15+ days)</td><td>PSRP: mesophilic digestion (35–55°C / 15+ days HRT)</td></tr>
-                        <tr><td>Land application restrictions</td><td class="ref-value">No site access restrictions required</td><td>Site access restrictions: 30-day crop harvest hold, grazing restrictions</td></tr>
-                        <tr><td>Public contact sites</td><td class="ref-value">Allowed without restrictions</td><td>12-month site access restriction</td></tr>
-                        <tr><td>Common treatment paths</td><td class="ref-value">Thermophilic digestion, heat drying, alkaline stabilization (≥ 70°C)</td><td>Mesophilic anaerobic digestion, aerobic digestion, composting</td></tr>
-                        <tr><td>Testing frequency</td><td class="ref-value">More frequent — verify each pathogen batch</td><td>Less frequent once process reliability established</td></tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
 
     </div>

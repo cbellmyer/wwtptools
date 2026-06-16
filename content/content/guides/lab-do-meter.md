@@ -3,7 +3,7 @@ title: "DO Meter Calibration and Field Use"
 description: "Air-saturation and water-saturation calibration for membrane and optical DO sensors, barometric pressure correction, field measurement technique, and membrane maintenance."
 layout: "guide"
 category: "Laboratory"
-status: "draft"
+status: "published"
 weight: 34
 chapters:
   - id: "overview"

@@ -3,7 +3,7 @@ title: "Alkalinity Titration"
 description: "Total alkalinity procedure using sulfuric acid titration, result calculation, and target ranges for activated sludge and anaerobic digestion."
 layout: "guide"
 category: "Laboratory"
-status: "draft"
+status: "published"
 weight: 31
 chapters:
   - id: "overview"

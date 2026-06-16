@@ -3,7 +3,7 @@ title: "pH Meter Calibration and Use"
 description: "Two-point and three-point calibration procedures, electrode care, field measurement technique, and troubleshooting drift and slow response."
 layout: "guide"
 category: "Laboratory"
-status: "draft"
+status: "published"
 weight: 32
 chapters:
   - id: "overview"

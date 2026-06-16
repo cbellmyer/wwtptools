@@ -1182,6 +1182,112 @@ body.about .story-sidebar {
   white-space: nowrap;
 }
 
+/* Reference page — category sections */
+.ref-category {
+  margin-bottom: 4rem;
+}
+
+.ref-category:last-child {
+  margin-bottom: 0;
+}
+
+.ref-category-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--secondary);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+/* Reference page — quick-jump nav */
+.ref-nav {
+  max-width: 1000px;
+  margin: 0 auto 2rem;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ref-nav-link {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--secondary);
+  text-decoration: none;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--bg2);
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+
+.ref-nav-link:hover {
+  color: var(--blue);
+  border-color: var(--blue-dim);
+}
+
+/* Reference page — two-column grid for narrow table pairs */
+.ref-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.ref-grid .tk-section {
+  margin-bottom: 0;
+}
+
+@media (max-width: 800px) {
+  .ref-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .ref-grid .tk-section {
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* Reference page — fixed column widths for wide tables */
+.ref-table--wide {
+  table-layout: fixed;
+}
+
+.ref-table--wide .col-label { width: 28%; }
+.ref-table--wide .col-value { width: 22%; }
+.ref-table--wide .col-notes { width: 50%; }
+
+.ref-table--wide .ref-value {
+  white-space: normal;
+}
+
+.ref-table--biosolids {
+  table-layout: fixed;
+}
+
+.ref-table--biosolids .col-criterion { width: 22%; }
+.ref-table--biosolids .col-a         { width: 39%; }
+.ref-table--biosolids .col-b         { width: 39%; }
+
+.ref-table--biosolids .ref-value {
+  white-space: normal;
+}
+
+/* Generic fixed-layout table — column widths set via inline <col> */
+.ref-table--fixed {
+  table-layout: fixed;
+}
+
+.ref-table--fixed .ref-value {
+  white-space: normal;
+}
+
 /* ============================================================
    MATRIX PAGE
    ============================================================ */
@@ -1351,6 +1457,233 @@ body.matrix {
 
 @media (width <= 480px) {
   .matrix-zones-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Matrix — live zone card ---- */
+.mx-zone-card--live {
+  border-color: var(--blue-dim);
+  background: rgb(56 189 248 / 4%);
+}
+
+.mx-zone-card--live .mx-zone-code {
+  color: var(--blue);
+}
+
+.mx-zone-card--live .mx-zone-name {
+  color: var(--blue);
+}
+
+.mx-zone-live-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.52rem;
+  color: var(--blue);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+/* ---- Matrix — active tool section ---- */
+.mx-tool-section {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.mx-tool-hdr {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.mx-tool-zone-code {
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--blue);
+  background: rgb(56 189 248 / 8%);
+  border: 1px solid var(--blue-dim);
+  border-radius: 2px;
+  padding: 0.35rem 0.7rem;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+.mx-tool-zone-label {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--content);
+}
+
+.mx-tool-zone-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--secondary);
+  margin-top: 0.2rem;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Symptom picker ---- */
+.mx-symptom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0;
+}
+
+.mx-symptom-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--secondary);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  line-height: 1.4;
+}
+
+.mx-symptom-btn:hover {
+  color: var(--content);
+  border-color: var(--blue-dim);
+}
+
+.mx-symptom-btn.is-active {
+  color: var(--blue);
+  border-color: var(--blue);
+  background: rgb(56 189 248 / 6%);
+}
+
+/* ---- Diagnosis panel ---- */
+.mx-diagnosis-panel {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.mx-panel-hdr {
+  margin-bottom: 1.25rem;
+}
+
+.mx-panel-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--content);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.3rem;
+}
+
+.mx-panel-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--secondary);
+  letter-spacing: 0.02em;
+}
+
+/* ---- Cause cards ---- */
+.mx-cause-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mx-cause {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.mx-cause-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--amber);
+  letter-spacing: 0.04em;
+  padding: 0.55rem 1rem;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+}
+
+.mx-cause-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.mx-cause-col {
+  padding: 0.85rem 1rem;
+}
+
+.mx-cause-col--response {
+  border-left: 1px solid var(--border);
+}
+
+.mx-cause-col-lbl {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--secondary);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.55rem;
+}
+
+.mx-cause-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.mx-cause-col li {
+  font-size: 0.72rem;
+  color: var(--content);
+  line-height: 1.45;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.mx-cause-col li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--secondary);
+}
+
+.mx-cause-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--secondary);
+  font-style: italic;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+@media (width <= 768px) {
+  .mx-symptom-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mx-cause-body {
+    grid-template-columns: 1fr;
+  }
+
+  .mx-cause-col--response {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}
+
+@media (width <= 480px) {
+  .mx-symptom-grid {
     grid-template-columns: 1fr;
   }
 }

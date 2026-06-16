@@ -16,7 +16,7 @@
                 <span>Matrix</span>
             </nav>
             <h1 class="page-title">Process <span>Decision Matrix</span></h1>
-            <p class="page-desc">Symptom-driven troubleshooting across all treatment zones — select a symptom, follow the diagnostic path to causes and corrective actions.</p>
+            <p class="page-desc">Symptom-driven troubleshooting — select a treatment zone, pick what you're observing, and follow the diagnostic path to causes and corrective actions.</p>
         </div>
     </div>
 
@@ -25,22 +25,70 @@
 
             <div class="matrix-status-bar">
                 <span class="matrix-status-dot"></span>
-                <span class="matrix-status-label">[ Under Development ]</span>
-                <span class="matrix-status-desc">Interactive diagnostic coming in a future release. See below for what's planned and how to contribute.</span>
+                <span class="matrix-status-label">[ Draft ]</span>
+                <span class="matrix-status-desc">Activated Sludge zone live — additional treatment zones in development.</span>
             </div>
 
-            <!-- WEATHER WIDGET -->
-            <weather-widget></weather-widget>
+            {{ $zone := index .Site.Data.matrix.zones 0 }}
 
-            <div class="matrix-overview">
-                <div class="matrix-overview-label">[ What This Will Be ]</div>
-                <p>The Process Decision Matrix is a structured troubleshooting tool designed for field use. You start with an observable symptom — rising effluent TSS, dropping DO, digester foaming, polymer not holding — and the matrix walks you through a decision tree of possible causes and corrective actions, weighted by frequency and severity.</p>
-                <p>Unlike static reference tables, the matrix is interactive: branch points narrow the diagnostic path based on what you observe, what you've already ruled out, and what your process data shows. The goal is to get from "something's wrong" to "here's what to check and in what order" in under two minutes.</p>
+            <div class="mx-tool-section">
+                <div class="mx-tool-hdr">
+                    <span class="mx-tool-zone-code">{{ $zone.code }}</span>
+                    <div class="mx-tool-zone-info">
+                        <div class="mx-tool-zone-label">{{ $zone.label }}</div>
+                        <div class="mx-tool-zone-desc">{{ $zone.description }} &mdash; select a symptom below</div>
+                    </div>
+                </div>
+
+                <div class="mx-symptom-grid" role="group" aria-label="Select a symptom">
+                    {{ range $zone.symptoms }}
+                    <button class="mx-symptom-btn" data-symptom="{{ .id }}" aria-expanded="false" aria-controls="mx-panel-{{ .id }}">
+                        {{ .label }}
+                    </button>
+                    {{ end }}
+                </div>
+
+                {{ range $zone.symptoms }}
+                <div id="mx-panel-{{ .id }}" class="mx-diagnosis-panel" hidden aria-label="{{ .label }} diagnostic">
+                    <div class="mx-panel-hdr">
+                        <div class="mx-panel-title">{{ .label }}</div>
+                        <div class="mx-panel-desc">{{ .description }}</div>
+                    </div>
+                    <div class="mx-cause-list">
+                        {{ range .causes }}
+                        <div class="mx-cause">
+                            <div class="mx-cause-name">{{ .label }}</div>
+                            <div class="mx-cause-body">
+                                <div class="mx-cause-col">
+                                    <div class="mx-cause-col-lbl">[ Indicators ]</div>
+                                    <ul>
+                                        {{ range .indicators }}<li>{{ . }}</li>{{ end }}
+                                    </ul>
+                                </div>
+                                <div class="mx-cause-col mx-cause-col--response">
+                                    <div class="mx-cause-col-lbl">[ First Response ]</div>
+                                    <ul>
+                                        {{ range .response }}<li>{{ . }}</li>{{ end }}
+                                    </ul>
+                                </div>
+                            </div>
+                            {{ with .note }}<p class="mx-cause-note">{{ . }}</p>{{ end }}
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
             </div>
 
             <div class="matrix-zones-section">
-                <div class="matrix-overview-label">[ Treatment Zones Covered ]</div>
+                <div class="matrix-overview-label">[ More Zones Coming ]</div>
                 <div class="matrix-zones-grid">
+                    <div class="mx-zone-card mx-zone-card--live">
+                        <div class="mx-zone-code">AS</div>
+                        <div class="mx-zone-name">Activated Sludge</div>
+                        <div class="mx-zone-desc">Aeration basin and secondary clarifier</div>
+                        <div class="mx-zone-live-badge">Live</div>
+                    </div>
                     <div class="mx-zone-card">
                         <div class="mx-zone-code">HW</div>
                         <div class="mx-zone-name">Headworks</div>
@@ -55,16 +103,6 @@
                         <div class="mx-zone-code">PRI</div>
                         <div class="mx-zone-name">Primary Treatment</div>
                         <div class="mx-zone-desc">Primary clarifier performance, scum and sludge removal</div>
-                    </div>
-                    <div class="mx-zone-card">
-                        <div class="mx-zone-code">AER</div>
-                        <div class="mx-zone-name">Aeration</div>
-                        <div class="mx-zone-desc">DO control, MLSS, biological process upsets, foaming</div>
-                    </div>
-                    <div class="mx-zone-card">
-                        <div class="mx-zone-code">SEC</div>
-                        <div class="mx-zone-name">Secondary Clarifier</div>
-                        <div class="mx-zone-desc">Sludge blanket, solids carryover, RAS/WAS management</div>
                     </div>
                     <div class="mx-zone-card">
                         <div class="mx-zone-code">SOL</div>
@@ -94,6 +132,9 @@
                 </div>
             </div>
 
+            <!-- WEATHER WIDGET -->
+            <weather-widget></weather-widget>
+
             <div class="matrix-contribute">
                 <div class="matrix-overview-label">[ Help Build It ]</div>
                 <p>The matrix is only as good as the operational experience behind it. If you've worked through a process upset and know the diagnostic path — what you checked, what the cause turned out to be, what actually fixed it — that's exactly what this tool needs.</p>
@@ -106,6 +147,37 @@
     </main>
 
     {{- partial "footer.html" . -}}
+
+    <script>
+    /* ── Matrix symptom picker ──────────────────────────────── */
+    (function () {
+        var btns = document.querySelectorAll('.mx-symptom-btn');
+        btns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var id = btn.dataset.symptom;
+                var panel = document.getElementById('mx-panel-' + id);
+                var isActive = btn.classList.contains('is-active');
+
+                btns.forEach(function (b) {
+                    b.classList.remove('is-active');
+                    b.setAttribute('aria-expanded', 'false');
+                });
+                document.querySelectorAll('.mx-diagnosis-panel').forEach(function (p) {
+                    p.hidden = true;
+                });
+
+                if (!isActive) {
+                    btn.classList.add('is-active');
+                    btn.setAttribute('aria-expanded', 'true');
+                    if (panel) {
+                        panel.hidden = false;
+                        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                }
+            });
+        });
+    })();
+    </script>
 
     <script>
     /* ── Weather Widget ─────────────────────────────────────── */

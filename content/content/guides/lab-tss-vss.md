@@ -3,7 +3,7 @@ title: "TSS and VSS Analysis"
 description: "Gravimetric procedure for total and volatile suspended solids, filter preparation, drying and ignition protocol, and calculation of both values from a single sample."
 layout: "guide"
 category: "Laboratory"
-status: "draft"
+status: "published"
 weight: 33
 chapters:
   - id: "overview"
