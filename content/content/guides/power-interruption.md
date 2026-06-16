@@ -2,7 +2,7 @@
 title: "Emergency Power Interruption"
 description: "Immediate response, flow management, generator operations, process priorities, and restoring normal operations after a power loss event."
 layout: "guide"
-category: "Operations"
+category: "Site"
 status: "published"
 weight: 6
 chapters:

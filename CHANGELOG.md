@@ -9,7 +9,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **Field guides — category grouping** — Guides index now organizes guides into four named sections: Operations, Troubleshooting, Site, and Laboratory Methodology. Each section renders as a labeled group with its own color accent: blue (Operations), amber (Troubleshooting), green (Site), violet (Laboratory Methodology). `--violet` / `--violet-dim` added to the design token palette.
+- **Laboratory Methodology category** — New guide category for lab test procedures and analytical methods. First guide: Settleometer Test / SVI Calculation — full step-by-step procedure covering equipment selection, sample collection timing and location, 30-minute test protocol, SVI formula with worked example, result interpretation table (< 80 to > 300 mL/g), and common errors (stale sample, wrong sample point, compaction-limited settling at high MLSS).
+
 ### Changed
+
+- **Field guide categories restructured** — Existing guides reorganized across the four new categories. Plant Startup and Emergency Power Interruption moved from Operations to Site (whole-plant / infrastructure scope). Dewatering Operations and Digester Management moved from Solids Handling to Operations.
 
 ### Fixed
 

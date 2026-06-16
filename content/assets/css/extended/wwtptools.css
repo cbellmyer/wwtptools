@@ -26,6 +26,10 @@
   --amber-dim: #d97706;   /* amber-600 */
   --red:       #f87171;   /* red-400 */
 
+  /* Guide category accent */
+  --violet:     #a78bfa;   /* violet-400 */
+  --violet-dim: #7c3aed;   /* violet-600 */
+
   /* Compatibility aliases used by toolkit.css */
   --gray:       #94a3b8;
   --gray-dim:   #94a3b8;
@@ -1009,9 +1013,11 @@ body.about .story-sidebar {
   color: var(--blue);
 }
 
-.category--troubleshooting { color: var(--amber); }
-.category--solids-handling { color: var(--green); }
-.category--contributing { color: var(--secondary); }
+.category--operations            { color: var(--blue); }
+.category--troubleshooting       { color: var(--amber); }
+.category--site                  { color: var(--green); }
+.category--laboratory-methodology { color: var(--violet); }
+.category--contributing          { color: var(--secondary); }
 
 .guide-card-status {
   font-family: 'Space Mono', monospace;
@@ -1048,6 +1054,22 @@ body.about .story-sidebar {
   margin-top: 0.4rem;
   padding-top: 0.75rem;
   border-top: 1px solid var(--border);
+}
+
+.guides-category-section {
+  margin-top: 3rem;
+}
+
+.guides-category-section:first-child {
+  margin-top: 0;
+}
+
+.guides-category-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--secondary);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
 }
 
 .guides-meta-section {

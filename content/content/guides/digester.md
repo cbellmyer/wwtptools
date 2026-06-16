@@ -2,7 +2,7 @@
 title: "Digester Management"
 description: "Digester types, loading management, key indicators, and the two failure modes to watch for."
 layout: "guide"
-category: "Solids Handling"
+category: "Operations"
 status: "published"
 weight: 5
 chapters:

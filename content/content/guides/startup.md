@@ -2,7 +2,7 @@
 title: "Plant Startup"
 description: "Establishing hydraulics, seeding biology, and bringing a plant back online after a planned or emergency outage."
 layout: "guide"
-category: "Operations"
+category: "Site"
 status: "published"
 weight: 1
 chapters:

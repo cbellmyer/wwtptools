@@ -2,7 +2,7 @@
 title: "Dewatering Operations"
 description: "Polymer conditioning, jar testing, and getting consistent performance from gravity belt thickeners, belt presses, and centrifuges."
 layout: "guide"
-category: "Solids Handling"
+category: "Operations"
 status: "published"
 weight: 4
 chapters:

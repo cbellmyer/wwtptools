@@ -33,19 +33,86 @@
             {{ $fieldGuides := where $all ".Params.meta" "ne" true }}
             {{ $metaGuides := where $all ".Params.meta" true }}
 
-            <div class="guides-grid">
-                {{ range $fieldGuides.ByWeight }}
-                <a href="{{ .Permalink }}" class="guide-card">
-                    <div class="guide-card-meta">
-                        <span class="guide-card-category category--{{ .Params.category | lower | replace " " "-" }}">{{ .Params.category }}</span>
-                        {{ if eq .Params.status "draft" }}<span class="guide-card-status">[ Draft ]</span>{{ end }}
-                    </div>
-                    <div class="guide-card-title">{{ .Title }}</div>
-                    <div class="guide-card-desc">{{ .Params.description }}</div>
-                    <div class="guide-card-cta">Read guide →</div>
-                </a>
-                {{ end }}
+            {{ $ops   := where $fieldGuides ".Params.category" "Operations" }}
+            {{ $tshoot := where $fieldGuides ".Params.category" "Troubleshooting" }}
+            {{ $site  := where $fieldGuides ".Params.category" "Site" }}
+            {{ $lab   := where $fieldGuides ".Params.category" "Laboratory Methodology" }}
+
+            {{ if $ops }}
+            <div class="guides-category-section">
+                <div class="guides-category-label">[ Operations ]</div>
+                <div class="guides-grid">
+                    {{ range $ops.ByWeight }}
+                    <a href="{{ .Permalink }}" class="guide-card">
+                        <div class="guide-card-meta">
+                            <span class="guide-card-category category--{{ .Params.category | lower | replace " " "-" }}">{{ .Params.category }}</span>
+                            {{ if eq .Params.status "draft" }}<span class="guide-card-status">[ Draft ]</span>{{ end }}
+                        </div>
+                        <div class="guide-card-title">{{ .Title }}</div>
+                        <div class="guide-card-desc">{{ .Params.description }}</div>
+                        <div class="guide-card-cta">Read guide →</div>
+                    </a>
+                    {{ end }}
+                </div>
             </div>
+            {{ end }}
+
+            {{ if $tshoot }}
+            <div class="guides-category-section">
+                <div class="guides-category-label">[ Troubleshooting ]</div>
+                <div class="guides-grid">
+                    {{ range $tshoot.ByWeight }}
+                    <a href="{{ .Permalink }}" class="guide-card">
+                        <div class="guide-card-meta">
+                            <span class="guide-card-category category--{{ .Params.category | lower | replace " " "-" }}">{{ .Params.category }}</span>
+                            {{ if eq .Params.status "draft" }}<span class="guide-card-status">[ Draft ]</span>{{ end }}
+                        </div>
+                        <div class="guide-card-title">{{ .Title }}</div>
+                        <div class="guide-card-desc">{{ .Params.description }}</div>
+                        <div class="guide-card-cta">Read guide →</div>
+                    </a>
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
+
+            {{ if $site }}
+            <div class="guides-category-section">
+                <div class="guides-category-label">[ Site ]</div>
+                <div class="guides-grid">
+                    {{ range $site.ByWeight }}
+                    <a href="{{ .Permalink }}" class="guide-card">
+                        <div class="guide-card-meta">
+                            <span class="guide-card-category category--{{ .Params.category | lower | replace " " "-" }}">{{ .Params.category }}</span>
+                            {{ if eq .Params.status "draft" }}<span class="guide-card-status">[ Draft ]</span>{{ end }}
+                        </div>
+                        <div class="guide-card-title">{{ .Title }}</div>
+                        <div class="guide-card-desc">{{ .Params.description }}</div>
+                        <div class="guide-card-cta">Read guide →</div>
+                    </a>
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
+
+            {{ if $lab }}
+            <div class="guides-category-section">
+                <div class="guides-category-label">[ Laboratory Methodology ]</div>
+                <div class="guides-grid">
+                    {{ range $lab.ByWeight }}
+                    <a href="{{ .Permalink }}" class="guide-card">
+                        <div class="guide-card-meta">
+                            <span class="guide-card-category category--{{ .Params.category | lower | replace " " "-" }}">{{ .Params.category }}</span>
+                            {{ if eq .Params.status "draft" }}<span class="guide-card-status">[ Draft ]</span>{{ end }}
+                        </div>
+                        <div class="guide-card-title">{{ .Title }}</div>
+                        <div class="guide-card-desc">{{ .Params.description }}</div>
+                        <div class="guide-card-cta">Read guide →</div>
+                    </a>
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
 
             {{ if $metaGuides }}
             <div class="guides-meta-section">
