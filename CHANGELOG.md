@@ -36,6 +36,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 
 - **Pre-commit violations in guide content** — Markdownlint rule violations (line length, list formatting, heading style), Prettier reformatting, codespell corrections, and trailing whitespace fixed across newly written field guide markdown files.
+- **Accessibility — `aria-hidden-focus` on Pie Wheels** — The Pie Wheel SVG was marked `aria-hidden="true"` while containing `<path>` elements with `tabindex="0" role="button"`, violating ARIA rules (focusable descendants inside a hidden container). Fixed by replacing `aria-hidden` on the `<svg>` with `role="group" aria-label="[title] formula"`. All interactive path elements now carry descriptive `aria-label="Solve for [variable]"` (or "Solving for..." when active). Decorative elements (circles, lines, text labels) individually marked `aria-hidden="true"` so screen readers only announce the interactive controls.
+- **Accessibility — `link-in-text-block` on About and Matrix pages** — In-paragraph anchor elements on the About and Matrix pages relied solely on color to distinguish links from surrounding text, failing WCAG SC 1.4.1. Added `text-decoration: underline` with `text-decoration-color: var(--blue-dim)` and `text-underline-offset: 2px` targeting `p a` within `.about-content`, `.story-content`, `.matrix-overview`, and `.matrix-contribute`. CTA link styles are unaffected.
 
 ---
 

@@ -718,6 +718,15 @@ body.home .header #menu .active {
   font-weight: 600;
 }
 
+.about-content p a,
+.story-content p a,
+.matrix-overview p a,
+.matrix-contribute p a {
+  text-decoration: underline;
+  text-decoration-color: var(--blue-dim);
+  text-underline-offset: 2px;
+}
+
 .about-cta-link {
   font-family: 'Space Mono', monospace;
   font-size: 0.62rem;
