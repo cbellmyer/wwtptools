@@ -1507,11 +1507,11 @@ body.matrix {
 
   /* Page breaks */
   .tk-section {
-    page-break-inside: avoid;
+    break-inside: avoid;
   }
 
   h1, h2, h3 {
-    page-break-after: avoid;
+    break-after: avoid;
     color: #000 !important;
   }
 
