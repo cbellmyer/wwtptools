@@ -36,7 +36,7 @@
             {{ $ops   := where $fieldGuides ".Params.category" "Operations" }}
             {{ $tshoot := where $fieldGuides ".Params.category" "Troubleshooting" }}
             {{ $site  := where $fieldGuides ".Params.category" "Site" }}
-            {{ $lab   := where $fieldGuides ".Params.category" "Laboratory Methodology" }}
+            {{ $lab   := where $fieldGuides ".Params.category" "Laboratory" }}
 
             {{ if $ops }}
             <div class="guides-category-section">
@@ -97,7 +97,7 @@
 
             {{ if $lab }}
             <div class="guides-category-section">
-                <div class="guides-category-label">[ Laboratory Methodology ]</div>
+                <div class="guides-category-label">[ Laboratory ]</div>
                 <div class="guides-grid">
                     {{ range $lab.ByWeight }}
                     <a href="{{ .Permalink }}" class="guide-card">

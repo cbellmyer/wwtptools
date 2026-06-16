@@ -1016,7 +1016,7 @@ body.about .story-sidebar {
 .category--operations            { color: var(--blue); }
 .category--troubleshooting       { color: var(--amber); }
 .category--site                  { color: var(--green); }
-.category--laboratory-methodology { color: var(--violet); }
+.category--laboratory { color: var(--violet); }
 .category--contributing          { color: var(--secondary); }
 
 .guide-card-status {
