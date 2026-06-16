@@ -10,7 +10,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 - **Field guides — category grouping** — Guides index now organizes guides into four named sections: Operations, Troubleshooting, Site, and Laboratory Methodology. Each section renders as a labeled group with its own color accent: blue (Operations), amber (Troubleshooting), green (Site), violet (Laboratory). `--violet` / `--violet-dim` added to the design token palette.
-- **Laboratory category** — New guide category for lab test procedures and analytical methods. First guide: Settleometer Test / SVI Calculation — full step-by-step procedure covering equipment selection, sample collection timing and location, 30-minute test protocol, SVI formula with worked example, result interpretation table (< 80 to > 300 mL/g), and common errors (stale sample, wrong sample point, compaction-limited settling at high MLSS).
+- **Laboratory category — five guides (all draft)** — New guide category for lab test procedures and analytical methods:
+  - *Settleometer Test / SVI Calculation* — 30-minute procedure, SVI formula with worked example, interpretation table (< 80 to > 300 mL/g), common errors including compaction-limited settling at high MLSS.
+  - *Alkalinity Titration* — 0.02N H₂SO₄ titration to pH 4.5 endpoint, ×10 shortcut factor derivation, target ranges for activated sludge (> 100 mg/L) and anaerobic digestion (1,500–3,000 mg/L), VFA:alkalinity ratio interpretation.
+  - *pH Meter Calibration and Use* — Two-point and three-point calibration procedure, buffer selection, field measurement technique, electrode storage and cleaning by fouling type, slope interpretation (95–105% acceptable range).
+  - *TSS and VSS Analysis* — Gravimetric procedure: filter pre-ignition, sample volume selection by matrix, filtration, 103–105°C drying for TSS, 550°C ignition for VSS, both calculations from a single filter run.
+  - *DO Meter Calibration and Field Use* — Membrane vs. optical sensor types, air-saturation calibration with barometric pressure correction, field measurement technique, membrane replacement procedure, polarization time requirement.
 
 ### Changed
 
