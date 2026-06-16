@@ -3,7 +3,7 @@ title: "Upset Response"
 description: "Identifying hydraulic vs. biological upsets and how to respond before conditions worsen."
 layout: "guide"
 category: "Troubleshooting"
-status: "draft"
+status: "published"
 weight: 2
 chapters:
   - id: "overview"
@@ -40,4 +40,40 @@ _This section is under active development. More content coming soon._
 
 <div id="triage" class="story-chapter-label">[ Triage Protocol ]</div>
 
-_This section is under active development. More content coming soon._
+Use this sequence when something is wrong and you're not sure what you're dealing with.
+
+**Step 1 — Establish the timeline.**
+
+When did it start? What changed in the last 24–48 hours? Flow events (wet weather, industrial discharges, pump failures) point to hydraulic. Chemistry events (new industrial connection, slug loads, chemical dosing changes) point to biological. If nothing changed externally, look at what changed internally — wasting rate, DO setpoints, RAS rate.
+
+**Step 2 — Check the clarifiers first.**
+
+Secondary clarifier performance is the fastest visible indicator. A rising blanket with unchanged MLSS and flow = hydraulic. A rising blanket with declining VSS:TSS ratio or poor settleability = biological. If the blanket is stable and effluent quality has dropped, look upstream — the problem is entering the basin, not leaving it.
+
+**Step 3 — Pull a 30-minute settleability test.**
+
+Take a mixed liquor sample and let it settle for 30 minutes. A good mixed liquor settles to 200–400 mL/L. Anything above 600 is a flag. If it settles fast and clear, the problem is hydraulic. If it settles slow, bulky, or with a diffuse interface, biology is involved. If there's a dark, poorly-settling layer on top with clear liquid below, you have a pinpoint or dispersed growth problem.
+
+**Step 4 — Check DO demand vs. supply.**
+
+If aeration can't keep up with demand (DO pinned at zero despite blowers at capacity), load has increased faster than biology can respond. This can be hydraulic (more flow) or biological (degraded treatment efficiency requiring more oxygen per unit removed). Measure both influent flow and influent BOD/COD if possible.
+
+**Step 5 — Decide: manage or wait.**
+
+Hydraulic upsets: adjust RAS rate, increase recycle to maintain blanket, notify downstream if effluent quality is at risk. These typically resolve within one HRT (4–12 hours for most activated sludge systems).
+
+Biological upsets: stop wasting or reduce wasting significantly. If toxicity is suspected, increase aeration, monitor DO demand over 2–4 hours — a toxic event will show DO demand dropping as organisms are inhibited. Notify the industrial discharger if applicable and alert the pretreatment coordinator. Recovery is measured in SRTs, not hours.
+
+**When to call for help:** If effluent quality is at risk of a permit exceedance, notify the ORC (operator in responsible charge) immediately regardless of what shift it is. Permit violations have compliance consequences; delay makes them worse.
+
+**Getting ahead of compliance issues:**
+
+The most important call you can make during an upset isn't to the regulatory agency — it's to your superintendent or process engineer before things reach that point. These are the people who can help you think through options, adjust permit conditions if circumstances warrant, and frame the situation correctly if agency notification does become necessary.
+
+Don't wait for an exceedance to happen before reaching out. If trending data suggests effluent quality is degrading — ammonia creeping up, TSS rising over several days, a permit parameter that's been flirting with the limit — that's the time to loop in your superintendent. Early conversations allow for proactive adjustments: process changes, temporary operational modifications, or a courtesy call to the regulatory agency that frames a potential issue before it becomes a violation on paper.
+
+Process engineers are a particularly underused resource during upset conditions. They can pull historical data, review loading trends, evaluate whether an operational adjustment makes sense given your permit conditions, and help you document what you did and why. Good documentation of your response during an upset — what you observed, what actions you took, and when — is often the difference between a notice of violation and a recognized good-faith response.
+
+The operator's instinct is often to fix it first and report later. In most cases, the smarter path is to communicate early and fix it together.
+
+A short written summary of each significant upset — trigger, response actions, and recovery timeline — gives your team institutional memory that makes the next similar event faster to diagnose and easier to defend. Log it the same day while details are fresh; a written record filed a week later is worth significantly less to a regulator or a new operator trying to understand a pattern.

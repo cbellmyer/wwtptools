@@ -171,4 +171,4 @@ fi
 
 # Change to the actual project root and run Hugo
 cd "${SCRIPT_DIR}/content"
-"${HUGO_BIN}"
+"${HUGO_BIN}" --minify

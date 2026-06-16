@@ -8,7 +8,7 @@ body.toolkit {
   --tk-border: #2d3a50;
   --tk-sub: #242e40;
   --tk-hdr: #0d1424;
-  --tk-label: #546878;
+  --tk-label: #849fb5;
   --tk-notes-bg: #0c1520;
   --tk-input-bg: #0f1620;
   --tk-green: #40e060;
@@ -416,7 +416,7 @@ body.toolkit {
 
 .tk-calc-desc {
   font-family: 'Space Mono', monospace;
-  font-size: 0.42rem;
+  font-size: 0.72rem;
   color: var(--tk-label);
   letter-spacing: 0.03em;
   line-height: 1.5;
@@ -433,7 +433,7 @@ body.toolkit {
 .tk-field-label {
   display: block;
   font-family: 'Space Mono', monospace;
-  font-size: 0.4rem;
+  font-size: 0.72rem;
   letter-spacing: 0.08em;
   color: var(--tk-label);
   text-transform: uppercase;
@@ -447,7 +447,7 @@ body.toolkit {
   color: var(--primary);
   padding: 0.38rem 0.6rem;
   font-family: 'Space Mono', monospace;
-  font-size: 0.55rem;
+  font-size: 0.75rem;
   box-sizing: border-box;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
@@ -467,7 +467,7 @@ body.toolkit {
 
 .tk-result-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.4rem;
+  font-size: 0.72rem;
   letter-spacing: 0.15em;
   color: var(--tk-label);
   text-transform: uppercase;
@@ -484,7 +484,7 @@ body.toolkit {
 
 .tk-result-unit {
   font-family: 'Space Mono', monospace;
-  font-size: 0.4rem;
+  font-size: 0.72rem;
   color: var(--gray-dim);
   letter-spacing: 0.1em;
   margin-top: 0.25rem;
@@ -498,9 +498,9 @@ body.toolkit {
 
 .tk-formula-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.38rem;
+  font-size: 0.72rem;
   letter-spacing: 0.15em;
-  color: var(--yellow-dim);
+  color: var(--yellow);
   text-transform: uppercase;
   display: block;
   margin-bottom: 0.2rem;
@@ -508,7 +508,7 @@ body.toolkit {
 
 .tk-formula-text {
   font-family: 'Space Mono', monospace;
-  font-size: 0.5rem;
+  font-size: 0.72rem;
   color: var(--primary);
   line-height: 1.6;
   letter-spacing: 0.02em;
@@ -532,7 +532,7 @@ body.toolkit {
 
 .tk-impact-text {
   font-family: 'Space Mono', monospace;
-  font-size: 0.44rem;
+  font-size: 0.72rem;
   color: var(--gray-dim);
   line-height: 1.7;
   letter-spacing: 0.02em;
@@ -548,7 +548,7 @@ body.toolkit {
 
 .tk-multi-result-label-hdr {
   font-family: 'Space Mono', monospace;
-  font-size: 0.4rem;
+  font-size: 0.72rem;
   letter-spacing: 0.15em;
   color: var(--tk-label);
   text-transform: uppercase;
@@ -567,7 +567,7 @@ body.toolkit {
 
 .tk-multi-row-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.42rem;
+  font-size: 0.72rem;
   color: var(--tk-label);
   letter-spacing: 0.05em;
 }
@@ -615,4 +615,127 @@ body.toolkit {
 
 @media (width <= 600px) {
   .tk-calc-grid { grid-template-columns: 1fr; }
+}
+
+/* ---- Pie Wheels ---- */
+
+.tk-pie-hint {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.44rem;
+  color: var(--tk-label);
+  letter-spacing: 0.06em;
+  margin: 0.6rem 0 1rem;
+  line-height: 1.5;
+}
+
+.tk-pie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1px;
+  background: var(--tk-border);
+  border: 1px solid var(--tk-border);
+}
+
+.pw-card {
+  background: var(--tk-panel);
+  display: flex;
+  flex-direction: column;
+}
+
+.pw-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  padding: 0.75rem 1.5rem 0.25rem;
+  box-sizing: border-box;
+}
+
+.pw-seg {
+  cursor: pointer;
+  transition: fill 0.15s;
+  outline: none;
+}
+
+.pw-seg.pw-const {
+  cursor: default;
+  pointer-events: none;
+}
+
+.pw-seg:not(.pw-const, .pw-active):hover {
+  fill: rgb(56 189 248 / 12%);
+}
+
+.pw-seg:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+.pw-lbl {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  fill: var(--primary);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.pw-lbl-dim {
+  fill: var(--tk-label);
+  font-weight: 400;
+}
+
+.pw-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 7.5px;
+  fill: var(--tk-label);
+  pointer-events: none;
+}
+
+.pw-inputs {
+  padding: 0.6rem 0.8rem 0;
+  flex: 1;
+}
+
+.pw-solve-for {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.4rem;
+  color: var(--teal-dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.pw-solve-for strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+
+.pw-card .tk-calc-card-hdr {
+  position: relative;
+}
+
+.pw-reset {
+  position: absolute;
+  top: 50%;
+  right: 0.6rem;
+  transform: translateY(-50%);
+  background: none;
+  border: 1px solid var(--tk-border);
+  color: var(--tk-label);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.15rem 0.45rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.pw-reset:hover {
+  color: var(--yellow);
+  border-color: var(--yellow);
+}
+
+@media (width <= 480px) {
+  .tk-pie-grid { grid-template-columns: 1fr; }
+  .pw-svg { padding: 0.75rem 3rem 0.25rem; }
 }

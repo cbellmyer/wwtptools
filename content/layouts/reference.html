@@ -11,7 +11,7 @@
     <div class="page-header">
         <div class="page-header-inner">
             <nav class="page-breadcrumb">
-                <a href="/">WWTP Tools</a>
+                <a href="/">The Operator's Toolkit</a>
                 <span class="breadcrumb-sep">→</span>
                 <span>Reference</span>
             </nav>
@@ -128,6 +128,89 @@
                         <tr><td>ft³</td><td>gallons</td><td class="ref-value">× 7.481</td></tr>
                         <tr><td>acres</td><td>ft²</td><td class="ref-value">× 43,560</td></tr>
                         <tr><td>°F</td><td>°C</td><td class="ref-value">(°F − 32) × 5/9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tk-section">
+            <div class="tk-section-hdr">
+                <span class="tk-section-label">[ Alkalinity ]</span>
+                <span class="tk-section-title">Targets &amp; Nitrification Consumption</span>
+            </div>
+            <div class="tk-ref-table">
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter / Process</th>
+                            <th>Target Range</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Aeration Basin Alkalinity</td><td class="ref-value">80 – 120 mg/L as CaCO₃</td><td>Below 80: pH drops, nitrification destabilizes</td></tr>
+                        <tr><td>Effluent Alkalinity (minimum)</td><td class="ref-value">≥ 50 mg/L as CaCO₃</td><td>Residual alkalinity after nitrification; below this risks pH crash</td></tr>
+                        <tr><td>Nitrification consumption</td><td class="ref-value">7.14 mg alk / mg NH₄⁺-N</td><td>Theoretical; actual 6.0–7.0 in practice</td></tr>
+                        <tr><td>Denitrification recovery</td><td class="ref-value">3.57 mg alk / mg NO₃⁻-N</td><td>Denitrification returns ~50% of nitrification alkalinity draw</td></tr>
+                        <tr><td>Sodium bicarbonate addition</td><td class="ref-value">84 g/mol</td><td>1 lb NaHCO₃ adds 0.595 lbs alkalinity as CaCO₃</td></tr>
+                        <tr><td>Hydrated lime addition</td><td class="ref-value">74 g/mol Ca(OH)₂</td><td>More reactive than NaHCO₃; raises pH quickly — dose carefully</td></tr>
+                        <tr><td>pH below which to supplement</td><td class="ref-value">&lt; 6.8 in basin</td><td>Supplement alkalinity; don't wait for effluent pH to drop</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tk-section">
+            <div class="tk-section-hdr">
+                <span class="tk-section-label">[ Chemical Feed ]</span>
+                <span class="tk-section-title">Typical Doses &amp; Application Points</span>
+            </div>
+            <div class="tk-ref-table">
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>Chemical</th>
+                            <th>Typical Dose</th>
+                            <th>Application / Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Alum (liquid, 48%)</td><td class="ref-value">5 – 15 mg/L as Al</td><td>Phosphorus precipitation; optimal pH 6.0–7.0; reduces alkalinity</td></tr>
+                        <tr><td>Ferric chloride (liquid, 37–42%)</td><td class="ref-value">5 – 20 mg/L as Fe</td><td>Phosphorus precipitation; effective pH 4.5–8.0; more corrosive than alum</td></tr>
+                        <tr><td>Sodium hypochlorite (12.5%)</td><td class="ref-value">2 – 10 mg/L as Cl₂</td><td>Disinfection; actual dose depends on CT requirement and effluent demand</td></tr>
+                        <tr><td>Polymer (cationic, belt press)</td><td class="ref-value">10 – 25 lbs/dry ton</td><td>Biosolids conditioning; jar-test to optimize; higher dose ≠ better cake</td></tr>
+                        <tr><td>Polymer (cationic, GBT)</td><td class="ref-value">5 – 15 lbs/dry ton</td><td>Lower dose than belt press; inject close to static mixer</td></tr>
+                        <tr><td>Polymer (anionic, DAF)</td><td class="ref-value">2 – 8 lbs/dry ton</td><td>DAF thickening; charge must match sludge — jar-test required</td></tr>
+                        <tr><td>Sodium bisulfite (dechlorination)</td><td class="ref-value">1 mg/L per 1 mg/L Cl₂</td><td>Stoichiometric; slight overdose acceptable; monitor residual</td></tr>
+                        <tr><td>Caustic soda (50% NaOH)</td><td class="ref-value">Varies — pH controlled</td><td>pH adjustment; extremely reactive — use automated dosing with pH feedback</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tk-section">
+            <div class="tk-section-hdr">
+                <span class="tk-section-label">[ Biosolids Classification ]</span>
+                <span class="tk-section-title">Class A vs. Class B — Federal 503 Standards</span>
+            </div>
+            <div class="tk-ref-table">
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>Criterion</th>
+                            <th>Class A</th>
+                            <th>Class B</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Pathogen standard</td><td class="ref-value">Fecal coliform &lt; 1,000 MPN/g TS or Salmonella &lt; 3 MPN/4g TS</td><td>Fecal coliform &lt; 2,000,000 MPN/g TS (geometric mean)</td></tr>
+                        <tr><td>Vector attraction reduction (VAR)</td><td class="ref-value">One of Options 1–8 required</td><td>One of Options 1–10 required</td></tr>
+                        <tr><td>VSR (anaerobic digestion)</td><td class="ref-value">≥ 38% + time/temp requirement</td><td>≥ 38% (Van Kleeck formula)</td></tr>
+                        <tr><td>Common VAR method (anaerobic)</td><td class="ref-value">PFRP: thermophilic digestion (55°C / 15+ days)</td><td>PSRP: mesophilic digestion (35–55°C / 15+ days HRT)</td></tr>
+                        <tr><td>Land application restrictions</td><td class="ref-value">No site access restrictions required</td><td>Site access restrictions: 30-day crop harvest hold, grazing restrictions</td></tr>
+                        <tr><td>Public contact sites</td><td class="ref-value">Allowed without restrictions</td><td>12-month site access restriction</td></tr>
+                        <tr><td>Common treatment paths</td><td class="ref-value">Thermophilic digestion, heat drying, alkaline stabilization (≥ 70°C)</td><td>Mesophilic anaerobic digestion, aerobic digestion, composting</td></tr>
+                        <tr><td>Testing frequency</td><td class="ref-value">More frequent — verify each pathogen batch</td><td>Less frequent once process reliability established</td></tr>
                     </tbody>
                 </table>
             </div>

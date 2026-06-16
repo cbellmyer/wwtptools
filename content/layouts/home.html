@@ -12,7 +12,7 @@
     <div class="page-hero">
         <div class="page-hero-inner">
             <div class="hero-badge">[ Process Control Tools ]</div>
-            <h1 class="hero-title">The Operator's<br><span>Digital Toolkit</span></h1>
+            <h1 class="hero-title">The Operator's<br><span>Toolkit</span></h1>
             <p class="hero-desc">
                 Free calculators, reference tables, and field guides for wastewater treatment plant operators.
                 No account required. No paywall. No ads. No vendor agenda.
@@ -25,13 +25,16 @@
     </div>
 
     <!-- ── STATS STRIP ────────────────────────────────────────────── -->
+    {{- $calcCount := 0 -}}{{- with site.Data.calculators -}}{{- $calcCount = len . -}}{{- end -}}
+    {{- $refCount := 0 -}}{{- with site.Data.reference_tables -}}{{- $refCount = len . -}}{{- end -}}
+    {{- $fieldGuides := where (where site.RegularPages "Section" "guides") ".Params.meta" "ne" true -}}
     <div class="stats-strip">
         <div class="stats-strip-inner">
-            <div class="stat-item"><span>12+</span> Calculators</div>
+            <div class="stat-item"><span>{{ $calcCount }}</span> Tools</div>
             <div class="stat-div">·</div>
-            <div class="stat-item"><span>4</span> Reference Tables</div>
+            <div class="stat-item"><span>{{ $refCount }}</span> Reference Tables</div>
             <div class="stat-div">·</div>
-            <div class="stat-item"><span>5</span> Field Guides</div>
+            <div class="stat-item"><span>{{ len $fieldGuides }}</span> Field Guides</div>
             <div class="stat-div">·</div>
             <div class="stat-item"><span>Free</span> &amp; Open Source</div>
         </div>
@@ -51,7 +54,7 @@
                     <div class="module-card-top">
                         <div class="module-icon">⚙</div>
                         <div class="module-name">Calculators</div>
-                        <div class="module-count">12 tools</div>
+                        <div class="module-count">{{ $calcCount }} tools</div>
                     </div>
                     <div class="module-desc">Activated sludge, hydraulics, solids handling, and digester operations — with live results as you type.</div>
                     <ul class="module-items">
@@ -60,6 +63,7 @@
                         <li>HRT, WOR, Surface Loading</li>
                         <li>Chemical Dosing, Mass Loading</li>
                         <li>VSR, VS Loading, Digester DT</li>
+                        <li>12 Formula Pie Wheels</li>
                     </ul>
                     <div class="module-cta">Open Calculators →</div>
                 </a>
@@ -68,14 +72,11 @@
                     <div class="module-card-top">
                         <div class="module-icon">◎</div>
                         <div class="module-name">Reference</div>
-                        <div class="module-count">4 tables</div>
+                        <div class="module-count">{{ $refCount }} tables</div>
                     </div>
                     <div class="module-desc">Quick-access process data organized for field use — DO targets, pH ranges, loading benchmarks, conversions.</div>
                     <ul class="module-items">
-                        <li>DO Operating Ranges by Zone</li>
-                        <li>pH Targets by Process</li>
-                        <li>Loading Rate Benchmarks</li>
-                        <li>Common Unit Conversions</li>
+                        {{ with site.Data.reference_tables }}{{ range . }}<li>{{ index . "name" }}</li>{{ end }}{{ end }}
                     </ul>
                     <div class="module-cta">View Reference →</div>
                 </a>
@@ -84,21 +85,32 @@
                     <div class="module-card-top">
                         <div class="module-icon">⌬</div>
                         <div class="module-name">Field Guides</div>
-                        <div class="module-count">5 guides</div>
+                        <div class="module-count">{{ len $fieldGuides }} guides</div>
                     </div>
                     <div class="module-desc">Practical guidance for common operations and troubleshooting scenarios — written the way it should have been explained earlier.</div>
                     <ul class="module-items">
-                        <li>Plant Startup Procedures</li>
-                        <li>Upset Response Protocols</li>
-                        <li>Seasonal Adjustments</li>
-                        <li>Dewatering Operations</li>
-                        <li>Digester Management</li>
+                        {{ range first 5 ($fieldGuides.ByWeight) }}<li>{{ .Title }}</li>{{ end }}
                     </ul>
                     <div class="module-cta">Read Guides →</div>
                 </a>
             </div>
         </div>
     </section>
+
+    <!-- ── WHAT'S NEW ─────────────────────────────────────────────── -->
+    <div class="whats-new-strip">
+        <div class="whats-new-inner">
+            <div class="whats-new-label">[ Recently Updated ]</div>
+            <div class="whats-new-items">
+                {{ with site.Data.whats_new }}{{ range . }}
+                <a href="{{ index . "href" }}" class="whats-new-item">
+                    <span class="whats-new-type">{{ index . "type" }}</span>
+                    <span class="whats-new-name">{{ index . "label" }}</span>
+                </a>
+                {{ end }}{{ end }}
+            </div>
+        </div>
+    </div>
 
     <!-- ── ABOUT ──────────────────────────────────────────────────── -->
     <div class="about-section">

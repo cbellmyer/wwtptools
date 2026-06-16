@@ -9,12 +9,14 @@ ci:
       - http://localhost/matrix/
       - http://localhost/about/
     numberOfRuns: 1
+    settings:
+      preset: desktop
   assert:
     preset: lighthouse:no-pwa
     assertions:
       categories:performance:
         - warn
-        - minScore: 0.8
+        - minScore: 0.85
       categories:accessibility:
         - error
         - minScore: 0.9
