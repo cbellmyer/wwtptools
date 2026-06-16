@@ -559,6 +559,92 @@ body.home .header #menu .active {
 .module-card.amber .module-cta { color: var(--amber); }
 
 /* ============================================================
+   WHAT'S NEW STRIP
+   ============================================================ */
+
+.whats-new-strip {
+  background: var(--theme);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.4rem 0;
+}
+
+.whats-new-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 4rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.whats-new-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.whats-new-items {
+  display: flex;
+  gap: 0.5rem 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.whats-new-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 0.78rem;
+  color: var(--secondary);
+  transition: color 0.15s;
+}
+
+.whats-new-item:hover {
+  color: var(--primary);
+}
+
+.whats-new-type {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  border: 1px solid var(--blue-dim);
+  padding: 0.1rem 0.35rem;
+  border-radius: 2px;
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+.whats-new-item:hover .whats-new-type {
+  opacity: 1;
+}
+
+.whats-new-name {
+  color: inherit;
+}
+
+@media (width <= 768px) {
+  .whats-new-inner {
+    padding: 0 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .whats-new-items {
+    gap: 0.5rem 1rem;
+  }
+}
+
+/* ============================================================
    ABOUT SECTION
    ============================================================ */
 
@@ -1332,5 +1418,112 @@ body.matrix {
     padding: 1.5rem;
     flex-direction: column;
     text-align: center;
+  }
+}
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+
+@media print {
+  /* Hide navigation chrome */
+  .header,
+  .footer,
+  .page-breadcrumb,
+  .story-sidebar,
+  .guide-nav,
+  .hero-actions,
+  .stats-strip,
+  .modules-section,
+  .whats-new-strip,
+  .about-section,
+  .pw-reset,
+  .tk-system-status,
+  .tk-clock,
+  .matrix-status-bar {
+    display: none !important;
+  }
+
+  /* Force light background for readability */
+  body,
+  .page-hero,
+  .toolkit-canvas,
+  .guides-index-body,
+  .story-section,
+  .tk-section,
+  .tk-ref-table,
+  .story-content {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  /* Remove decorative borders and shadows */
+  .tk-section,
+  .tk-ref-table,
+  .ref-table,
+  .process-calculator,
+  .guide-card {
+    border-color: #ccc !important;
+    box-shadow: none !important;
+  }
+
+  /* Table print formatting */
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+
+  .ref-table th,
+  .ref-table td {
+    border: 1px solid #bbb !important;
+    padding: 0.3rem 0.5rem !important;
+    color: #111 !important;
+    background: #fff !important;
+  }
+
+  .ref-table th {
+    background: #f0f0f0 !important;
+    font-weight: 600;
+  }
+
+  .ref-value {
+    color: #000 !important;
+    font-weight: 600;
+  }
+
+  /* Guide content */
+  .story-content,
+  .story-chapter-label {
+    color: #111 !important;
+  }
+
+  .story-chapter-label {
+    font-weight: 700;
+    margin-top: 1.5rem;
+    border-top: 1px solid #ccc;
+    padding-top: 0.5rem;
+  }
+
+  /* Page breaks */
+  .tk-section {
+    page-break-inside: avoid;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+    color: #000 !important;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: none;
+  }
+
+  /* Show URLs for external links */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.7rem;
+    color: #555;
   }
 }

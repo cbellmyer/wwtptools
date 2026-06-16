@@ -3,7 +3,7 @@ title: "Seasonal Adjustments"
 description: "Temperature-driven changes to wasting, DO targets, and MCRT management through the year."
 layout: "guide"
 category: "Operations"
-status: "draft"
+status: "published"
 weight: 3
 chapters:
   - id: "overview"

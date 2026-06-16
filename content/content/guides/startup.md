@@ -3,7 +3,7 @@ title: "Plant Startup"
 description: "Establishing hydraulics, seeding biology, and bringing a plant back online after a planned or emergency outage."
 layout: "guide"
 category: "Operations"
-status: "draft"
+status: "published"
 weight: 1
 chapters:
   - id: "overview"
@@ -66,3 +66,5 @@ Solids handling should not be brought online until secondary clarifiers are prod
 Monitor VFA/alkalinity ratio during startup. Ratio above 0.3 indicates the digester is being loaded faster than it can process; slow or stop loading and give the methanogens time to recover.
 
 Once all three stages are running and producing consistent results, progressively increase loading toward design rates. Don't rush the final 20% — that's where most startup issues compound.
+
+Startup is complete when hydraulics, biology, and solids handling are all within normal operating ranges on a consistent basis. Document the timeline: seeding date, first nitrification, digester stability, and first acceptable cake. That record is the baseline for everything that follows and the reference point when something changes later and you need to understand why.

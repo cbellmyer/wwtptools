@@ -1,13 +1,15 @@
 ---
 title: "Dewatering Operations"
-description: "Polymer conditioning, jar testing, and getting consistent cake solids from belt presses or centrifuges."
+description: "Polymer conditioning, jar testing, and getting consistent performance from gravity belt thickeners, belt presses, and centrifuges."
 layout: "guide"
 category: "Solids Handling"
-status: "draft"
+status: "published"
 weight: 4
 chapters:
   - id: "overview"
     label: "Overview"
+  - id: "gbt"
+    label: "Gravity Belt Thickener"
   - id: "conditioning"
     label: "Sludge Conditioning"
   - id: "jar-test"
@@ -18,9 +20,38 @@ chapters:
 
 <div id="overview" class="story-chapter-label">[ Overview ]</div>
 
-Effective dewatering depends on sludge conditioning as much as equipment performance. Belt filter presses and centrifuges will underperform on poorly conditioned sludge regardless of how well the machine is tuned.
+Solids handling follows a path: dilute sludge leaves the secondary clarifiers, gets thickened to reduce volume, gets conditioned with polymer so it will release water, and then gets mechanically dewatered into a cake that can be hauled, composted, or further processed. Each step depends on the one before it.
 
-The most common dewatering problem isn't a mechanical one — it's a conditioning one. Operators chase belt tension, drum speed, and wash water pressure when the actual variable is polymer dose.
+The gravity belt thickener (GBT) is typically the first piece of equipment in that chain, concentrating waste activated sludge from under 1% solids up to 4–8% before it reaches a digester or a dewatering press. From there, polymer conditioning determines how much water the belt press or centrifuge can actually remove — and this is where most operations have the most room to improve. The most common dewatering problem isn't a mechanical one. Operators chase belt tension, drum speed, and wash water pressure when the actual variable is polymer dose.
+
+This guide follows the sludge through each step in sequence.
+
+<div id="gbt" class="story-chapter-label">[ Gravity Belt Thickener ]</div>
+
+A gravity belt thickener (GBT) is a thickening step, not final dewatering — its job is to increase feed solids concentration before downstream processing. Waste activated sludge (WAS) often arrives at a GBT at 0.5–1.5% solids; the goal is to leave at 4–8%. That concentration gain reduces the volume the digester or belt press has to handle and narrows the feed solids range that conditioning must compensate for.
+
+The GBT uses polymer to flocculate sludge, then relies on gravity drainage across a slow-moving porous belt. There are no pressure rollers. The driving force is gravity alone, which is why incoming sludge must flocculate well — weak or unflocculated sludge drains poorly and carries through to the filtrate, reducing capture rate and increasing return load.
+
+**Polymer conditioning for GBT:**
+
+Cationic polymer is standard for WAS. Inject it as close to the belt feed as practical, with just enough mixing to distribute it — a short static mixer section is preferred over a long pipe run. High-head pump loops and turbulent pipe flow between the injection point and the belt break floc apart before it can drain. Over-shearing is the most common operator error on a GBT.
+
+Polymer dose for GBTs typically runs lower than for belt presses per ton of dry solids. You're not trying to build the same floc strength — just enough structure to drain under gravity. Over-dosing produces floc that is too fluffy and doesn't compact well on the belt.
+
+**Operating variables:**
+
+- **Belt speed** — slower belt speed increases contact time and drainage, producing higher cake solids and better capture. Too slow and the belt floods. Find the slowest speed that keeps the sludge from ponding across the full belt width.
+- **Feed rate** — hydraulic overloading is the primary cause of poor thickening. If effluent solids are rising, check flow rate before adjusting polymer. Most GBTs have a design hydraulic limit; stay below it.
+- **Wash water** — belt blinding reduces drainage rate and mimics a polymer problem. Wash at regular intervals and maintain adequate pressure (typically 60–100 PSI). A clean belt draining poorly is a polymer or feed problem; a dirty belt draining poorly is a wash problem.
+- **Belt tracking** — off-center tracking wastes effective belt width and causes uneven sludge distribution. Check alignment at startup.
+
+**Where the GBT fits in the process train:**
+
+A GBT is most commonly placed after secondary clarifier WAS withdrawal and before anaerobic digestion. Feeding a digester at 5–6% solids instead of 1% solids dramatically reduces the required digester volume and heating load. In some configurations, a GBT thickens sludge that then goes directly to a belt press or centrifuge for final dewatering, with the GBT doing the heavy lifting on volume reduction so the dewatering equipment handles a more manageable, consistent feed.
+
+**Performance targets:** A well-operated GBT should achieve 85–95% solids capture with effluent (filtrate) solids below 200–400 mg/L. Thickened cake solids of 5–7% are typical for WAS; blended primary/secondary sludge may reach higher. If capture rate is dropping, check polymer dose and belt condition before assuming a feed problem.
+
+The same polymer principles that govern the GBT apply downstream with greater consequence. On a belt press or centrifuge, the stakes are higher — more energy, higher polymer doses, and cake quality that determines hauling cost. Getting conditioning right is the foundation.
 
 <div id="conditioning" class="story-chapter-label">[ Sludge Conditioning ]</div>
 
@@ -34,7 +65,7 @@ Sludge characteristics shift with season, feed blend (primary vs. secondary vs. 
 
 **Conditioning intensity and contact time:** Polymer and sludge need to mix together, but over-mixing shears the floc apart. Inline injection with a short static mixer is typically better than a pump with high head followed by turbulent pipe flow. Contact time of 5–15 seconds at the point of application is usually sufficient; more mixing after floc forms hurts cake quality.
 
-**Feed consistency:** Variable feed concentration (% solids) makes polymer dose optimization impossible. If your feed solids swing from 1% to 4% between runs, your polymer-to-sludge ratio will be wrong half the time unless you have automatic feed-forward control. Gravity or DAF thickening before dewatering narrows the range significantly.
+**Feed consistency:** Variable feed concentration (% solids) makes polymer dose optimization impossible. If your feed solids swing from 1% to 4% between runs, your polymer-to-sludge ratio will be wrong half the time unless you have automatic feed-forward control. A gravity belt thickener upstream narrows this range significantly before sludge reaches the dewatering equipment.
 
 <div id="jar-test" class="story-chapter-label">[ Jar Testing ]</div>
 

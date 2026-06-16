@@ -1,5 +1,5 @@
-baseURL: "https://wwtptools.com/"
-title: "WWTP Tools"
+baseURL: "https://wwtp.tools/"
+title: "The Operator's Toolkit"
 copyright: "CC BY-NC 4.0"
 theme: [scada-theme]
 
