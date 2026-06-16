@@ -26,3 +26,6 @@ ci:
       categories:seo:
         - warn
         - minScore: 0.9
+      geolocation-on-start: "off"
+      network-dependency-tree-insight: "off"
+      errors-in-console: warn
