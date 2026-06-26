@@ -76,13 +76,13 @@ If you are only running TSS (not VSS), pre-ignition is not required — you only
 
 The goal is to capture 5–200 mg of solids on the filter. Too little and weighing error dominates; too much and the filter plugs before you've filtered a representative volume.
 
-| Sample type | Suggested starting volume |
-|---|---|
-| Mixed liquor (MLSS ~2,000–3,500 mg/L) | 25–50 mL |
-| RAS | 10–25 mL |
-| Secondary effluent (< 30 mg/L) | 250–500 mL |
-| Digester effluent / centrate | 25–50 mL |
-| Raw influent | 50–100 mL |
+| Sample type                           | Suggested starting volume |
+| ------------------------------------- | ------------------------- |
+| Mixed liquor (MLSS ~2,000–3,500 mg/L) | 25–50 mL                  |
+| RAS                                   | 10–25 mL                  |
+| Secondary effluent (< 30 mg/L)        | 250–500 mL                |
+| Digester effluent / centrate          | 25–50 mL                  |
+| Raw influent                          | 50–100 mL                 |
 
 If the filter plugs before the full volume is filtered, note the volume actually filtered and use that in your calculation.
 
@@ -145,9 +145,9 @@ VSS:TSS ratio = VSS ÷ TSS
 
 VSS = (1.5448 − 1.5262) × 1,000,000 ÷ 25 = 0.0186 × 1,000,000 ÷ 25 = **744 mg/L**
 
-FSS = 2,500 − 744 = **1,756 mg/L** *(this is unusually high for mixed liquor — in practice a VSS:TSS of ~0.76–0.80 is typical)*
+FSS = 2,500 − 744 = **1,756 mg/L** _(this is unusually high for mixed liquor — in practice a VSS:TSS of ~0.76–0.80 is typical)_
 
-VSS:TSS = 744 ÷ 2,500 = **0.30** *(abnormally low — would indicate heavy inorganic loading or a calculation check is needed)*
+VSS:TSS = 744 ÷ 2,500 = **0.30** _(abnormally low — would indicate heavy inorganic loading or a calculation check is needed)_
 
 <div id="errors" class="story-chapter-label">[ Common Errors ]</div>
 

@@ -112,6 +112,7 @@ Basin grates, railings, and wet surfaces are fall hazards. Use a pole-mounted pr
 **Membrane electrode maintenance:**
 
 Replace membranes when any of the following occur:
+
 - Response time is sluggish (more than 60–90 seconds to stabilize in a new solution)
 - Membrane is visibly scratched, fouled, or discolored
 - Calibration slope is outside the acceptable range
@@ -130,6 +131,7 @@ Replace membranes when any of the following occur:
 **Optical sensor cap maintenance:**
 
 Optical sensor caps degrade slowly as the luminescent material photobleaches with use. Replace per manufacturer schedule (typically 1–2 years). Between replacements:
+
 - Clean the sensor face with a damp, lint-free cloth if fouled
 - Store in the protective cap when not in use
 - Avoid exposing the sensor to direct sunlight for extended periods

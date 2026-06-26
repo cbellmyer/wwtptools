@@ -105,22 +105,22 @@ Always use the full formula. A common error is applying the ×10 shortcut to a n
 
 **Activated sludge / nitrification:**
 
-| Alkalinity (mg/L as CaCO₃) | Interpretation |
-|---|---|
-| > 100 | Adequate buffer. Nitrification should proceed normally. |
-| 50–100 | Marginal. Monitor pH in basin. Consider supplemental alkalinity. |
-| < 50 | Low. pH likely dropping. Nitrification impaired or at risk. |
+| Alkalinity (mg/L as CaCO₃) | Interpretation                                                   |
+| -------------------------- | ---------------------------------------------------------------- |
+| > 100                      | Adequate buffer. Nitrification should proceed normally.          |
+| 50–100                     | Marginal. Monitor pH in basin. Consider supplemental alkalinity. |
+| < 50                       | Low. pH likely dropping. Nitrification impaired or at risk.      |
 
 If your system nitrifies fully and alkalinity in the effluent is consistently below 50 mg/L, you may need to add alkalinity supplement (sodium bicarbonate, sodium carbonate, or lime depending on your permit and process). Calculate the dosing demand based on your influent ammonia load and the 7.14 mg alkalinity consumed per mg NH₄⁺-N nitrified.
 
 **Anaerobic digestion:**
 
-| Alkalinity (mg/L as CaCO₃) | Interpretation |
-|---|---|
-| > 2,500 | Well-buffered. Good stability. |
-| 1,500–2,500 | Normal operating range. |
-| 1,000–1,500 | Declining buffer. Reduce loading or add alkalinity supplement. |
-| < 1,000 | Critically low. Digester upset likely without intervention. |
+| Alkalinity (mg/L as CaCO₃) | Interpretation                                                 |
+| -------------------------- | -------------------------------------------------------------- |
+| > 2,500                    | Well-buffered. Good stability.                                 |
+| 1,500–2,500                | Normal operating range.                                        |
+| 1,000–1,500                | Declining buffer. Reduce loading or add alkalinity supplement. |
+| < 1,000                    | Critically low. Digester upset likely without intervention.    |
 
 In digester monitoring, the ratio of volatile acids (VFA) to alkalinity is often more meaningful than alkalinity alone. A VFA:alkalinity ratio above 0.3–0.4 indicates the digester is accumulating acids faster than it's buffering them — an early warning sign even when raw alkalinity appears adequate.
 

@@ -11,18 +11,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **Field guides — category grouping** — Guides index now organizes guides into four named sections: Operations, Troubleshooting, Site, and Laboratory Methodology. Each section renders as a labeled group with its own color accent: blue (Operations), amber (Troubleshooting), green (Site), violet (Laboratory). `--violet` / `--violet-dim` added to the design token palette.
 - **Laboratory category — five guides** — New guide category for lab test procedures and analytical methods:
-  - *Settleometer Test / SVI Calculation* — 30-minute procedure, SVI formula with worked example, interpretation table (< 80 to > 300 mL/g), common errors including compaction-limited settling at high MLSS.
-  - *Alkalinity Titration* — 0.02N H₂SO₄ titration to pH 4.5 endpoint, ×10 shortcut factor derivation, target ranges for activated sludge (> 100 mg/L) and anaerobic digestion (1,500–3,000 mg/L), VFA:alkalinity ratio interpretation.
-  - *pH Meter Calibration and Use* — Two-point and three-point calibration procedure, buffer selection, field measurement technique, electrode storage and cleaning by fouling type, slope interpretation (95–105% acceptable range).
-  - *TSS and VSS Analysis* — Gravimetric procedure: filter pre-ignition, sample volume selection by matrix, filtration, 103–105°C drying for TSS, 550°C ignition for VSS, both calculations from a single filter run.
-  - *DO Meter Calibration and Field Use* — Membrane vs. optical sensor types, air-saturation calibration with barometric pressure correction, field measurement technique, membrane replacement procedure, polarization time requirement.
+  - _Settleometer Test / SVI Calculation_ — 30-minute procedure, SVI formula with worked example, interpretation table (< 80 to > 300 mL/g), common errors including compaction-limited settling at high MLSS.
+  - _Alkalinity Titration_ — 0.02N H₂SO₄ titration to pH 4.5 endpoint, ×10 shortcut factor derivation, target ranges for activated sludge (> 100 mg/L) and anaerobic digestion (1,500–3,000 mg/L), VFA:alkalinity ratio interpretation.
+  - _pH Meter Calibration and Use_ — Two-point and three-point calibration procedure, buffer selection, field measurement technique, electrode storage and cleaning by fouling type, slope interpretation (95–105% acceptable range).
+  - _TSS and VSS Analysis_ — Gravimetric procedure: filter pre-ignition, sample volume selection by matrix, filtration, 103–105°C drying for TSS, 550°C ignition for VSS, both calculations from a single filter run.
+  - _DO Meter Calibration and Field Use_ — Membrane vs. optical sensor types, air-saturation calibration with barometric pressure correction, field measurement technique, membrane replacement procedure, polarization time requirement.
 - **Field guide — Secondary Clarifier Troubleshooting** — Fully written, replacing stub. Four chapters: Overview (clarifier role, blanket as process indicator, cross-reference to matrix tool), Blanket Control (depth targets, RAS as the primary knob, WAS over longer timeframes, wet weather response), Rising Sludge (mechanism identification by observation; separate sections for denitrification gas lift, filamentous bulking, hydraulic overload, and RAS failure), and Effluent Quality (visible blanket overflow, pin floc and dispersed growth, deflocculation from toxic shock, foam carryover, and a six-point troubleshooting checklist).
 - **Reference page — five new tables** — Expanded the reference data set with five additional tables:
-  - *Temperature Effects* — DO saturation and nitrification rate guidance across temperature bands from < 5°C through thermophilic digestion range (55°C); SRT guidance for cold-weather operations.
-  - *Solids Production* — Typical percent total solids by sludge type from raw primary through heat-dried biosolids; useful for mass balance and dewatering planning.
-  - *Oxygen Demand* — BOD removal, nitrification (4.57 lb O₂/lb NH₄⁺-N), and denitrification credit (2.86 lb O₂/lb NO₃⁻-N) factors; alpha/beta correction factors; fine and coarse bubble SOTE ranges.
-  - *Filamentous Organisms* — Seven common filamentous types (Nocardia, Microthrix parvicella, Type 021N, Thiothrix, Type 0041/0675, Type 1701, Beggiatoa) with associated conditions, symptoms, and first control response.
-  - *Lab Methods* — Standard Methods citations, preservation requirements, and maximum hold times for 12 common permit and process parameters (BOD, TSS/VSS, alkalinity, pH, DO, ammonia, nitrate, phosphorus, TKN, fecal coliform, chlorine residual).
+  - _Temperature Effects_ — DO saturation and nitrification rate guidance across temperature bands from < 5°C through thermophilic digestion range (55°C); SRT guidance for cold-weather operations.
+  - _Solids Production_ — Typical percent total solids by sludge type from raw primary through heat-dried biosolids; useful for mass balance and dewatering planning.
+  - _Oxygen Demand_ — BOD removal, nitrification (4.57 lb O₂/lb NH₄⁺-N), and denitrification credit (2.86 lb O₂/lb NO₃⁻-N) factors; alpha/beta correction factors; fine and coarse bubble SOTE ranges.
+  - _Filamentous Organisms_ — Seven common filamentous types (Nocardia, Microthrix parvicella, Type 021N, Thiothrix, Type 0041/0675, Type 1701, Beggiatoa) with associated conditions, symptoms, and first control response.
+  - _Lab Methods_ — Standard Methods citations, preservation requirements, and maximum hold times for 12 common permit and process parameters (BOD, TSS/VSS, alkalinity, pH, DO, ammonia, nitrate, phosphorus, TKN, fecal coliform, chlorine residual).
 
 ### Changed
 
