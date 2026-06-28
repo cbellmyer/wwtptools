@@ -1891,3 +1891,63 @@ body.matrix {
     color: #555;
   }
 }
+
+/* ============================================================
+   Responsive media — images, figures, GIF-replacement video
+   Emitted by partials/responsive-image.html and the img / figure /
+   video shortcodes. See docs/IMAGES.md.
+   ============================================================ */
+
+.responsive-img,
+.responsive-video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: var(--bg2);          /* placeholder tone before load */
+}
+
+/* <picture> is inline by default; let it fill the content column. */
+figure picture,
+.guide-content picture {
+  display: block;
+}
+
+.responsive-img.align-center,
+figure.align-center {
+  margin-inline: auto;
+}
+
+figure {
+  margin: 1.75rem 0;
+}
+
+figure.align-center {
+  text-align: center;
+}
+
+figcaption {
+  margin-top: 0.5rem;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--secondary);
+  border-left: 2px solid var(--border);
+  padding-left: 0.75rem;
+}
+
+figcaption a {
+  color: var(--blue);
+}
+
+/* GIF-replacement clips: behave like an autoplaying GIF but far smaller. */
+.responsive-video {
+  width: 100%;
+}
+
+/* Respect users who prefer reduced motion: don't autoplay looping clips. */
+@media (prefers-reduced-motion: reduce) {
+  video.responsive-video[autoplay] {
+    animation: none;
+  }
+}

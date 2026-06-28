@@ -1,5 +1,8 @@
 content/public/
-content/resources/
+# content/resources/ is committed on purpose: Hugo's processed image
+# derivatives (WebP/srcset variants) are checked in so Cloudflare builds do zero
+# image work. Hugo regenerates any missing/stale entry automatically. See
+# docs/IMAGES.md.
 content/.hugo_build.lock
 .hugo-bin-*/
 node_modules/

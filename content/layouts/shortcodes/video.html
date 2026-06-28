@@ -1,0 +1,42 @@
+{{- /*
+  video shortcode — embeds an MP4/WebM produced from an animated GIF (or any
+  short clip) by scripts/convert-images.sh. Autoplaying GIF-style loops use
+  muted + loop + playsinline; full clips with audio drop those for controls.
+
+  Usage (GIF replacement, looping, no audio):
+    {{< video src="sludge-settling" poster="sludge-settling.png"
+              alt="Sludge settling in a settleometer over 30 minutes" >}}
+
+  Parameters:
+    src     (required)  basename WITHOUT extension; .webm and/or .mp4 must exist
+                        next to the page (bundle) or under assets/.
+    poster  (optional)  still frame shown before play (path resolved like images)
+    alt     (optional)  accessible description (aria-label)
+    loop    (optional)  "true" (default) — autoplay/mute/loop like a GIF
+                        "false"          — show controls, no autoplay
+    class   (optional)  appended to "responsive-video"
+*/ -}}
+{{- $src := .Get "src" -}}
+{{- if not $src }}{{ errorf "video shortcode requires 'src' (%s)" .Position }}{{ end -}}
+{{- $loop := ne (.Get "loop" | default "true") "false" -}}
+{{- $alt := .Get "alt" -}}
+{{- $class := .Get "class" -}}
+
+{{- $webm := or (.Page.Resources.GetMatch (printf "%s.webm" $src)) (resources.Get (printf "%s.webm" $src)) -}}
+{{- $mp4  := or (.Page.Resources.GetMatch (printf "%s.mp4" $src))  (resources.Get (printf "%s.mp4" $src)) -}}
+{{- if not (or $webm $mp4) }}{{ errorf "video shortcode: no %s.webm or %s.mp4 found (%s)" $src $src .Position }}{{ end -}}
+
+{{- $poster := "" -}}
+{{- with .Get "poster" -}}
+  {{- with (or ($.Page.Resources.GetMatch .) (resources.Get .)) }}{{ $poster = .RelPermalink }}{{ end -}}
+{{- end -}}
+
+<video
+  class="responsive-video{{ with $class }} {{ . }}{{ end }}"
+  {{ if $loop }}autoplay muted loop playsinline{{ else }}controls preload="metadata"{{ end }}
+  {{- with $poster }} poster="{{ . }}"{{ end }}
+  {{- with $alt }} aria-label="{{ . }}"{{ end }}>
+  {{- with $webm }}<source src="{{ .RelPermalink }}" type="video/webm">{{ end }}
+  {{- with $mp4 }}<source src="{{ .RelPermalink }}" type="video/mp4">{{ end }}
+  {{- with $alt }}<p>{{ . }}</p>{{ end }}
+</video>
