@@ -47,11 +47,11 @@ A pH meter works by measuring the voltage difference across a glass membrane tha
 
 Buffers are certified solutions of known pH used to calibrate the meter. Common buffers:
 
-| Buffer pH | When to use |
-|---|---|
-| pH 4.0 | Lower anchor point for acidic samples (digester, alkalinity endpoint) |
-| pH 7.0 | Mid-range anchor — use in nearly all two-point calibrations |
-| pH 10.0 | Upper anchor for alkaline samples |
+| Buffer pH | When to use                                                           |
+| --------- | --------------------------------------------------------------------- |
+| pH 4.0    | Lower anchor point for acidic samples (digester, alkalinity endpoint) |
+| pH 7.0    | Mid-range anchor — use in nearly all two-point calibrations           |
+| pH 10.0   | Upper anchor for alkaline samples                                     |
 
 **For most WWTP work:** calibrate with pH 7.0 and pH 4.0 buffers. This brackets the working range for aeration basin monitoring, secondary effluent, and alkalinity titration (pH 4.5 endpoint).
 

@@ -8,12 +8,12 @@ Free process calculators, reference tables, and field guides for wastewater trea
 
 ## What's in the Toolkit
 
-| Section             | Description                                                                                                                                                              |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Calculators**     | 12+ process calculators — activated sludge, hydraulics, solids handling, digester operations. Live results as you type.                                                  |
+| Section             | Description                                                                                                                                                                                                     |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Calculators**     | 12+ process calculators — activated sludge, hydraulics, solids handling, digester operations. Live results as you type.                                                                                         |
 | **Reference**       | 12 reference tables in four categories: Process Parameters (DO, pH, loading rates, temperature, conversions), Chemistry & Dosing, Solids & Biosolids, and Laboratory (filamentous organisms, standard methods). |
-| **Field Guides**    | 9+ published operational guides organized into four categories: Operations, Troubleshooting, Site, and Laboratory. Laboratory guides are draft; all others are published. |
-| **Decision Matrix** | _(In development)_ Symptom-driven process troubleshooting across all treatment zones.                                                                                    |
+| **Field Guides**    | 9+ published operational guides organized into four categories: Operations, Troubleshooting, Site, and Laboratory. Laboratory guides are draft; all others are published.                                       |
+| **Decision Matrix** | _(In development)_ Symptom-driven process troubleshooting across all treatment zones.                                                                                                                           |
 
 ---
 

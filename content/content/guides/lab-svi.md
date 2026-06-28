@@ -122,19 +122,19 @@ This result is solidly in the normal range for a healthy activated sludge system
 
 <div id="interpretation" class="story-chapter-label">[ Interpreting Results ]</div>
 
-| SVI (mL/g) | Condition |
-|---|---|
-| < 80 | Dense, well-settling sludge. May indicate high sludge age or over-wasting. |
-| 80–150 | Normal range. Good settleability. |
-| 150–200 | Elevated. Monitor closely. Begin investigating cause. |
-| > 200 | Poor settling (bulking). Clarifier performance at risk. |
-| > 300 | Severe bulking. Immediate action required. |
+| SVI (mL/g) | Condition                                                                  |
+| ---------- | -------------------------------------------------------------------------- |
+| < 80       | Dense, well-settling sludge. May indicate high sludge age or over-wasting. |
+| 80–150     | Normal range. Good settleability.                                          |
+| 150–200    | Elevated. Monitor closely. Begin investigating cause.                      |
+| > 200      | Poor settling (bulking). Clarifier performance at risk.                    |
+| > 300      | Severe bulking. Immediate action required.                                 |
 
 **What high SVI means:**
 
 High SVI is most commonly caused by:
 
-- **Filamentous bulking** — excessive filamentous organisms create a loose, open floc structure that settles slowly. Typical filaments: *Nocardia*, *Thiothrix*, *Type 021N*, *M. parvicella*. Microscopy is needed to confirm species.
+- **Filamentous bulking** — excessive filamentous organisms create a loose, open floc structure that settles slowly. Typical filaments: _Nocardia_, _Thiothrix_, _Type 021N_, _M. parvicella_. Microscopy is needed to confirm species.
 - **Pin floc** — very fine, dispersed floc that doesn't aggregate properly. Often associated with low F/M ratio (over-aeration, over-wasting).
 - **Rising sludge** — nitrogen gas bubbles lift settled sludge in the clarifier. SVI may appear normal but sludge is floating, not rising due to poor settling.
 - **Viscous bulking** — gel-like floc matrix from overproduction of extracellular polymers. Associated with low-nutrient conditions.
