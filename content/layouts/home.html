@@ -25,8 +25,8 @@
     </div>
 
     <!-- ── STATS STRIP ────────────────────────────────────────────── -->
-    {{- $calcCount := 0 -}}{{- with site.Data.calculators -}}{{- $calcCount = len . -}}{{- end -}}
-    {{- $refCount := 0 -}}{{- with site.Data.reference_tables -}}{{- $refCount = len . -}}{{- end -}}
+    {{- $calcCount := 0 -}}{{- with hugo.Data.calculators -}}{{- $calcCount = len . -}}{{- end -}}
+    {{- $refCount := 0 -}}{{- with hugo.Data.reference_tables -}}{{- $refCount = len . -}}{{- end -}}
     {{- $fieldGuides := where (where site.RegularPages "Section" "guides") ".Params.meta" "ne" true -}}
     <div class="stats-strip">
         <div class="stats-strip-inner">
@@ -76,7 +76,7 @@
                     </div>
                     <div class="module-desc">Quick-access process data organized for field use — DO targets, pH ranges, loading benchmarks, conversions.</div>
                     <ul class="module-items">
-                        {{ with site.Data.reference_tables }}{{ range . }}<li>{{ index . "name" }}</li>{{ end }}{{ end }}
+                        {{ with hugo.Data.reference_tables }}{{ range . }}<li>{{ index . "name" }}</li>{{ end }}{{ end }}
                     </ul>
                     <div class="module-cta">View Reference →</div>
                 </a>
@@ -102,7 +102,7 @@
         <div class="whats-new-inner">
             <div class="whats-new-label">[ Recently Updated ]</div>
             <div class="whats-new-items">
-                {{ with site.Data.whats_new }}{{ range . }}
+                {{ with hugo.Data.whats_new }}{{ range . }}
                 <a href="{{ index . "href" }}" class="whats-new-item">
                     <span class="whats-new-type">{{ index . "type" }}</span>
                     <span class="whats-new-name">{{ index . "label" }}</span>

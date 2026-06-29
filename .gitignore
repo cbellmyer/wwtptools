@@ -8,3 +8,6 @@ content/.hugo_build.lock
 node_modules/
 .DS_Store
 Thumbs.db
+# Lighthouse report output files
+lh-*.json
+.lighthouseci/

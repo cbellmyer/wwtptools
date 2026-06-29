@@ -31,16 +31,16 @@ How visual content is optimized on this site, and what you do as an author.
 Hugo Extended (the version pinned in `.hugo-version`) has a full image pipeline
 built in. We lean on it instead of a separate Node/JS image framework:
 
-| Need | Handled by |
-| --- | --- |
-| Resize, WebP, responsive `srcset` | Hugo Extended (build time) |
-| Markdown `![]()` auto-optimization | `layouts/_default/_markup/render-image.html` |
-| Captioned / linked figures | `layouts/shortcodes/figure.html` |
-| Explicit responsive image | `layouts/shortcodes/img.html` |
-| The shared engine all three call | `layouts/partials/responsive-image.html` |
-| Animated GIF → MP4/WebM | `scripts/convert-images.sh` (ffmpeg) + `{{< video >}}` |
-| SVG optimization | SVGO (`svgo.config.mjs`, pre-commit) |
-| Repo/build bloat guard | `scripts/check-image-sizes.sh` (pre-commit) |
+| Need                               | Handled by                                             |
+| ---------------------------------- | ------------------------------------------------------ |
+| Resize, WebP, responsive `srcset`  | Hugo Extended (build time)                             |
+| Markdown `![]()` auto-optimization | `layouts/_default/_markup/render-image.html`           |
+| Captioned / linked figures         | `layouts/shortcodes/figure.html`                       |
+| Explicit responsive image          | `layouts/shortcodes/img.html`                          |
+| The shared engine all three call   | `layouts/partials/responsive-image.html`               |
+| Animated GIF → MP4/WebM            | `scripts/convert-images.sh` (ffmpeg) + `{{< video >}}` |
+| SVG optimization                   | SVGO (`svgo.config.mjs`, pre-commit)                   |
+| Repo/build bloat guard             | `scripts/check-image-sizes.sh` (pre-commit)            |
 
 ### The engine
 

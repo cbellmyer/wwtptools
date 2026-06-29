@@ -1298,7 +1298,7 @@ body.matrix {
   --tk-border: #2d3a50;
   --tk-sub: #242e40;
   --tk-hdr: #0d1424;
-  --tk-label: #546878;
+  --tk-label: #849fb5; /* matches toolkit.css; #546878 failed WCAG AA contrast */
   --tk-notes-bg: #0c1520;
   --tk-input-bg: #0f1620;
   --tk-green: #40e060;
@@ -1909,8 +1909,15 @@ body.matrix {
 
 /* <picture> is inline by default; let it fill the content column. */
 figure picture,
+picture,
 .guide-content picture {
   display: block;
+}
+
+/* Safety net for any lazy-loaded image without the responsive-img class */
+img[loading="lazy"] {
+  max-width: 100%;
+  height: auto;
 }
 
 .responsive-img.align-center,
