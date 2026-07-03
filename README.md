@@ -8,12 +8,12 @@ Free process calculators, reference tables, and field guides for wastewater trea
 
 ## What's in the Toolkit
 
-| Section             | Description                                                                                                                                                                                                     |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Calculators**     | 12+ process calculators — activated sludge, hydraulics, solids handling, digester operations. Live results as you type.                                                                                         |
-| **Reference**       | 12 reference tables in four categories: Process Parameters (DO, pH, loading rates, temperature, conversions), Chemistry & Dosing, Solids & Biosolids, and Laboratory (filamentous organisms, standard methods). |
-| **Field Guides**    | 9+ published operational guides organized into four categories: Operations, Troubleshooting, Site, and Laboratory. Laboratory guides are draft; all others are published.                                       |
-| **Decision Matrix** | _(In development)_ Symptom-driven process troubleshooting across all treatment zones.                                                                                                                           |
+| Section             | Description                                                                                                                                                                                                                                                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Calculators**     | 12+ process calculators — activated sludge, hydraulics, solids handling, digester operations. Live results as you type.                                                                                                                                                                                                             |
+| **Reference**       | 12 reference tables in four categories: Process Parameters (DO, pH, loading rates, temperature, conversions), Chemistry & Dosing, Solids & Biosolids, and Laboratory (filamentous organisms, standard methods).                                                                                                                     |
+| **Field Guides**    | 9+ published operational guides organized into four categories: Operations, Troubleshooting, Site, and Laboratory. Laboratory guides are draft; all others are published.                                                                                                                                                           |
+| **Decision Matrix** | _(Draft)_ Guided, symptom-driven process troubleshooting. Activated Sludge zone is live — pick a treatment area, choose the symptom you're seeing, and follow the branching diagnostic path to probable causes and corrective actions, with schematic figures on appearance-based steps. Additional treatment zones in development. |
 
 ---
 
@@ -54,7 +54,7 @@ wwtptools/
 │   ├── hugo.yaml             # Site config and nav menu
 │   ├── content/              # Content stubs and guide markdown files
 │   │   └── guides/           # Individual field guide .md files
-│   ├── data/                 # YAML data files (calculators, reference tables, what's new)
+│   ├── data/                 # YAML data files (calculators, reference tables, decision matrix, what's new)
 │   ├── layouts/              # Custom page layouts (override theme)
 │   │   ├── partials/         # Header, footer, head extensions
 │   │   └── *.html            # Page templates: home, toolkit, reference, guides, guide, matrix, about

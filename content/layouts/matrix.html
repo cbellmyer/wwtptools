@@ -36,49 +36,33 @@
                     <span class="mx-tool-zone-code">{{ $zone.code }}</span>
                     <div class="mx-tool-zone-info">
                         <div class="mx-tool-zone-label">{{ $zone.label }}</div>
-                        <div class="mx-tool-zone-desc">{{ $zone.description }} &mdash; select a symptom below</div>
+                        <div class="mx-tool-zone-desc">{{ $zone.description }} &mdash; pick a treatment area, choose the symptom you&rsquo;re seeing, then follow the diagnostic path</div>
                     </div>
                 </div>
 
-                <div class="mx-symptom-grid" role="group" aria-label="Select a symptom">
-                    {{ range $zone.symptoms }}
-                    <button class="mx-symptom-btn" data-symptom="{{ .id }}" aria-expanded="false" aria-controls="mx-panel-{{ .id }}">
-                        {{ .label }}
-                    </button>
-                    {{ end }}
-                </div>
-
-                {{ range $zone.symptoms }}
-                <div id="mx-panel-{{ .id }}" class="mx-diagnosis-panel" hidden aria-label="{{ .label }} diagnostic">
-                    <div class="mx-panel-hdr">
-                        <div class="mx-panel-title">{{ .label }}</div>
-                        <div class="mx-panel-desc">{{ .description }}</div>
-                    </div>
-                    <div class="mx-cause-list">
-                        {{ range .causes }}
-                        <div class="mx-cause">
-                            <div class="mx-cause-name">{{ .label }}</div>
-                            <div class="mx-cause-body">
-                                <div class="mx-cause-col">
-                                    <div class="mx-cause-col-lbl">[ Indicators ]</div>
-                                    <ul>
-                                        {{ range .indicators }}<li>{{ . }}</li>{{ end }}
-                                    </ul>
-                                </div>
-                                <div class="mx-cause-col mx-cause-col--response">
-                                    <div class="mx-cause-col-lbl">[ First Response ]</div>
-                                    <ul>
-                                        {{ range .response }}<li>{{ . }}</li>{{ end }}
-                                    </ul>
-                                </div>
-                            </div>
-                            {{ with .note }}<p class="mx-cause-note">{{ . }}</p>{{ end }}
+                <div id="mx-canvas" class="mx-canvas" data-state="idle">
+                    <div class="mx-panel">
+                        <div class="mx-panel-hdr">
+                            <span class="mx-panel-hdr-label" id="mx-panel-title">Treatment Areas</span>
+                            <span class="mx-panel-hdr-count" id="mx-symptom-count"></span>
                         </div>
-                        {{ end }}
+                        <div class="mx-search">
+                            <span class="mx-search-icon" aria-hidden="true">⌕</span>
+                            <input type="text" id="mx-search" class="mx-search-input"
+                                   placeholder="Filter symptoms…" autocomplete="off" spellcheck="false"
+                                   aria-label="Filter symptoms">
+                            <button type="button" class="mx-search-clear" id="mx-search-clear"
+                                    aria-label="Clear filter" hidden>×</button>
+                        </div>
+                        <div class="mx-symptom-list" id="mx-symptom-list"></div>
                     </div>
+                    <div class="mx-diag-col" id="mx-diag-col"></div>
                 </div>
-                {{ end }}
             </div>
+
+            <script>
+            var MX_ZONE = {{ $zone | jsonify | safeJS }};
+            </script>
 
             <div class="matrix-zones-section">
                 <div class="matrix-overview-label">[ More Zones Coming ]</div>
@@ -149,33 +133,553 @@
     {{- partial "footer.html" . -}}
 
     <script>
-    /* ── Matrix symptom picker ──────────────────────────────── */
+    /* ── Matrix figure library — schematic SVGs, theme-matched ── */
     (function () {
-        var btns = document.querySelectorAll('.mx-symptom-btn');
-        btns.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var id = btn.dataset.symptom;
-                var panel = document.getElementById('mx-panel-' + id);
-                var isActive = btn.classList.contains('is-active');
+        var C = {
+            ln: '#7b8794', glass: '#0e2431', grid: '#4a5a6e',
+            water: '#123a4d', sludge: '#7a5733', sludgeDk: '#523a22',
+            foam: '#d7dee6', blue: '#38bdf8', amber: '#fbbf24',
+            red: '#f87171', violet: '#a78bfa', green: '#4ade80'
+        };
 
-                btns.forEach(function (b) {
-                    b.classList.remove('is-active');
-                    b.setAttribute('aria-expanded', 'false');
-                });
-                document.querySelectorAll('.mx-diagnosis-panel').forEach(function (p) {
-                    p.hidden = true;
-                });
+        /* graduated jar frame; caller supplies inner contents (y 9→57, x 17→47) */
+        function jar(inner) {
+            return '<svg viewBox="0 0 64 64" class="mx-fig" aria-hidden="true">' +
+                '<rect x="16" y="8" width="32" height="50" rx="4" fill="' + C.glass +
+                    '" stroke="' + C.ln + '" stroke-width="1.6"/>' +
+                '<g stroke="' + C.ln + '" stroke-width="1" opacity=".5">' +
+                    '<line x1="42" y1="18" x2="47" y2="18"/><line x1="42" y1="28" x2="47" y2="28"/>' +
+                    '<line x1="42" y1="38" x2="47" y2="38"/><line x1="42" y1="48" x2="47" y2="48"/>' +
+                '</g>' + inner + '</svg>';
+        }
+        /* wide tank frame (surface view) */
+        function tank(inner) {
+            return '<svg viewBox="0 0 64 64" class="mx-fig" aria-hidden="true">' +
+                '<rect x="6" y="18" width="52" height="40" rx="2" fill="' + C.glass +
+                    '" stroke="' + C.ln + '" stroke-width="1.6"/>' + inner + '</svg>';
+        }
 
-                if (!isActive) {
-                    btn.classList.add('is-active');
-                    btn.setAttribute('aria-expanded', 'true');
-                    if (panel) {
-                        panel.hidden = false;
-                        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        var F = {};
+
+        /* ---- Foam appearance (aeration surface) ---- */
+        F.foam_white_sudsy = tank(
+            '<g fill="none" stroke="' + C.foam + '" stroke-width="1.3" opacity=".9">' +
+            '<circle cx="13" cy="17" r="3"/><circle cx="21" cy="15" r="2.3"/>' +
+            '<circle cx="29" cy="17" r="3.3"/><circle cx="38" cy="15" r="2.2"/>' +
+            '<circle cx="46" cy="17" r="2.9"/><circle cx="53" cy="16" r="2"/>' +
+            '<circle cx="17" cy="20" r="1.6"/><circle cx="34" cy="20" r="1.6"/>' +
+            '<circle cx="50" cy="20" r="1.5"/></g>');
+        F.foam_brown_greasy = tank(
+            '<path d="M6 26 Q16 18 26 26 T46 26 Q52 22 58 26 L58 38 L6 38 Z" ' +
+                'fill="' + C.sludge + '" opacity=".85"/>' +
+            '<path d="M6 26 Q16 18 26 26 T46 26 Q52 22 58 26" fill="none" ' +
+                'stroke="' + C.sludge + '" stroke-width="1.4"/>' +
+            '<path d="M12 30 q6 2 12 0 t12 0" fill="none" stroke="#caa06e" ' +
+                'stroke-width="1" opacity=".6"/>');
+        F.foam_nocardia = tank(
+            '<g fill="' + C.foam + '" opacity=".82">' +
+            '<circle cx="14" cy="22" r="6"/><circle cx="24" cy="20" r="7"/>' +
+            '<circle cx="35" cy="22" r="6.5"/><circle cx="45" cy="20" r="7"/>' +
+            '<circle cx="53" cy="23" r="5.5"/></g>' +
+            '<rect x="6" y="24" width="52" height="10" fill="' + C.foam + '" opacity=".5"/>');
+
+        /* ---- Settleometer appearance (30-min settling) ---- */
+        F.settle_bulking = jar(
+            '<rect x="17" y="19" width="30" height="38" fill="' + C.sludge + '" opacity=".45"/>' +
+            '<path d="M17 19 q4 -4 7.5 0 t7.5 0 t7.5 0 t7.5 0" fill="none" ' +
+                'stroke="' + C.sludge + '" stroke-width="1.4" opacity=".9"/>' +
+            '<text x="50" y="21" font-size="6" fill="' + C.ln + '" font-family="monospace">↑</text>');
+        F.settle_rising = jar(
+            '<rect x="17" y="44" width="30" height="13" fill="' + C.sludge + '" opacity=".7"/>' +
+            '<g fill="' + C.sludge + '" opacity=".7">' +
+            '<circle cx="24" cy="18" r="2.6"/><circle cx="33" cy="15" r="2.2"/>' +
+            '<circle cx="40" cy="20" r="2.4"/><circle cx="29" cy="24" r="1.8"/></g>' +
+            '<text x="19" y="14" font-size="6" fill="' + C.amber + '" font-family="monospace">↑</text>');
+        F.settle_dispersed = jar(
+            '<rect x="17" y="9" width="30" height="48" fill="' + C.sludge + '" opacity=".22"/>' +
+            '<g fill="' + C.sludge + '" opacity=".55">' +
+            '<circle cx="24" cy="20" r="1"/><circle cx="34" cy="16" r="1"/><circle cx="40" cy="26" r="1"/>' +
+            '<circle cx="22" cy="34" r="1"/><circle cx="33" cy="40" r="1"/><circle cx="41" cy="46" r="1"/>' +
+            '<circle cx="26" cy="48" r="1"/><circle cx="37" cy="30" r="1"/></g>');
+        F.settle_viscous = jar(
+            '<rect x="17" y="23" width="30" height="34" rx="2" fill="' + C.sludge + '" opacity=".62"/>' +
+            '<path d="M17 23 h30" fill="none" stroke="' + C.sludge + '" stroke-width="1.4"/>' +
+            '<path d="M21 28 q3 3 0 6" fill="none" stroke="#caa06e" stroke-width="1" opacity=".55"/>');
+
+        /* ---- Mixed-liquor color ---- */
+        function mlJar(fill, op) {
+            return jar('<rect x="17" y="12" width="30" height="45" rx="2" fill="' + fill +
+                '" opacity="' + op + '"/>');
+        }
+        F.ml_dark = mlJar('#2c1f12', 0.92);
+        F.ml_pale = mlJar('#b09a72', 0.5);
+        F.ml_unusual = jar(
+            '<defs><linearGradient id="mlU" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="' + C.violet + '"/>' +
+            '<stop offset="1" stop-color="' + C.red + '"/></linearGradient></defs>' +
+            '<rect x="17" y="12" width="30" height="45" rx="2" fill="url(#mlU)" opacity=".5"/>');
+
+        /* ---- Effluent solids appearance ---- */
+        F.blanket_rising = tank(
+            '<rect x="6" y="40" width="52" height="18" fill="' + C.sludge + '" opacity=".6"/>' +
+            '<path d="M6 40 Q22 30 38 38 T58 34 L58 40 Z" fill="' + C.sludge + '" opacity=".45"/>' +
+            '<g stroke="' + C.amber + '" stroke-width="1.2" opacity=".8">' +
+            '<line x1="16" y1="40" x2="16" y2="32"/><line x1="30" y1="38" x2="30" y2="30"/>' +
+            '<line x1="44" y1="36" x2="44" y2="28"/></g>');
+        F.pin_floc = tank(
+            '<g fill="' + C.sludge + '" opacity=".75">' +
+            '<circle cx="14" cy="28" r="1"/><circle cx="24" cy="34" r="1"/><circle cx="33" cy="26" r="1"/>' +
+            '<circle cx="42" cy="38" r="1"/><circle cx="50" cy="30" r="1"/><circle cx="19" cy="46" r="1"/>' +
+            '<circle cx="37" cy="48" r="1"/><circle cx="47" cy="45" r="1"/><circle cx="29" cy="42" r="1"/></g>');
+        F.floating_clumps = tank(
+            '<g fill="' + C.sludge + '" opacity=".7">' +
+            '<ellipse cx="16" cy="24" rx="7" ry="4"/><ellipse cx="33" cy="22" rx="9" ry="4.5"/>' +
+            '<ellipse cx="49" cy="25" rx="6" ry="3.5"/></g>' +
+            '<line x1="6" y1="30" x2="58" y2="30" stroke="' + C.ln + '" stroke-width=".8" opacity=".5"/>');
+
+        /* ---- Larger diagnosis diagrams (viewBox 0 0 200 108) ---- */
+        F.clarifier_xsection = '<svg viewBox="0 0 200 108" class="mx-fig mx-fig--wide" aria-hidden="true">' +
+            '<path d="M14 20 H186 V78 L150 92 H50 L14 78 Z" fill="' + C.glass +
+                '" stroke="' + C.ln + '" stroke-width="1.6"/>' +
+            /* clear supernatant band */
+            '<rect x="15" y="21" width="170" height="20" fill="' + C.water + '" opacity=".35"/>' +
+            /* rising sludge blanket */
+            '<path d="M15 74 L15 60 Q60 46 110 52 T185 44 L185 74 L150 90 H50 Z" ' +
+                'fill="' + C.sludge + '" opacity=".55"/>' +
+            '<path d="M15 60 Q60 46 110 52 T185 44" fill="none" stroke="' + C.sludge +
+                '" stroke-width="1.4"/>' +
+            /* center feed well */
+            '<rect x="92" y="14" width="16" height="30" fill="' + C.glass + '" stroke="' + C.ln +
+                '" stroke-width="1.2"/>' +
+            '<line x1="100" y1="6" x2="100" y2="14" stroke="' + C.blue + '" stroke-width="2"/>' +
+            /* effluent weir + outflow */
+            '<path d="M178 21 l0 5 l6 0" fill="none" stroke="' + C.green + '" stroke-width="1.4"/>' +
+            '<line x1="184" y1="26" x2="196" y2="26" stroke="' + C.green + '" stroke-width="2"/>' +
+            /* RAS draw */
+            '<line x1="100" y1="90" x2="100" y2="102" stroke="' + C.amber + '" stroke-width="2"/>' +
+            '<g font-family="monospace" font-size="7" fill="' + C.ln + '">' +
+            '<text x="20" y="52">SUPERNATANT</text>' +
+            '<text x="118" y="70" fill="#b98a55">RISING BLANKET</text>' +
+            '<text x="150" y="18" fill="' + C.green + '">WEIR →</text>' +
+            '<text x="104" y="101" fill="' + C.amber + '">RAS/WAS</text>' +
+            '<text x="90" y="12" fill="' + C.blue + '">IN</text></g></svg>';
+
+        F.settleometer = '<svg viewBox="0 0 200 108" class="mx-fig mx-fig--wide" aria-hidden="true">' +
+            '<rect x="70" y="10" width="46" height="88" rx="4" fill="' + C.glass +
+                '" stroke="' + C.ln + '" stroke-width="1.6"/>' +
+            '<rect x="71" y="66" width="44" height="31" fill="' + C.sludge + '" opacity=".55"/>' +
+            '<path d="M71 66 h44" stroke="' + C.sludge + '" stroke-width="1.4"/>' +
+            '<g stroke="' + C.ln + '" stroke-width="1" opacity=".55" font-family="monospace" font-size="7" fill="' + C.ln + '">' +
+            '<line x1="110" y1="22" x2="116" y2="22"/><text x="120" y="25">1000</text>' +
+            '<line x1="110" y1="44" x2="116" y2="44"/><text x="120" y="47">750</text>' +
+            '<line x1="110" y1="66" x2="116" y2="66"/><text x="120" y="69" fill="#b98a55">SV30 →</text>' +
+            '<line x1="110" y1="88" x2="116" y2="88"/><text x="120" y="91">250</text></g>' +
+            '<g font-family="monospace" font-size="7" fill="' + C.blue + '">' +
+            '<text x="14" y="40">CLEAR</text><text x="14" y="52">SUPER-</text><text x="14" y="64">NATANT</text></g>' +
+            '<text x="30" y="86" font-family="monospace" font-size="7" fill="#b98a55">SETTLED</text>' +
+            '<text x="30" y="96" font-family="monospace" font-size="7" fill="#b98a55">SLUDGE</text></svg>';
+
+        F.diffuser_grid = '<svg viewBox="0 0 200 108" class="mx-fig mx-fig--wide" aria-hidden="true">' +
+            '<rect x="12" y="14" width="176" height="82" rx="2" fill="' + C.glass +
+                '" stroke="' + C.ln + '" stroke-width="1.6"/>' +
+            /* header pipe */
+            '<line x1="20" y1="86" x2="180" y2="86" stroke="' + C.ln + '" stroke-width="3"/>' +
+            /* healthy diffusers with bubbles */
+            '<g fill="' + C.blue + '" opacity=".85">' +
+            '<circle cx="45" cy="70" r="1.6"/><circle cx="43" cy="58" r="1.6"/><circle cx="48" cy="48" r="1.6"/><circle cx="45" cy="38" r="1.6"/>' +
+            '<circle cx="90" cy="70" r="1.6"/><circle cx="93" cy="58" r="1.6"/><circle cx="88" cy="48" r="1.6"/><circle cx="91" cy="38" r="1.6"/>' +
+            '<circle cx="135" cy="70" r="1.6"/><circle cx="132" cy="58" r="1.6"/><circle cx="137" cy="48" r="1.6"/><circle cx="134" cy="38" r="1.6"/></g>' +
+            '<g stroke="' + C.blue + '" stroke-width="2">' +
+            '<line x1="45" y1="86" x2="45" y2="82"/><line x1="90" y1="86" x2="90" y2="82"/><line x1="135" y1="86" x2="135" y2="82"/></g>' +
+            /* broken lateral, no bubbles */
+            '<line x1="168" y1="86" x2="168" y2="82" stroke="' + C.red + '" stroke-width="2"/>' +
+            '<line x1="164" y1="78" x2="172" y2="70" stroke="' + C.red + '" stroke-width="1.6"/>' +
+            '<line x1="172" y1="78" x2="164" y2="70" stroke="' + C.red + '" stroke-width="1.6"/>' +
+            '<g font-family="monospace" font-size="7" fill="' + C.ln + '">' +
+            '<text x="30" y="26" fill="' + C.blue + '">EVEN AERATION</text>' +
+            '<text x="150" y="60" fill="' + C.red + '">FOULED/</text>' +
+            '<text x="150" y="70" fill="' + C.red + '">BROKEN</text></g></svg>';
+
+        window.MX_FIGURES = F;
+    })();
+    </script>
+
+    <script>
+    /* ── Matrix diagnostic tree — click-through UI ───────────── */
+    (function () {
+        var zone = MX_ZONE;
+        var diagnoses = zone.diagnoses || {};
+        var symptoms = zone.symptoms || [];
+        var subsystems = zone.subsystems || [];
+        var figures = window.MX_FIGURES || {};
+
+        var state = {
+            symptomId: null,
+            qId: 'q1',
+            history: [],   /* [{qId, label}] */
+            diagnosisId: null,
+            filter: '',
+            groupId: null   /* selected treatment area */
+        };
+
+        var _opts = [];
+
+        function escHtml(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function sevOrder(s) {
+            return s === 'high' ? 3 : s === 'moderate' ? 2 : 1;
+        }
+
+        function symMaxSev(symptom) {
+            var qMap = {};
+            (symptom.questions || []).forEach(function (q) { qMap[q.id] = q; });
+            var best = 'low';
+            function visit(qId, depth) {
+                if (depth > 20) return;
+                var q = qMap[qId];
+                if (!q) return;
+                (q.options || []).forEach(function (opt) {
+                    if (opt.next === 'diagnosis' && opt.diagnosis) {
+                        var d = diagnoses[opt.diagnosis];
+                        if (d && sevOrder(d.severity) > sevOrder(best)) best = d.severity;
+                    } else if (opt.next && opt.next !== 'diagnosis') {
+                        visit(opt.next, depth + 1);
                     }
+                });
+            }
+            visit('q1', 0);
+            return best;
+        }
+
+        function selectGroup(gId) {
+            state.groupId = gId;
+            state.symptomId = null;
+            state.qId = 'q1';
+            state.history = [];
+            state.diagnosisId = null;
+            renderCanvas();
+        }
+
+        function backToGroups() {
+            state.groupId = null;
+            state.symptomId = null;
+            state.qId = 'q1';
+            state.history = [];
+            state.diagnosisId = null;
+            renderCanvas();
+        }
+
+        function selectSymptom(symId) {
+            var sym = symptoms.find(function (s) { return s.id === symId; });
+            if (sym && sym.group) state.groupId = sym.group;   /* keep area context when jumping via search */
+            state.symptomId = symId;
+            state.qId = 'q1';
+            state.history = [];
+            state.diagnosisId = null;
+            renderCanvas();
+            var canvas = document.getElementById('mx-canvas');
+            if (canvas) canvas.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function handleOption(idx) {
+            var opt = _opts[idx];
+            if (!opt) return;
+            state.history.push({ qId: state.qId, label: opt.label });
+            if (opt.next === 'diagnosis') {
+                state.diagnosisId = opt.diagnosis || null;
+                state.qId = null;
+            } else {
+                state.qId = opt.next;
+                state.diagnosisId = null;
+            }
+            renderCanvas();
+        }
+
+        function handleBack() {
+            if (state.history.length === 0) {
+                backToSymptoms();
+                return;
+            }
+            var prev = state.history.pop();
+            state.qId = prev.qId;
+            state.diagnosisId = null;
+            renderCanvas();
+        }
+
+        function backToSymptoms() {
+            state.symptomId = null;
+            state.qId = 'q1';
+            state.history = [];
+            state.diagnosisId = null;
+            renderCanvas();
+        }
+
+        function renderBreadcrumb(symptomLabel) {
+            if (!state.history.length) return '';
+            var rows = state.history.map(function (h) {
+                return '<div class="mx-breadcrumb-row">' +
+                    '<span class="mx-bc-a">' + escHtml(h.label) + '</span>' +
+                    '</div>';
+            }).join('');
+            return '<div class="mx-breadcrumb">' +
+                '<div class="mx-breadcrumb-hdr">PATH &middot; ' + escHtml(symptomLabel) + '</div>' +
+                rows +
+                '</div>';
+        }
+
+        function renderQuestion(symptom, q) {
+            _opts = q.options || [];
+            var qNum = (q.id || 'q1').replace('q', '');
+            var hasFigs = _opts.some(function (o) { return o.figure && figures[o.figure]; });
+            var options = _opts.map(function (opt, i) {
+                var fig = opt.figure && figures[opt.figure]
+                    ? '<span class="mx-q-option-fig">' + figures[opt.figure] + '</span>'
+                    : '';
+                return '<button class="mx-q-option' + (hasFigs ? ' has-fig' : '') + '" data-idx="' + i + '">' +
+                    fig +
+                    '<span class="mx-q-option-label">' + escHtml(opt.label) + '</span>' +
+                    '<span class="mx-q-option-arrow">&rsaquo;</span>' +
+                    '</button>';
+            }).join('');
+
+            return renderBreadcrumb(symptom.label) +
+                '<div class="mx-q-card">' +
+                '<div class="mx-q-hdr">' +
+                '<span class="mx-q-step">Question ' + qNum + '</span>' +
+                '<span class="mx-q-symptom-hint">' + escHtml(symptom.label) + '</span>' +
+                '</div>' +
+                '<div class="mx-q-body">' +
+                '<div class="mx-q-text">' + escHtml(q.text) + '</div>' +
+                '<div class="mx-q-options' + (hasFigs ? ' mx-q-options--grid' : '') + '">' + options + '</div>' +
+                '</div>' +
+                '</div>' +
+                '<button class="mx-back-btn" id="mx-back-btn">&larr; Back</button>';
+        }
+
+        function renderDiagnosis(symptom, diagId) {
+            var d = diagnoses[diagId];
+            if (!d) {
+                return '<div class="mx-await"><div class="mx-await-icon">&#9888;</div>' +
+                    '<div class="mx-await-label">Diagnosis record not found</div></div>';
+            }
+
+            var sev = d.severity || 'low';
+            var sevLabel = sev === 'high' ? 'High Severity' : sev === 'moderate' ? 'Moderate Severity' : 'Low Severity';
+
+            var figHtml = d.figure && figures[d.figure]
+                ? '<div class="mx-diag-fig">' + figures[d.figure] +
+                    (d.figureCaption ? '<div class="mx-diag-fig-cap">' + escHtml(d.figureCaption) + '</div>' : '') +
+                    '</div>'
+                : '';
+
+            var causes = (d.causes || []).map(function (c) {
+                return '<li class="mx-cause-item">' + escHtml(c) + '</li>';
+            }).join('');
+
+            var actions = (d.actions || []).map(function (a, i) {
+                var n = String(i + 1).padStart(2, '0');
+                return '<li class="mx-action-item"><span class="mx-action-num">' + n + '</span>' + escHtml(a) + '</li>';
+            }).join('');
+
+            var noteHtml = d.note
+                ? '<div class="mx-note-box">' +
+                    '<div class="mx-note-label">OPERATOR NOTE</div>' +
+                    '<div>' + escHtml(d.note) + '</div>' +
+                    '</div>'
+                : '';
+
+            return renderBreadcrumb(symptom.label) +
+                '<div class="mx-diag-card ' + sev + '">' +
+                '<div class="mx-diag-hdr ' + sev + '">' +
+                '<div class="mx-diag-title">' + escHtml(d.title) + '</div>' +
+                '<span class="mx-sev-badge ' + sev + '">' + sevLabel + '</span>' +
+                '</div>' +
+                figHtml +
+                '<div class="mx-diag-body">' +
+                '<div>' +
+                '<div class="mx-section-label">Probable Causes</div>' +
+                '<ul class="mx-cause-list">' + causes + '</ul>' +
+                '</div>' +
+                '<div>' +
+                '<div class="mx-section-label">Recommended Actions</div>' +
+                '<ul class="mx-action-list">' + actions + '</ul>' +
+                '</div>' +
+                noteHtml +
+                '</div>' +
+                '</div>' +
+                '<button class="mx-back-btn" id="mx-back-btn">&larr; Back</button>';
+        }
+
+        function symMatches(sym, f) {
+            if (!f) return true;
+            return String(sym.label || '').toLowerCase().indexOf(f) !== -1 ||
+                   String(sym.id || '').toLowerCase().indexOf(f) !== -1;
+        }
+
+        function symItemHtml(sym) {
+            var sev = symMaxSev(sym);
+            var active = sym.id === state.symptomId ? ' active' : '';
+            return '<div class="mx-symptom-item' + active + '" data-symptom="' + escHtml(sym.id) + '">' +
+                '<span class="mx-sev-dot ' + sev + '"></span>' +
+                '<span class="mx-symptom-text">' + escHtml(sym.label) + '</span>' +
+                '</div>';
+        }
+
+        function buildGroups() {
+            if (!subsystems.length) {
+                return [{ id: '_all', label: '', items: symptoms.slice() }];
+            }
+            var groups = subsystems.map(function (ss) {
+                return {
+                    id: ss.id, label: ss.label, desc: ss.desc,
+                    items: symptoms.filter(function (s) { return s.group === ss.id; })
+                };
+            });
+            var known = {};
+            subsystems.forEach(function (ss) { known[ss.id] = true; });
+            var orphans = symptoms.filter(function (s) { return !known[s.group]; });
+            if (orphans.length) groups.push({ id: '_other', label: 'Other', items: orphans });
+            return groups;
+        }
+
+        function renderSymptomList() {
+            var list = document.getElementById('mx-symptom-list');
+            var count = document.getElementById('mx-symptom-count');
+            var title = document.getElementById('mx-panel-title');
+            if (!list) return;
+
+            var f = (state.filter || '').trim().toLowerCase();
+            var filtering = f.length > 0;
+            var groups = buildGroups();
+            var html = '';
+
+            if (filtering) {
+                /* search jumps straight past the area step */
+                var matched = symptoms.filter(function (s) { return symMatches(s, f); });
+                if (title) title.textContent = 'Search';
+                if (count) count.textContent = matched.length + ' / ' + symptoms.length;
+                html = matched.length
+                    ? '<div class="mx-sym-group-items">' + matched.map(symItemHtml).join('') + '</div>'
+                    : '<div class="mx-sym-empty">No symptoms match &ldquo;' +
+                        escHtml(state.filter.trim()) + '&rdquo;</div>';
+            } else if (!state.groupId) {
+                /* stage 1 — choose a treatment area */
+                if (title) title.textContent = 'Treatment Areas';
+                if (count) count.textContent = groups.length + (groups.length === 1 ? ' area' : ' areas');
+                html = '<div class="mx-grouplist">' + groups.map(function (g) {
+                    return '<button type="button" class="mx-group-pick" data-pick="' + escHtml(g.id) + '">' +
+                        '<span class="mx-group-pick-main">' +
+                        '<span class="mx-group-pick-name">' + escHtml(g.label || 'Symptoms') + '</span>' +
+                        (g.desc ? '<span class="mx-group-pick-desc">' + escHtml(g.desc) + '</span>' : '') +
+                        '</span>' +
+                        '<span class="mx-group-pick-meta">' +
+                        '<span class="mx-group-pick-count">' + g.items.length + '</span>' +
+                        '<span class="mx-group-pick-arrow">&rsaquo;</span>' +
+                        '</span>' +
+                        '</button>';
+                }).join('') + '</div>';
+            } else {
+                /* stage 2 — symptoms within the chosen area */
+                var grp = groups.filter(function (g) { return g.id === state.groupId; })[0] || groups[0];
+                if (title) title.textContent = grp.label || 'Symptoms';
+                if (count) count.textContent = grp.items.length + (grp.items.length === 1 ? ' symptom' : ' symptoms');
+                html = '<button type="button" class="mx-sym-back" data-back="1">' +
+                        '<span class="mx-sym-back-arrow">&lsaquo;</span> All treatment areas</button>' +
+                    '<div class="mx-sym-group-items">' + grp.items.map(symItemHtml).join('') + '</div>';
+            }
+
+            list.innerHTML = html;
+
+            list.querySelectorAll('.mx-symptom-item').forEach(function (el) {
+                el.addEventListener('click', function () { selectSymptom(el.dataset.symptom); });
+            });
+            list.querySelectorAll('.mx-group-pick').forEach(function (el) {
+                el.addEventListener('click', function () { selectGroup(el.dataset.pick); });
+            });
+            list.querySelectorAll('.mx-sym-back').forEach(function (el) {
+                el.addEventListener('click', backToGroups);
+            });
+        }
+
+        function renderDiagCol() {
+            var col = document.getElementById('mx-diag-col');
+            if (!col) return;
+
+            var html;
+            if (!state.symptomId) {
+                var hint = !state.groupId && !(state.filter || '').trim()
+                    ? 'Select a treatment area, then choose the symptom you&rsquo;re observing.'
+                    : 'Choose the symptom you&rsquo;re observing to begin the diagnostic path.';
+                html = '<div class="mx-await">' +
+                    '<div class="mx-await-icon">&#11041;</div>' +
+                    '<div class="mx-await-label">Awaiting Input</div>' +
+                    '<div class="mx-await-hint">' + hint + '</div>' +
+                    '</div>';
+            } else {
+                var sym = symptoms.find(function (s) { return s.id === state.symptomId; });
+                if (!sym) {
+                    html = '<div class="mx-await"><div class="mx-await-label">Symptom not found</div></div>';
+                } else if (state.diagnosisId) {
+                    html = renderDiagnosis(sym, state.diagnosisId);
+                } else {
+                    var qMap = {};
+                    (sym.questions || []).forEach(function (q) { qMap[q.id] = q; });
+                    var currentQ = qMap[state.qId || 'q1'];
+                    html = currentQ
+                        ? renderQuestion(sym, currentQ)
+                        : '<div class="mx-await"><div class="mx-await-label">Question not found</div></div>';
+                }
+            }
+
+            col.innerHTML = html;
+
+            col.querySelectorAll('.mx-q-option').forEach(function (btn) {
+                btn.addEventListener('click', function () { handleOption(Number(btn.dataset.idx)); });
+            });
+            var backBtn = document.getElementById('mx-back-btn');
+            if (backBtn) backBtn.addEventListener('click', handleBack);
+        }
+
+        function renderCanvas() {
+            var canvas = document.getElementById('mx-canvas');
+            if (canvas) canvas.dataset.state = state.symptomId ? 'active' : 'idle';
+            renderSymptomList();
+            renderDiagCol();
+        }
+
+        var searchEl = document.getElementById('mx-search');
+        var clearEl = document.getElementById('mx-search-clear');
+        if (searchEl) {
+            searchEl.addEventListener('input', function () {
+                state.filter = searchEl.value;
+                if (clearEl) clearEl.hidden = !searchEl.value;
+                renderSymptomList();
+            });
+            searchEl.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && searchEl.value) {
+                    searchEl.value = '';
+                    state.filter = '';
+                    if (clearEl) clearEl.hidden = true;
+                    renderSymptomList();
                 }
             });
-        });
+        }
+        if (clearEl) {
+            clearEl.addEventListener('click', function () {
+                state.filter = '';
+                if (searchEl) { searchEl.value = ''; searchEl.focus(); }
+                clearEl.hidden = true;
+                renderSymptomList();
+            });
+        }
+
+        renderCanvas();
     })();
     </script>
 
