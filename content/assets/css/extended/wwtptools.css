@@ -26,6 +26,10 @@
   --amber-dim: #d97706;   /* amber-600 */
   --red:       #f87171;   /* red-400 */
 
+  /* Guide category accent */
+  --violet:     #a78bfa;   /* violet-400 */
+  --violet-dim: #7c3aed;   /* violet-600 */
+
   /* Compatibility aliases used by toolkit.css */
   --gray:       #94a3b8;
   --gray-dim:   #94a3b8;
@@ -34,6 +38,20 @@
   --yellow:     #38bdf8;
   --yellow-dim: #0284c7;
   --bm-red:     #f87171;
+
+  /* --- Modern UI tokens: radii, elevation, motion --- */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-pill: 999px;
+  --border-soft: rgb(148 163 184 / 14%);
+  --border-faint: rgb(148 163 184 / 8%);
+  --shadow-1: 0 1px 2px rgb(2 6 23 / 35%), 0 2px 10px rgb(2 6 23 / 25%);
+  --shadow-2: 0 2px 4px rgb(2 6 23 / 40%), 0 10px 28px rgb(2 6 23 / 30%);
+  --shadow-3: 0 4px 10px rgb(2 6 23 / 45%), 0 18px 44px rgb(2 6 23 / 35%);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-med:  250ms;
 }
 
 /* --- Global font scale --- */
@@ -110,7 +128,8 @@ body.home .header #menu .active {
 #nav-toggle {
   display: none;
   background: none;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
   color: var(--gray);
   cursor: pointer;
   padding: 0.28rem 0.7rem;
@@ -188,7 +207,7 @@ body.home .header #menu .active {
   border-top: 1px solid var(--border);
   padding: 2rem 4rem;
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   color: var(--gray-dim);
   letter-spacing: 0.1em;
   display: flex;
@@ -228,7 +247,8 @@ body.home .header #menu .active {
   color: var(--theme);
   text-decoration: none;
   font-weight: 700;
-  transition: all 0.2s;
+  border-radius: var(--radius-pill);
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
   display: inline-block;
   cursor: pointer;
 }
@@ -236,6 +256,8 @@ body.home .header #menu .active {
 .btn-primary:hover {
   background: var(--primary);
   color: var(--theme);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgb(56 189 248 / 25%);
 }
 
 .btn-ghost {
@@ -244,16 +266,19 @@ body.home .header #menu .active {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.8rem 1.8rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   color: var(--gray);
   text-decoration: none;
-  transition: all 0.2s;
+  border-radius: var(--radius-pill);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
   display: inline-block;
 }
 
 .btn-ghost:hover {
   border-color: var(--blue);
   color: var(--blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-1);
 }
 
 /* keep old alias */
@@ -263,16 +288,19 @@ body.home .header #menu .active {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.8rem 1.8rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   color: var(--gray);
   text-decoration: none;
-  transition: all 0.2s;
+  border-radius: var(--radius-pill);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
   display: inline-block;
 }
 
 .btn-secondary:hover {
   border-color: var(--blue);
   color: var(--blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-1);
 }
 
 /* ============================================================
@@ -307,7 +335,7 @@ body.home .header #menu .active {
 
 .hero-badge {
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   color: var(--blue);
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -374,7 +402,7 @@ body.home .header #menu .active {
 
 .stat-item {
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   letter-spacing: 0.1em;
   color: var(--gray);
   text-transform: uppercase;
@@ -416,7 +444,7 @@ body.home .header #menu .active {
 
 .modules-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--blue);
@@ -461,20 +489,23 @@ body.home .header #menu .active {
 
 .module-card {
   background: var(--bg2);
-  border: 1px solid var(--border);
   border-top: 3px solid transparent;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
   padding: 1.75rem;
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  transition: border-color 0.2s, background 0.2s;
+  transition: background var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
   position: relative;
 }
 
 .module-card:hover {
   background: var(--bg3);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
 }
 
 .module-card.blue  { border-top-color: var(--blue); }
@@ -507,7 +538,7 @@ body.home .header #menu .active {
 
 .module-count {
   font-family: 'Space Mono', monospace;
-  font-size: 0.5rem;
+  font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--gray-dim);
@@ -529,7 +560,7 @@ body.home .header #menu .active {
 
 .module-items li {
   font-family: 'Space Mono', monospace;
-  font-size: 0.52rem;
+  font-size: 0.62rem;
   letter-spacing: 0.06em;
   color: var(--gray);
   line-height: 2.2;
@@ -546,7 +577,7 @@ body.home .header #menu .active {
 
 .module-cta {
   font-family: 'Space Mono', monospace;
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-top: 0.5rem;
@@ -581,7 +612,7 @@ body.home .header #menu .active {
 
 .whats-new-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--blue);
@@ -612,13 +643,13 @@ body.home .header #menu .active {
 
 .whats-new-type {
   font-family: 'Space Mono', monospace;
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--blue);
   border: 1px solid var(--blue-dim);
-  padding: 0.1rem 0.35rem;
-  border-radius: 2px;
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--radius-pill);
   white-space: nowrap;
   opacity: 0.8;
 }
@@ -671,7 +702,7 @@ body.home .header #menu .active {
 
 .about-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--blue);
@@ -769,7 +800,7 @@ body.home .header #menu .active {
 
 .page-breadcrumb {
   font-family: 'Space Mono', monospace;
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--gray-dim);
@@ -841,7 +872,7 @@ body.home .header #menu .active {
 
 .section-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--blue);
@@ -891,7 +922,7 @@ body.home .header #menu .active {
 
 .story-nav-text {
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--gray-dim);
@@ -975,23 +1006,25 @@ body.about .story-sidebar {
 .guides-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
+  gap: 1.1rem;
 }
 
 .guide-card {
-  background: var(--theme);
+  background: var(--entry);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
   padding: 1.5rem 1.75rem;
   text-decoration: none;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  transition: background 0.15s;
+  transition: background var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
 }
 
 .guide-card:hover {
   background: var(--bg3);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
 }
 
 .guide-card-meta {
@@ -1009,9 +1042,11 @@ body.about .story-sidebar {
   color: var(--blue);
 }
 
-.category--troubleshooting { color: var(--amber); }
-.category--solids-handling { color: var(--green); }
-.category--contributing { color: var(--secondary); }
+.category--operations            { color: var(--blue); }
+.category--troubleshooting       { color: var(--amber); }
+.category--site                  { color: var(--green); }
+.category--laboratory { color: var(--violet); }
+.category--contributing          { color: var(--secondary); }
 
 .guide-card-status {
   font-family: 'Space Mono', monospace;
@@ -1047,7 +1082,23 @@ body.about .story-sidebar {
   color: var(--blue);
   margin-top: 0.4rem;
   padding-top: 0.75rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-faint);
+}
+
+.guides-category-section {
+  margin-top: 3rem;
+}
+
+.guides-category-section:first-child {
+  margin-top: 0;
+}
+
+.guides-category-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--secondary);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
 }
 
 .guides-meta-section {
@@ -1068,9 +1119,7 @@ body.about .story-sidebar {
 .guides-meta-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
+  gap: 1.1rem;
   max-width: 420px;
 }
 
@@ -1116,6 +1165,9 @@ body.about .story-sidebar {
 
 .tk-ref-table {
   overflow-x: auto;
+  background: var(--entry);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
 }
 
 .ref-table {
@@ -1142,7 +1194,7 @@ body.about .story-sidebar {
 .ref-table td {
   padding: 0.7rem 1rem;
   color: var(--content);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-faint);
   line-height: 1.4;
 }
 
@@ -1160,6 +1212,113 @@ body.about .story-sidebar {
   white-space: nowrap;
 }
 
+/* Reference page — category sections */
+.ref-category {
+  margin-bottom: 4rem;
+}
+
+.ref-category:last-child {
+  margin-bottom: 0;
+}
+
+.ref-category-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--secondary);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+/* Reference page — quick-jump nav */
+.ref-nav {
+  max-width: 1000px;
+  margin: 0 auto 2rem;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ref-nav-link {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--secondary);
+  text-decoration: none;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+  background: var(--bg2);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+
+.ref-nav-link:hover {
+  color: var(--blue);
+  border-color: var(--blue-dim);
+  transform: translateY(-1px);
+}
+
+/* Reference page — two-column grid for narrow table pairs */
+.ref-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.ref-grid .tk-section {
+  margin-bottom: 0;
+}
+
+@media (width <= 800px) {
+  .ref-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .ref-grid .tk-section {
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* Reference page — fixed column widths for wide tables */
+.ref-table--wide {
+  table-layout: fixed;
+}
+
+.ref-table--wide .col-label { width: 28%; }
+.ref-table--wide .col-value { width: 22%; }
+.ref-table--wide .col-notes { width: 50%; }
+
+.ref-table--wide .ref-value {
+  white-space: normal;
+}
+
+.ref-table--biosolids {
+  table-layout: fixed;
+}
+
+.ref-table--biosolids .col-criterion { width: 22%; }
+.ref-table--biosolids .col-a         { width: 39%; }
+.ref-table--biosolids .col-b         { width: 39%; }
+
+.ref-table--biosolids .ref-value {
+  white-space: normal;
+}
+
+/* Generic fixed-layout table — column widths set via inline <col> */
+.ref-table--fixed {
+  table-layout: fixed;
+}
+
+.ref-table--fixed .ref-value {
+  white-space: normal;
+}
+
 /* ============================================================
    MATRIX PAGE
    ============================================================ */
@@ -1170,7 +1329,7 @@ body.matrix {
   --tk-border: #2d3a50;
   --tk-sub: #242e40;
   --tk-hdr: #0d1424;
-  --tk-label: #546878;
+  --tk-label: #849fb5; /* matches toolkit.css; #546878 failed WCAG AA contrast */
   --tk-notes-bg: #0c1520;
   --tk-input-bg: #0f1620;
   --tk-green: #40e060;
@@ -1198,6 +1357,7 @@ body.matrix {
   padding: 0.85rem 1.25rem;
   background: rgb(56 189 248 / 6%);
   border: 1px solid rgb(56 189 248 / 20%);
+  border-radius: var(--radius-md);
   flex-wrap: wrap;
 }
 
@@ -1213,7 +1373,7 @@ body.matrix {
 
 .matrix-status-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--amber);
@@ -1222,7 +1382,7 @@ body.matrix {
 
 .matrix-status-desc {
   font-family: 'Space Mono', monospace;
-  font-size: 0.52rem;
+  font-size: 0.62rem;
   letter-spacing: 0.05em;
   color: var(--gray);
 }
@@ -1233,7 +1393,7 @@ body.matrix {
 
 .matrix-overview-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--blue);
@@ -1279,22 +1439,28 @@ body.matrix {
 .matrix-zones-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
+  gap: 1rem;
 }
 
 .mx-zone-card {
-  background: var(--theme);
+  background: var(--entry);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
   padding: 1.1rem 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  transition: background var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+}
+
+.mx-zone-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
 }
 
 .mx-zone-code {
   font-family: 'Space Mono', monospace;
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   letter-spacing: 0.2em;
   color: var(--blue);
   text-transform: uppercase;
@@ -1310,7 +1476,7 @@ body.matrix {
 
 .mx-zone-desc {
   font-family: 'Space Mono', monospace;
-  font-size: 0.46rem;
+  font-size: 0.6rem;
   letter-spacing: 0.04em;
   color: var(--gray-dim);
   line-height: 1.6;
@@ -1333,6 +1499,655 @@ body.matrix {
   }
 }
 
+/* ---- Matrix — live zone card ---- */
+.mx-zone-card--live {
+  border: 1px solid rgb(56 189 248 / 30%);
+  background: rgb(56 189 248 / 6%);
+}
+
+.mx-zone-card--live .mx-zone-code {
+  color: var(--blue);
+}
+
+.mx-zone-card--live .mx-zone-name {
+  color: var(--blue);
+}
+
+.mx-zone-live-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--blue);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+/* ---- Matrix — active tool section ---- */
+.mx-tool-section {
+  background: var(--bg2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2);
+  padding: 1.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.mx-tool-hdr {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.mx-tool-zone-code {
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--blue);
+  background: rgb(56 189 248 / 8%);
+  border: 1px solid rgb(56 189 248 / 35%);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.7rem;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+.mx-tool-zone-label {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--content);
+}
+
+.mx-tool-zone-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--secondary);
+  margin-top: 0.2rem;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Diagnostic tree canvas ---- */
+.mx-canvas {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.mx-panel {
+  background: var(--bg3);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+
+.mx-panel-hdr {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.mx-panel-hdr-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+.mx-panel-hdr-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--gray-dim);
+}
+
+.mx-symptom-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.mx-symptom-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.7rem;
+  color: var(--secondary);
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-faint);
+  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), padding-left var(--dur-fast) var(--ease-out);
+}
+
+.mx-symptom-item:last-child {
+  border-bottom: none;
+}
+
+.mx-symptom-item:hover {
+  color: var(--content);
+  background: rgb(56 189 248 / 4%);
+  padding-left: 1.1rem;
+}
+
+.mx-symptom-item.active {
+  color: var(--blue);
+  background: rgb(56 189 248 / 6%);
+}
+
+.mx-sev-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mx-sev-dot.low { background: var(--green); }
+.mx-sev-dot.moderate { background: var(--amber); }
+.mx-sev-dot.high { background: var(--red); }
+
+/* ---- Right column: await / question / diagnosis ---- */
+.mx-diag-col {
+  min-height: 260px;
+}
+
+.mx-await {
+  height: 100%;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  background: rgb(56 189 248 / 3%);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+}
+
+.mx-await-icon {
+  font-size: 1.3rem;
+  color: var(--gray-dim);
+}
+
+.mx-await-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+.mx-await-hint {
+  font-size: 0.75rem;
+  color: var(--gray-dim);
+  max-width: 32ch;
+}
+
+/* ---- Breadcrumb ---- */
+.mx-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  margin-bottom: 0.9rem;
+}
+
+.mx-breadcrumb-hdr {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-dim);
+  width: 100%;
+}
+
+.mx-breadcrumb-row {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--secondary);
+}
+
+.mx-breadcrumb-row::before {
+  content: '✓ ';
+  color: var(--blue);
+}
+
+/* ---- Question card ---- */
+.mx-q-card {
+  background: var(--bg3);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  animation: fade-up var(--dur-med) var(--ease-out);
+}
+
+.mx-q-hdr {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.7rem 1rem;
+  background: rgb(56 189 248 / 6%);
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.mx-q-step {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.mx-q-symptom-hint {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--gray-dim);
+}
+
+.mx-q-body {
+  padding: 1.1rem 1rem;
+}
+
+.mx-q-text {
+  font-size: 0.95rem;
+  color: var(--content);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.mx-q-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mx-q-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-family: inherit;
+  font-size: 0.78rem;
+  color: var(--content);
+  background: var(--theme);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.mx-q-option:hover {
+  color: var(--blue);
+  border-color: var(--blue-dim);
+  background: rgb(56 189 248 / 4%);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-1);
+}
+
+.mx-q-option-arrow {
+  color: var(--gray-dim);
+  flex-shrink: 0;
+}
+
+.mx-back-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: var(--secondary);
+  background: none;
+  border: none;
+  padding: 0.75rem 0.1rem 0;
+  cursor: pointer;
+}
+
+.mx-back-btn:hover {
+  color: var(--blue);
+}
+
+/* ---- Diagnosis card ---- */
+.mx-diag-card {
+  background: var(--bg2);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-2);
+  overflow: hidden;
+  animation: fade-up var(--dur-med) var(--ease-out);
+}
+
+.mx-diag-card.high { border-color: rgb(248 113 113 / 40%); }
+.mx-diag-card.moderate { border-color: rgb(251 191 36 / 35%); }
+.mx-diag-card.low { border-color: var(--border); }
+
+.mx-diag-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+}
+
+.mx-diag-hdr.high { background: rgb(248 113 113 / 8%); }
+.mx-diag-hdr.moderate { background: rgb(251 191 36 / 8%); }
+
+.mx-diag-title {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--primary);
+}
+
+.mx-sev-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mx-sev-badge.high { color: var(--red); background: rgb(248 113 113 / 12%); border: 1px solid rgb(248 113 113 / 30%); }
+.mx-sev-badge.moderate { color: var(--amber); background: rgb(251 191 36 / 12%); border: 1px solid rgb(251 191 36 / 30%); }
+.mx-sev-badge.low { color: var(--green); background: rgb(74 222 128 / 12%); border: 1px solid rgb(74 222 128 / 30%); }
+
+.mx-diag-body {
+  padding: 1.1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.mx-section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: 0.6rem;
+}
+
+.mx-cause-list,
+.mx-action-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.mx-cause-item {
+  font-size: 0.78rem;
+  color: var(--content);
+  line-height: 1.5;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.mx-cause-item::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--secondary);
+}
+
+.mx-action-item {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  color: var(--content);
+  line-height: 1.5;
+}
+
+.mx-action-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--blue);
+  flex-shrink: 0;
+}
+
+.mx-note-box {
+  font-size: 0.75rem;
+  color: var(--secondary);
+  line-height: 1.6;
+  padding: 0.75rem 0.9rem;
+  background: var(--theme);
+  border: 1px solid var(--border-faint);
+  border-radius: 10px;
+}
+
+.mx-note-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--gray-dim);
+  margin-bottom: 0.35rem;
+}
+
+/* ---- Symptom filter box ---- */
+.mx-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--theme);
+  border-bottom: 1px solid var(--border);
+}
+
+.mx-search-icon {
+  position: absolute;
+  left: 0.7rem;
+  font-size: 0.85rem;
+  color: var(--gray-dim);
+  pointer-events: none;
+}
+
+.mx-search-input {
+  flex: 1;
+  min-width: 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: var(--content);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.55rem 1.7rem 0.55rem 1.9rem;
+}
+
+.mx-search-input::placeholder { color: var(--gray-dim); }
+
+.mx-search-clear {
+  position: absolute;
+  right: 0.45rem;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+}
+
+.mx-search-clear:hover { color: var(--blue); }
+
+/* ---- Symptom list within an area ---- */
+.mx-sym-group-items .mx-symptom-item:last-child { border-bottom: none; }
+
+.mx-sym-empty {
+  padding: 1.2rem 0.9rem;
+  font-size: 0.72rem;
+  color: var(--gray-dim);
+  text-align: center;
+}
+
+/* ---- Stage 1: treatment-area picker ---- */
+.mx-grouplist { display: flex; flex-direction: column; }
+
+.mx-group-pick {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: left;
+  background: var(--theme);
+  border: none;
+  border-bottom: 1px solid var(--border-faint);
+  padding: 0.85rem 0.9rem;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.mx-group-pick:last-child { border-bottom: none; }
+.mx-group-pick:hover { background: rgb(56 189 248 / 5%); }
+
+.mx-group-pick-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.mx-group-pick-name {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--content);
+  transition: color 0.15s;
+}
+
+.mx-group-pick:hover .mx-group-pick-name { color: var(--blue); }
+
+.mx-group-pick-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  color: var(--secondary);
+}
+
+.mx-group-pick-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.mx-group-pick-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--gray-dim);
+  background: var(--bg2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+  padding: 0.1rem 0.5rem;
+}
+
+.mx-group-pick-arrow {
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--gray-dim);
+}
+
+.mx-group-pick:hover .mx-group-pick-arrow { color: var(--blue); }
+
+/* ---- Stage 2: back to areas ---- */
+.mx-sym-back {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  background: rgb(56 189 248 / 3%);
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.mx-sym-back:hover { color: var(--blue); }
+.mx-sym-back-arrow { font-size: 0.9rem; }
+
+.mx-symptom-text { line-height: 1.3; }
+
+/* ---- Figures ---- */
+.mx-fig {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* visual answer choices */
+.mx-q-options--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
+  gap: 0.5rem;
+}
+
+.mx-q-option.has-fig {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.4rem;
+  padding: 0.6rem 0.6rem 0.7rem;
+}
+
+.mx-q-option.has-fig .mx-q-option-arrow { display: none; }
+.mx-q-option.has-fig .mx-q-option-label { font-size: 0.72rem; line-height: 1.35; }
+
+.mx-q-option-fig .mx-fig {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto;
+}
+
+/* diagnosis / reference diagram */
+.mx-diag-fig {
+  padding: 0.9rem 1rem;
+  text-align: center;
+  background: rgb(15 23 42 / 45%);
+  border-bottom: 1px solid var(--border);
+}
+
+.mx-diag-fig .mx-fig--wide {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.mx-diag-fig-cap {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  color: var(--gray-dim);
+  margin-top: 0.55rem;
+}
+
+@media (width <= 768px) {
+  .mx-canvas {
+    grid-template-columns: 1fr;
+  }
+
+  .mx-symptom-list {
+    max-height: 260px;
+    overflow-y: auto;
+  }
+}
+
 /* ============================================================
    ANIMATIONS
    ============================================================ */
@@ -1352,6 +2167,17 @@ body.matrix {
 @keyframes fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+/* Respect users who prefer reduced motion: collapse all animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ============================================================
@@ -1534,5 +2360,72 @@ body.matrix {
     content: " (" attr(href) ")";
     font-size: 0.7rem;
     color: #555;
+  }
+}
+
+/* ============================================================
+   Responsive media — images, figures, GIF-replacement video
+   Emitted by partials/responsive-image.html and the img / figure /
+   video shortcodes. See docs/IMAGES.md.
+   ============================================================ */
+
+.responsive-img,
+.responsive-video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: var(--bg2);          /* placeholder tone before load */
+}
+
+/* <picture> is inline by default; let it fill the content column. */
+figure picture,
+picture,
+.guide-content picture {
+  display: block;
+}
+
+/* Safety net for any lazy-loaded image without the responsive-img class */
+img[loading="lazy"] {
+  max-width: 100%;
+  height: auto;
+}
+
+.responsive-img.align-center,
+figure.align-center {
+  margin-inline: auto;
+}
+
+figure {
+  margin: 1.75rem 0;
+}
+
+figure.align-center {
+  text-align: center;
+}
+
+figcaption {
+  margin-top: 0.5rem;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--secondary);
+  border-left: 2px solid var(--border);
+  padding-left: 0.75rem;
+}
+
+figcaption a {
+  color: var(--blue);
+}
+
+/* GIF-replacement clips: behave like an autoplaying GIF but far smaller. */
+.responsive-video {
+  width: 100%;
+}
+
+/* Respect users who prefer reduced motion: don't autoplay looping clips. */
+@media (prefers-reduced-motion: reduce) {
+  video.responsive-video[autoplay] {
+    animation: none;
   }
 }

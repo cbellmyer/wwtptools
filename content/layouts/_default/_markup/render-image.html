@@ -1,0 +1,13 @@
+{{- /*
+  Markdown image render hook. Intercepts every ![alt](src "title") in content and
+  routes it through the shared responsive-image engine, so authors get WebP +
+  responsive srcset + CLS-safe sizing for free from plain markdown.
+  Overrides the theme's passthrough hook.
+*/ -}}
+{{- partial "responsive-image.html" (dict
+  "src"   .Destination
+  "alt"   .Text
+  "title" .Title
+  "page"  .Page
+) -}}
+{{- /**/ -}}

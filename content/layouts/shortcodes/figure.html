@@ -1,0 +1,40 @@
+{{- /*
+  figure shortcode — overrides the theme figure to route the image through the
+  responsive-image engine (WebP + srcset + CLS-safe sizing) while keeping the
+  theme's caption/link API.
+
+  Usage:
+    {{< figure src="clarifier.png" alt="Clarifier cross-section"
+               caption="Secondary clarifier with sludge blanket" >}}
+
+  Parameters:
+    src (required), alt, title, caption, attr, attrlink, link, target, rel,
+    class, align ("center"), sizes
+*/ -}}
+{{- $src := .Get "src" -}}
+{{- if not $src }}{{ errorf "figure shortcode requires 'src' (%s)" .Position }}{{ end -}}
+{{- $class := .Get "class" -}}
+{{- if eq (.Get "align") "center" }}{{ $class = trim (printf "align-center %s" (or $class "")) " " }}{{ end -}}
+<figure{{ with $class }} class="{{ . }}"{{ end }}>
+  {{- with .Get "link" }}<a href="{{ . }}"{{ with $.Get "target" }} target="{{ . }}"{{ end }}{{ with $.Get "rel" }} rel="{{ . }}"{{ end }}>{{ end -}}
+  {{- partial "responsive-image.html" (dict
+    "src"   $src
+    "alt"   (or (.Get "alt") (.Get "caption" | markdownify | plainify))
+    "title" (.Get "title")
+    "sizes" (.Get "sizes")
+    "page"  .Page
+  ) -}}
+  {{- with .Get "link" }}</a>{{ end -}}
+  {{- if or (.Get "title") (or (.Get "caption") (.Get "attr")) -}}
+  <figcaption>
+    {{- with .Get "title" }}{{ . }}{{ end -}}
+    {{- if or (.Get "caption") (.Get "attr") -}}
+    <p>{{ .Get "caption" | markdownify -}}
+      {{- with .Get "attrlink" }} <a href="{{ . }}">{{ end -}}
+      {{- .Get "attr" | markdownify -}}
+      {{- if .Get "attrlink" }}</a>{{ end -}}
+    </p>
+    {{- end -}}
+  </figcaption>
+  {{- end }}
+</figure>

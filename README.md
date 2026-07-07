@@ -8,12 +8,12 @@ Free process calculators, reference tables, and field guides for wastewater trea
 
 ## What's in the Toolkit
 
-| Section             | Description                                                                                                             |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **Calculators**     | 12+ process calculators — activated sludge, hydraulics, solids handling, digester operations. Live results as you type. |
-| **Reference**       | Quick-access process data — DO targets, pH ranges, loading rate benchmarks, unit conversions.                           |
-| **Field Guides**    | Operational guidance for startup, upset response, seasonal adjustments, dewatering, and digester management.            |
-| **Decision Matrix** | _(In development)_ Symptom-driven process troubleshooting across all treatment zones.                                   |
+| Section             | Description                                                                                                                                                                                                                                                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Calculators**     | 12+ process calculators — activated sludge, hydraulics, solids handling, digester operations. Live results as you type.                                                                                                                                                                                                             |
+| **Reference**       | 12 reference tables in four categories: Process Parameters (DO, pH, loading rates, temperature, conversions), Chemistry & Dosing, Solids & Biosolids, and Laboratory (filamentous organisms, standard methods).                                                                                                                     |
+| **Field Guides**    | 9+ published operational guides organized into four categories: Operations, Troubleshooting, Site, and Laboratory. Laboratory guides are draft; all others are published.                                                                                                                                                           |
+| **Decision Matrix** | _(Draft)_ Guided, symptom-driven process troubleshooting. Activated Sludge zone is live — pick a treatment area, choose the symptom you're seeing, and follow the branching diagnostic path to probable causes and corrective actions, with schematic figures on appearance-based steps. Additional treatment zones in development. |
 
 ---
 
@@ -52,13 +52,15 @@ The site will be available at `http://localhost:1313`.
 wwtptools/
 ├── content/                  # Hugo site root
 │   ├── hugo.yaml             # Site config and nav menu
-│   ├── content/              # Content stubs (.md files that set layout)
+│   ├── content/              # Content stubs and guide markdown files
+│   │   └── guides/           # Individual field guide .md files
+│   ├── data/                 # YAML data files (calculators, reference tables, decision matrix, what's new)
 │   ├── layouts/              # Custom page layouts (override theme)
 │   │   ├── partials/         # Header, footer, head extensions
-│   │   └── *.html            # Page templates: home, toolkit, reference, guides, matrix, about
-│   ├── assets/css/extended/  # Custom CSS
-│   │   ├── wwtptools.css     # Site styles and palette
-│   │   └── toolkit.css       # Calculator interface (SCADA panel UI)
+│   │   └── *.html            # Page templates: home, toolkit, reference, guides, guide, matrix, about
+│   ├── assets/css/           # Custom CSS
+│   │   ├── extended/wwtptools.css  # Site styles, design tokens (palette, radii, shadows, motion), components
+│   │   └── toolkit.css       # Calculator interface (card-based tool UI)
 │   └── themes/scada-theme/
 ├── build.sh
 ├── CHANGELOG.md
@@ -86,6 +88,7 @@ All contributions are welcome. The [About page](https://wwtp.tools/about/) has m
 - **Issues** — Use [GitHub Issues](https://github.com/cbellmyer/wwtptools/issues) for data corrections, calculator bugs, missing reference values, or requests for new tools
 - **Pull Requests** — Welcome for content additions, new calculators, bug fixes, and UI improvements
 - **Field experience** — If you work in wastewater operations and want to contribute guide or decision matrix content, open an issue describing what you'd add — no coding required
+- **Email** — Prefer to keep it off a public tracker? Reach out at [hello@wwtp.tools](mailto:hello@wwtp.tools)
 
 When contributing content, note that submitted content will be licensed under CC BY-NC 4.0 as part of the site. Code contributions will be under MPL-2.0.
 

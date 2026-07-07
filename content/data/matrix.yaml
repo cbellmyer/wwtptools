@@ -1,0 +1,961 @@
+# Process Decision Matrix — diagnostic data
+#
+# The /matrix/ page renders entirely from this file (layouts/matrix.html). To add
+# or edit troubleshooting content you only touch this data — no template changes.
+#
+# Structure:
+#   zones[]                One treatment process. Only the first zone renders today.
+#     id, label, code, description
+#     subsystems[]         Treatment areas shown as the first navigation step.
+#       id, label, desc    `id` is referenced by each symptom's `group`.
+#     symptoms[]           A thing the operator observes.
+#       id, label
+#       group              Which subsystem id this symptom belongs to.
+#       questions[]        Branching decision tree; the tree always starts at `q1`.
+#         id (q1, q2, …), text
+#         options[]
+#           label
+#           figure         (optional) key into the figure library defined in
+#                          layouts/matrix.html — renders a thumbnail beside the choice.
+#           next           Another question id, or "diagnosis".
+#           diagnosis      Diagnosis key (required when next == "diagnosis").
+#     diagnoses{}          Keyed by the ids referenced above.
+#       title, severity ("low" | "moderate" | "high")
+#       causes[], actions[], note
+#       figure             (optional) figure key rendered as a diagram in the card.
+#       figureCaption      (optional) caption shown under that diagram.
+#
+# Figures are defined once as inline SVG in layouts/matrix.html (window.MX_FIGURES)
+# and referenced here by key, so a new diagram is added in the template and then
+# attached to any option or diagnosis from this file.
+zones:
+  - id: "activated-sludge"
+    label: "Activated Sludge"
+    code: "AS"
+    description: "Aeration basin and secondary clarifier"
+    subsystems:
+      - id: "aeration"
+        label: "Aeration Basin"
+        desc: "Blowers, DO, MLSS, foam, nutrients"
+      - id: "clarifier"
+        label: "Secondary Clarifier"
+        desc: "Settling, blanket, RAS, effluent quality"
+    symptoms:
+      - id: "low_do"
+        label: "Low dissolved oxygen (DO < 1.0 mg/L)"
+        group: "aeration"
+        questions:
+          - id: "q1"
+            text: "Has influent flow or loading increased recently?"
+            options:
+              - label: "Yes — loading increase"
+                next: "diagnosis"
+                diagnosis: "aer_do_loading"
+              - label: "No change in loading"
+                next: "q2"
+          - id: "q2"
+            text: "Is aeration equipment operating normally?"
+            options:
+              - label: "Equipment issue suspected"
+                next: "diagnosis"
+                diagnosis: "aer_do_equipment"
+              - label: "Equipment appears normal"
+                next: "diagnosis"
+                diagnosis: "aer_do_nitrification"
+      - id: "high_do"
+        label: "Excessively high DO (> 4–5 mg/L consistently)"
+        group: "aeration"
+        questions:
+          - id: "q1"
+            text: "Has loading dropped or flow decreased?"
+            options:
+              - label: "Yes — lower loading than normal"
+                next: "diagnosis"
+                diagnosis: "aer_high_do_loading"
+              - label: "No — loading is normal"
+                next: "diagnosis"
+                diagnosis: "aer_high_do_control"
+      - id: "foaming"
+        label: "Foaming / scum on basin surface"
+        group: "aeration"
+        questions:
+          - id: "q1"
+            text: "Describe the foam appearance:"
+            options:
+              - label: "White, sudsy, dissipates quickly"
+                figure: "foam_white_sudsy"
+                next: "diagnosis"
+                diagnosis: "aer_foam_surfactant"
+              - label: "Thick, stable, brown or greasy"
+                figure: "foam_brown_greasy"
+                next: "q2"
+              - label: "White, stable, pillowy — won't break"
+                figure: "foam_nocardia"
+                next: "diagnosis"
+                diagnosis: "aer_foam_nocardia"
+          - id: "q2"
+            text: "Is the MLSS decreasing or SRT low?"
+            options:
+              - label: "Yes — low SRT or declining MLSS"
+                next: "diagnosis"
+                diagnosis: "aer_foam_nocardia"
+              - label: "No — SRT is normal or high"
+                next: "diagnosis"
+                diagnosis: "aer_foam_microthrix"
+      - id: "bulking"
+        label: "Poor settling / high SVI (> 150 mL/g)"
+        group: "aeration"
+        questions:
+          - id: "q1"
+            text: "What does the settled sludge look like in a settleability test?"
+            options:
+              - label: "Fluffy, diffuse edges — slow settling"
+                figure: "settle_bulking"
+                next: "diagnosis"
+                diagnosis: "aer_bulk_filamentous"
+              - label: "Compact but rising back to surface"
+                figure: "settle_rising"
+                next: "diagnosis"
+                diagnosis: "aer_bulk_denitrification"
+              - label: "Watery, dispersed — no clear floc"
+                figure: "settle_dispersed"
+                next: "diagnosis"
+                diagnosis: "aer_bulk_dispersed"
+              - label: "Viscous, jelly-like, very slow"
+                figure: "settle_viscous"
+                next: "diagnosis"
+                diagnosis: "aer_bulk_viscous"
+      - id: "high_mlss"
+        label: "MLSS climbing / sludge inventory increasing"
+        group: "aeration"
+        questions:
+          - id: "q1"
+            text: "Is WAS being wasted regularly?"
+            options:
+              - label: "No — wasting paused or reduced"
+                next: "diagnosis"
+                diagnosis: "aer_mlss_wasting"
+              - label: "Yes — wasting on schedule"
+                next: "diagnosis"
+                diagnosis: "aer_mlss_loading"
+      - id: "low_mlss"
+        label: "MLSS dropping / losing sludge inventory"
+        group: "aeration"
+        questions:
+          - id: "q1"
+            text: "Is solids loss visible in the effluent?"
+            options:
+              - label: "Yes — turbid effluent, solids carryover"
+                next: "diagnosis"
+                diagnosis: "aer_mlss_washout"
+              - label: "No — effluent looks OK"
+                next: "q2"
+          - id: "q2"
+            text: "Has WAS rate increased or was there an accidental over-wasting event?"
+            options:
+              - label: "Yes — over-wasting suspected"
+                next: "diagnosis"
+                diagnosis: "aer_mlss_overwaste"
+              - label: "No — wasting is normal"
+                next: "diagnosis"
+                diagnosis: "aer_mlss_loading_drop"
+      - id: "high_ammonia_aer"
+        label: "High effluent ammonia / nitrification failure"
+        group: "aeration"
+        questions:
+          - id: "q1"
+            text: "Has temperature dropped significantly (below 12°C / 54°F)?"
+            options:
+              - label: "Yes — cold weather"
+                next: "diagnosis"
+                diagnosis: "aer_nitrif_temp"
+              - label: "No — normal temperature"
+                next: "q2"
+          - id: "q2"
+            text: "What is the current SRT?"
+            options:
+              - label: "Low SRT (< 8–10 days)"
+                next: "diagnosis"
+                diagnosis: "aer_nitrif_srt"
+              - label: "SRT seems adequate"
+                next: "diagnosis"
+                diagnosis: "aer_nitrif_inhibition"
+      - id: "ph_swing"
+        label: "pH swings in aeration basin"
+        group: "aeration"
+        questions:
+          - id: "q1"
+            text: "Which direction is the pH moving?"
+            options:
+              - label: "pH dropping — becoming acidic"
+                next: "diagnosis"
+                diagnosis: "aer_ph_low"
+              - label: "pH rising — becoming alkaline"
+                next: "diagnosis"
+                diagnosis: "aer_ph_high"
+      - id: "color_change"
+        label: "Mixed liquor color change (very dark, pale, or unusual)"
+        group: "aeration"
+        questions:
+          - id: "q1"
+            text: "What color is the mixed liquor?"
+            options:
+              - label: "Very dark brown / black"
+                figure: "ml_dark"
+                next: "diagnosis"
+                diagnosis: "aer_color_black"
+              - label: "Pale gray or tan — lighter than normal"
+                figure: "ml_pale"
+                next: "diagnosis"
+                diagnosis: "aer_color_pale"
+              - label: "Unusual color (orange, purple, red)"
+                figure: "ml_unusual"
+                next: "diagnosis"
+                diagnosis: "aer_color_unusual"
+      - id: "high_tss"
+        label: "High effluent TSS / turbid effluent"
+        group: "clarifier"
+        questions:
+          - id: "q1"
+            text: "Is solids carryover visible as a rising blanket or fine turbidity?"
+            options:
+              - label: "Rising blanket / bulk sludge rising"
+                figure: "blanket_rising"
+                next: "q2"
+              - label: "Fine pin floc or turbidity — no blanket"
+                figure: "pin_floc"
+                next: "diagnosis"
+                diagnosis: "clar_pin_floc"
+              - label: "Large fluffy clumps floating"
+                figure: "floating_clumps"
+                next: "diagnosis"
+                diagnosis: "clar_floating_sludge"
+          - id: "q2"
+            text: "Has the sludge blanket been rising gradually or suddenly?"
+            options:
+              - label: "Gradual rise over hours"
+                next: "diagnosis"
+                diagnosis: "clar_blanket_denitrification"
+              - label: "Sudden — hydraulic or load surge"
+                next: "diagnosis"
+                diagnosis: "clar_blanket_hydraulic"
+      - id: "thin_blanket"
+        label: "Sludge blanket too thin or absent"
+        group: "clarifier"
+        questions:
+          - id: "q1"
+            text: "Is the MLSS in the aeration basin also low?"
+            options:
+              - label: "Yes — MLSS is declining too"
+                next: "diagnosis"
+                diagnosis: "clar_thin_mlss"
+              - label: "No — aeration MLSS is normal"
+                next: "diagnosis"
+                diagnosis: "clar_thin_ras"
+      - id: "ras_issues"
+        label: "RAS flow problems / not returning sludge effectively"
+        group: "clarifier"
+        questions:
+          - id: "q1"
+            text: "What is the RAS pump status?"
+            options:
+              - label: "Pump failure / mechanical issue"
+                next: "diagnosis"
+                diagnosis: "clar_ras_mechanical"
+              - label: "Pump running but RAS looks thin/watery"
+                next: "diagnosis"
+                diagnosis: "clar_ras_thin"
+              - label: "RAS flow OK but blanket still rising"
+                next: "diagnosis"
+                diagnosis: "clar_ras_rate"
+      - id: "clarifier_odor"
+        label: "Septic / sulfur odor from clarifier"
+        group: "clarifier"
+        questions:
+          - id: "q1"
+            text: "Is the sludge blanket deep or holding long in the clarifier?"
+            options:
+              - label: "Yes — deep blanket, long retention"
+                next: "diagnosis"
+                diagnosis: "clar_odor_blanket"
+              - label: "No — blanket depth looks normal"
+                next: "diagnosis"
+                diagnosis: "clar_odor_influent"
+      - id: "scum_buildup"
+        label: "Scum / grease accumulation on clarifier surface"
+        group: "clarifier"
+        questions:
+          - id: "q1"
+            text: "Is the scum greasy/oily or biological foam?"
+            options:
+              - label: "Greasy, oily sheen — FOG-related"
+                next: "diagnosis"
+                diagnosis: "clar_scum_fog"
+              - label: "Biological foam / dark stable scum"
+                next: "diagnosis"
+                diagnosis: "clar_scum_bio"
+      - id: "short_circuit"
+        label: "Suspected short-circuiting / uneven flow in clarifier"
+        group: "clarifier"
+        questions:
+          - id: "q1"
+            text: "Are effluent quality problems worst during peak flow periods?"
+            options:
+              - label: "Yes — problems spike at peak flow"
+                next: "diagnosis"
+                diagnosis: "clar_shortcircuit_hydraulic"
+              - label: "Problems are random / not flow-related"
+                next: "diagnosis"
+                diagnosis: "clar_shortcircuit_structural"
+      - id: "weir_issues"
+        label: "Uneven effluent weir flow / one side overloaded"
+        group: "clarifier"
+        questions:
+          - id: "q1"
+            text: "Is the clarifier level or are there obvious structural issues?"
+            options:
+              - label: "Clarifier may not be level"
+                next: "diagnosis"
+                diagnosis: "clar_weir_level"
+              - label: "Level seems OK — weir flow still uneven"
+                next: "diagnosis"
+                diagnosis: "clar_weir_algae"
+    diagnoses:
+      aer_do_loading:
+        title: "Low DO Due to Increased Organic Loading"
+        severity: "moderate"
+        causes:
+          - "Higher BOD/ammonia loading increasing oxygen demand"
+          - "Seasonal or wet weather loading increase"
+        actions:
+          - "Increase blower output or aeration rate immediately"
+          - "Verify diffuser integrity — fouled diffusers reduce oxygen transfer efficiency"
+          - "Consider temporarily increasing MLSS to buffer higher F/M"
+          - "Monitor effluent ammonia — nitrification will fail first under low DO"
+        note: >-
+          Target DO of 1.5–2.5 mg/L in mixed liquor. Below 1.0 mg/L begins selecting for filamentous organisms —
+          effects may not appear for 5–10 days.
+      aer_do_equipment:
+        title: "Low DO Due to Aeration Equipment Failure"
+        severity: "high"
+        figure: "diffuser_grid"
+        figureCaption: "Inspect diffusers and laterals — fouling raises back-pressure, breaks kill local aeration"
+        causes:
+          - "Blower fault or reduced capacity"
+          - "Fouled or broken membrane diffusers"
+          - "Air line blockage or broken lateral"
+        actions:
+          - "Inspect all blowers for alarms, faults, or reduced amperage draw"
+          - "Check air flow distribution — blocked headers or broken laterals"
+          - "Measure diffuser back pressure — elevated pressure indicates fouling"
+          - "Switch to standby blower if available"
+          - "Contact maintenance immediately for repairs"
+        note: >-
+          A DO crash from equipment failure can devastate the biological community within hours. This is a plant
+          emergency — escalate immediately.
+      aer_do_nitrification:
+        title: "Low DO from High Nitrification Oxygen Demand"
+        severity: "moderate"
+        causes:
+          - "High ammonia load increasing nitrification oxygen demand"
+          - "Seasonal temperature increase accelerating nitrification rate"
+          - "Inadequate aeration capacity for current loading"
+        actions:
+          - "Check effluent ammonia and nitrate to assess nitrification extent"
+          - "Increase aeration rate to meet nitrification oxygen demand"
+          - "Verify SRT is adequate (typically >8–10 days at warmer temperatures)"
+          - "Review MLSS — may need to increase biomass inventory"
+        note: >-
+          Nitrification consumes ~4.6 mg O2 per mg NH4-N oxidized. Large ammonia spikes can overwhelm aeration
+          capacity within a single shift.
+      aer_high_do_loading:
+        title: "High DO Due to Reduced Loading"
+        severity: "low"
+        causes:
+          - "Lower organic load reducing oxygen demand"
+          - "Seasonal low-flow period"
+          - "Industrial customer offline"
+        actions:
+          - "Reduce aeration rate — turn off blowers or lower speed on VFDs"
+          - "Check that DO control system (if automated) is responding to load changes"
+          - "Increase WAS rate to avoid SRT climbing too high"
+          - "Monitor for Microthrix foam — low F/M conditions favor it"
+        note: >-
+          Running excess aeration wastes energy and can drive SRT too high if wasting isn't adjusted. Low F/M + high
+          DO is the classic setup for Microthrix problems.
+      aer_high_do_control:
+        title: "High DO Due to Control System Issue"
+        severity: "low"
+        causes:
+          - "DO probe fouled — reading low, causing blowers to over-respond"
+          - "DO control loop tuned too aggressively"
+          - "Manual override left on"
+        actions:
+          - "Clean and recalibrate DO probe — compare reading to grab sample Winkler test"
+          - "Check DO controller setpoint and output"
+          - "Review blower control for manual overrides"
+          - "If automated, verify control loop is responding correctly"
+        note: >-
+          A fouled DO probe reading low is one of the most common causes of unnecessary high aeration. Probe
+          maintenance is often neglected.
+      aer_foam_surfactant:
+        title: "Surfactant Foam (Detergent-Based)"
+        severity: "low"
+        causes:
+          - "High detergent loading from residential or commercial sources"
+          - "Low MLSS concentration reducing foam suppression"
+          - "New cleaning product discharged upstream"
+        actions:
+          - "This foam is usually self-limiting — monitor, don't panic"
+          - "Spray water on foam surface to break it down physically"
+          - "Investigate any new upstream discharge sources"
+          - "If persistent, increase MLSS slightly to improve foam suppression"
+        note: >-
+          Surfactant foam is white and sudsy and disappears when pressed. It does not indicate a biological problem
+          and usually resolves on its own.
+      aer_foam_nocardia:
+        title: "Nocardia-Type Foam (Filamentous Actinomycetes)"
+        severity: "high"
+        causes:
+          - "Nocardia amarae or similar actinomycetes proliferating"
+          - "Low F/M ratio or over-aeration"
+          - "High oil and grease in influent"
+          - "SRT too high for current conditions"
+        actions:
+          - "Increase wasting to reduce SRT — target lower end of design range"
+          - "Investigate and reduce O&G loading from influent if possible"
+          - "Chlorinate RAS at low dose (1–2 mg/L) to selectively suppress filaments"
+          - "Do NOT spray foam back into basin — it will re-seed the system"
+          - "Increase MLSS slightly if SRT cannot be adjusted"
+        note: >-
+          Nocardia foam is viscous, chocolate-brown, and stable. Recovery takes weeks. Microscopy confirms organism.
+          Consistent SRT control is the only reliable long-term fix.
+      aer_foam_microthrix:
+        title: "Microthrix Foam (High-SRT / High-Fat Conditions)"
+        severity: "moderate"
+        causes:
+          - "Very high SRT or over-stabilized sludge"
+          - "High fat/oil/grease loading from influent"
+          - "Cold temperatures reducing biological activity and driving up SRT"
+        actions:
+          - "Review current SRT — reduce slightly by increasing WAS"
+          - "Investigate O&G sources in influent"
+          - "Improve primary treatment to capture more grease before aeration"
+          - "Selective wasting of foam concentrate if equipment allows"
+        note: >-
+          Microthrix thrives at long SRTs and low F/M. Common in winter when operators hold extra sludge to protect
+          nitrification. The fix creates the problem — a difficult tradeoff.
+      aer_bulk_filamentous:
+        title: "Filamentous Bulking"
+        severity: "high"
+        figure: "settleometer"
+        figureCaption: "Settleometer at 30 min — filamentous sludge stays voluminous and slow to compact"
+        causes:
+          - "Low DO selecting for filamentous organisms (Thiothrix, Type 021N)"
+          - "Low F/M selecting for Microthrix or Nocardia"
+          - "Nutrient deficiency (N or P) favoring filaments"
+          - "Septic influent feeding sulfur-utilizing filaments"
+        actions:
+          - "Identify filament type via microscopy — treatment strategy differs by organism"
+          - "Low-DO filaments: increase DO immediately to 2+ mg/L"
+          - "Low-F/M filaments: increase F/M by wasting or reducing MLSS"
+          - "RAS chlorination (2–5 mg/L) as a temporary suppression measure"
+          - "Verify influent N:P:BOD ratios — nutrient deficiency is often overlooked"
+        note: >-
+          SVI >200 mL/g indicates severe bulking. Recovery can take 2–4 weeks of consistent corrective operation.
+          Microscopy is essential for accurate diagnosis.
+      aer_bulk_denitrification:
+        title: "Denitrification-Related Blanket Rise in Settling"
+        severity: "moderate"
+        causes:
+          - "Nitrate-laden sludge denitrifying in clarifier dead zones, producing N2 gas"
+          - "Deep sludge blanket allowing extended anaerobic retention"
+          - "High nitrate in RAS combined with slow return rate"
+        actions:
+          - "Increase RAS rate to reduce sludge retention time in clarifier"
+          - "Add anoxic zone or selector upstream if not present (long-term fix)"
+          - "If nitrification is unintentional, reduce SRT to suppress nitrifiers"
+          - "Reduce sludge blanket depth by wasting more frequently"
+        note: >-
+          Denitrification in the clarifier is common in systems with strong nitrification but no anoxic zone. Rising
+          sludge is buoyant and can overflow weirs rapidly.
+      aer_bulk_dispersed:
+        title: "Dispersed Growth / Poor Floc Formation"
+        severity: "high"
+        causes:
+          - "Very low SRT — floc-forming bacteria washed out"
+          - "Toxic inhibition disrupting biological community"
+          - "Extreme loading or temperature shock"
+        actions:
+          - "Check for toxic upstream discharge — effluent toxicity test can identify"
+          - "Increase SRT if below design minimum"
+          - "Reduce loading if possible during recovery period"
+          - "Add polymer to clarifier feed to aid settling temporarily"
+        note: >-
+          Dispersed growth produces chronically turbid effluent with no visible floc structure. If toxicity is
+          suspected, bioassay and upstream sampling should be prioritized.
+      aer_bulk_viscous:
+        title: "Viscous / Zoogleal Bulking"
+        severity: "moderate"
+        causes:
+          - "Excess exopolysaccharide production by zoogleal organisms"
+          - "High BOD or starch loading creating thick slime matrix"
+          - "Low F/M with certain industrial waste types (paper, food processing)"
+        actions:
+          - "Increase F/M ratio by reducing MLSS or increasing loading proportion"
+          - "Reduce carbohydrate-heavy industrial inputs if possible"
+          - "Chlorinate RAS at low dose to disrupt slime matrix"
+          - "Monitor SVI — viscous bulking can be just as damaging as filamentous"
+        note: >-
+          Viscous bulking is less common than filamentous but produces similar SVI problems. The jelly-like
+          consistency of the settleometer contents is the diagnostic tell.
+      aer_mlss_wasting:
+        title: "Insufficient Wasting / MLSS Buildup"
+        severity: "low"
+        causes:
+          - "WAS rate too low or wasting suspended"
+          - "WAS pump failure"
+          - "Operator error in wasting schedule"
+        actions:
+          - "Resume normal wasting schedule immediately"
+          - "Calculate target SRT and compare to actual — adjust WAS rate"
+          - "Verify WAS flow meter and pump operation"
+          - "Monitor clarifier blanket depth — high MLSS can overload settling capacity"
+        note: >-
+          High MLSS alone is not always harmful but reduces safety margin in clarifiers. During peak flow events, an
+          already-deep blanket can quickly overflow weirs.
+      aer_mlss_loading:
+        title: "MLSS Increase from Higher Loading"
+        severity: "low"
+        causes:
+          - "Higher BOD loading producing more biomass at the same SRT"
+          - "Seasonal loading increase"
+        actions:
+          - "Increase WAS rate proportionally to loading increase"
+          - "Monitor F/M ratio — may need to hold more MLSS as a buffer"
+          - "Verify aeration capacity keeps pace with higher oxygen demand"
+        note: >-
+          At constant SRT, biomass production tracks loading. More food = more bugs. This is normal — just manage WAS
+          accordingly.
+      aer_mlss_washout:
+        title: "MLSS Dropping Due to Solids Loss in Effluent"
+        severity: "high"
+        causes:
+          - "Clarifier overflow carrying solids out of system"
+          - "Bulking or denitrification blanket rise"
+          - "Hydraulic surge washing out biomass"
+        actions:
+          - "Address clarifier issue immediately — identify cause of solids carryover"
+          - "Reduce WAS or suspend wasting to preserve remaining MLSS"
+          - "Increase RAS rate to recover sludge from clarifier"
+          - "Monitor MLSS twice daily until recovery is confirmed"
+        note: >-
+          Biomass recovery after a washout can take 1–3 weeks. SRT must be maintained high enough for recovery, which
+          means minimizing WAS during the recovery period.
+      aer_mlss_overwaste:
+        title: "MLSS Drop Due to Accidental Over-Wasting"
+        severity: "moderate"
+        causes:
+          - "WAS valve or pump error causing excessive sludge removal"
+          - "Incorrect SRT calculation leading to over-wasting"
+          - "Extended wasting period due to operator error"
+        actions:
+          - "Stop or drastically reduce WAS immediately"
+          - "Allow MLSS to recover — expect 1–3 weeks depending on severity"
+          - "Do not compensate by dramatically increasing loading — the biology needs time"
+          - "Monitor nitrification — it is most sensitive to SRT drops"
+        note: >-
+          A sludge inventory crash is one of the harder process upsets to recover from quickly. Patience and stable
+          operation are the best medicine.
+      aer_mlss_loading_drop:
+        title: "MLSS Drop Due to Reduced Loading"
+        severity: "low"
+        causes:
+          - "Lower loading reducing net biomass production"
+          - "Current wasting rate higher than needed for actual loading"
+        actions:
+          - "Reduce WAS rate to allow MLSS to rebuild"
+          - "Recalculate target SRT based on current loading"
+          - "Monitor nitrification performance — SRT may have dropped below nitrifier threshold"
+        note: >-
+          This is a normal and manageable process condition. Failing to adjust WAS when loading drops is a common
+          oversight that can lead to unintended MLSS decline.
+      aer_nitrif_temp:
+        title: "Nitrification Failure Due to Cold Temperature"
+        severity: "high"
+        causes:
+          - "Water temperature below 10–12°C dramatically slowing nitrifier growth rate"
+          - "SRT no longer sufficient for nitrifiers at cold temperatures"
+          - "Seasonal drop catching operators off guard"
+        actions:
+          - "Increase SRT immediately — reduce WAS rate significantly"
+          - "Maintain higher MLSS to compensate for slower nitrifier growth"
+          - "Reduce loading or provide additional treatment capacity if possible"
+          - "Monitor effluent ammonia daily during cold-weather transition periods"
+        note: >-
+          Nitrifier growth rate roughly halves for every 10°C drop in temperature. A system that nitrifies well at
+          20°C may fail completely at 10°C with the same SRT.
+      aer_nitrif_srt:
+        title: "Nitrification Failure Due to Insufficient SRT"
+        severity: "high"
+        causes:
+          - "SRT below minimum threshold for nitrifier washout"
+          - "Over-wasting or solids loss reducing effective SRT"
+          - "Increased loading without corresponding MLSS increase"
+        actions:
+          - "Increase SRT by reducing WAS — do not over-correct too fast"
+          - "Increase MLSS to build nitrifier population"
+          - "Verify actual SRT calculation — check for solids losses in effluent"
+          - "Expect 2–4 weeks for full nitrification recovery"
+        note: >-
+          Nitrifiers are the most SRT-sensitive organisms in activated sludge. They are always the first to wash out
+          and the last to recover.
+      aer_nitrif_inhibition:
+        title: "Nitrification Inhibition — Potential Toxic Influent"
+        severity: "high"
+        causes:
+          - "Heavy metals, solvents, or other toxics inhibiting nitrifiers"
+          - "High free ammonia concentrations (above 2–5 mg/L at high pH)"
+          - "Industrial slug load with inhibitory compounds"
+        actions:
+          - "Collect influent and aeration basin samples for toxicity screening"
+          - "Identify and stop toxic discharge at source"
+          - "If free ammonia inhibition suspected, check pH and total ammonia"
+          - "Allow system to recover — nitrification should resume once inhibitor is removed"
+          - "Notify pretreatment coordinator and regulatory agency"
+        note: >-
+          Free ammonia inhibition is self-limiting — as ammonia oxidizes, inhibition decreases. External toxics
+          require source identification and control.
+      aer_ph_low:
+        title: "Low pH in Aeration Basin"
+        severity: "moderate"
+        causes:
+          - "High nitrification consuming alkalinity, driving down pH"
+          - "Industrial acid discharge in influent"
+          - "Low influent alkalinity combined with high ammonia load"
+          - "CO2 buildup in poorly ventilated basin"
+        actions:
+          - "Check alkalinity — nitrification requires ~7.1 mg alkalinity per mg NH4-N oxidized"
+          - "Add sodium bicarbonate or lime to supplement alkalinity if depleted"
+          - "Investigate industrial acid sources in influent"
+          - "If pH is below 6.5, biological activity is significantly impaired — treat urgently"
+        note: >-
+          pH below 6.5 will begin inhibiting nitrifiers significantly. Below 6.0, even heterotrophs struggle.
+          Alkalinity supplementation is often the fastest fix.
+      aer_ph_high:
+        title: "High pH in Aeration Basin"
+        severity: "moderate"
+        causes:
+          - "Industrial alkaline discharge (lime, caustic, concrete washout)"
+          - "Chemical addition error upstream"
+          - "Very low CO2 and high photosynthetic activity (algae in open basin)"
+        actions:
+          - "Identify source of alkaline discharge and stop it"
+          - "Check chemical feed systems for over-dosing"
+          - "If algae-related, consider shade structures or algaecide for open basins"
+          - "Monitor nitrification — free ammonia inhibition increases above pH 7.5"
+        note: >-
+          High pH in activated sludge is less common than low pH but can still impair biology. Above pH 8.5, floc
+          structure can deteriorate.
+      aer_color_black:
+        title: "Dark / Black Mixed Liquor Color"
+        severity: "moderate"
+        causes:
+          - "Septic or anaerobic conditions in the basin"
+          - "Sulfide formation causing iron sulfide precipitation"
+          - "Industrial waste with dark pigment (ink, dye, coffee, molasses)"
+        actions:
+          - "Check DO immediately — black color often indicates anaerobic zones"
+          - "Increase aeration to oxygenate the basin"
+          - "Investigate influent for industrial colored waste"
+          - "Check for septicity in influent — may need odor control upstream"
+        note: >-
+          A slight grayish tint can be normal at low F/M, but jet-black mixed liquor almost always indicates anaerobic
+          conditions or a toxic/industrial episode.
+      aer_color_pale:
+        title: "Pale / Light Mixed Liquor Color"
+        severity: "moderate"
+        causes:
+          - "Very low MLSS or dilute mixed liquor"
+          - "High loading washing out biomass faster than it grows"
+          - "Large proportion of inert TSS diluting active biomass"
+        actions:
+          - "Measure MLSS — confirm low concentration is real, not visual illusion"
+          - "Reduce WAS if MLSS is genuinely low"
+          - "Check for solids loss in effluent"
+          - "Evaluate VSS:TSS ratio — very pale liquor may have high inorganic content"
+        note: >-
+          Healthy mixed liquor is typically medium to dark brown. Very light tan or gray coloration usually means low
+          volatile solids content or very low MLSS.
+      aer_color_unusual:
+        title: "Unusual Mixed Liquor Color (Industrial Discharge)"
+        severity: "high"
+        causes:
+          - "Industrial dye, ink, or pigment discharge"
+          - "Chemical addition error (too much ferric, lime, polymer)"
+          - "Unusual industrial waste type entering system"
+        actions:
+          - "Collect and preserve influent grab sample immediately"
+          - "Notify pretreatment coordinator and begin source investigation"
+          - "Assess impact on biological community — unusual colors can indicate toxicity"
+          - "Increase monitoring frequency for effluent quality"
+        note: >-
+          Document everything with time-stamped photos. If toxicity is confirmed, regulatory notification may be
+          required.
+      clar_pin_floc:
+        title: "Pin Floc / Turbid Effluent (No Blanket Rise)"
+        severity: "moderate"
+        causes:
+          - "Very low SRT — floc-forming organisms washed out"
+          - "High hydraulic shear breaking floc apart"
+          - "Nutrient deficiency affecting floc structure"
+        actions:
+          - "Increase SRT — reduce WAS rate gradually"
+          - "Check effluent coliform to assess biological health"
+          - "Reduce hydraulic turbulence where possible (check baffles, inlet structures)"
+          - "Evaluate polymer addition to improve settleability temporarily"
+          - "Review influent N and P — nutrient deficiency produces weak, dispersed floc"
+        note: >-
+          Pin floc is very fine and won't settle even in a calm jar test. This is a biological community problem, not
+          a hydraulic one. Recovery requires patience and stable SRT.
+      clar_floating_sludge:
+        title: "Floating Sludge / Scum in Clarifier"
+        severity: "moderate"
+        causes:
+          - "Denitrification in blanket lifting sludge to surface"
+          - "Grease or oil entrapped in floc"
+          - "Nocardia foam migrating from aeration basin"
+        actions:
+          - "Check nitrate levels in clarifier — if denitrification, increase RAS rate"
+          - "Inspect surface scum — is it greasy, biological foam, or sludge floc?"
+          - "Increase scum removal if mechanical skimmers are available"
+          - "If Nocardia-related, treat aeration basin"
+        note: >-
+          Floating sludge and rising blanket look similar. Key difference: floating sludge accumulates at the surface
+          while a rising blanket is an upward-moving mass throughout the clarifier.
+      clar_blanket_denitrification:
+        title: "Rising Sludge Blanket — Denitrification-Driven"
+        severity: "high"
+        figure: "clarifier_xsection"
+        figureCaption: "Denitrifying blanket floats and creeps toward the weir"
+        causes:
+          - "Nitrate-laden sludge denitrifying in clarifier, producing N2 gas bubbles"
+          - "Excess sludge retention time in clarifier creating anaerobic pockets"
+          - "High nitrate in RAS with slow return rate"
+        actions:
+          - "Immediately increase RAS rate by 25–50% to clear blanket"
+          - "Reduce WAS temporarily to maintain MLSS while clearing clarifier"
+          - "Consider adding carbon to anoxic zone (if present) to drive denitrification before clarifier"
+          - "Increase sludge removal frequency"
+        note: >-
+          Long-term fix is process redesign with anoxic selectors or pre-anoxic zone if this recurs frequently.
+          Denitrification in the clarifier is a systemic design gap.
+      clar_blanket_hydraulic:
+        title: "Rising Sludge Blanket — Hydraulic Overload"
+        severity: "high"
+        figure: "clarifier_xsection"
+        figureCaption: "Hydraulic surge lifts the blanket toward the effluent weir"
+        causes:
+          - "Flow surge exceeding clarifier surface overflow rate design"
+          - "High MLSS combined with peak flow event"
+          - "Storm or I&I event"
+        actions:
+          - "If equalization basin available, divert excess flow"
+          - "Increase RAS rate to prevent blanket from deepening further"
+          - "Reduce WAS temporarily to preserve MLSS"
+          - "Alert supervisors — potential permit exceedance risk"
+          - "Document flows and conditions for regulatory reporting"
+        note: >-
+          Surface overflow rate (SOR) should stay below design maximum. During storms, SOR can spike 3–5x,
+          overwhelming even well-designed clarifiers quickly.
+      clar_thin_mlss:
+        title: "Thin Clarifier Blanket — Low System MLSS"
+        severity: "moderate"
+        causes:
+          - "System-wide MLSS decline from over-wasting or solids loss"
+          - "Low loading period with wasting not reduced accordingly"
+          - "Biological washout event"
+        actions:
+          - "Reduce or stop WAS to allow MLSS recovery"
+          - "Check for solids loss in effluent as a contributing factor"
+          - "Confirm with aeration basin MLSS measurement"
+          - "Expect 1–3 weeks for MLSS recovery at reduced wasting"
+        note: >-
+          A thin clarifier blanket itself is not harmful — it just reflects low system inventory. The problem is what
+          led to the low inventory and whether permit compliance is at risk.
+      clar_thin_ras:
+        title: "Thin Clarifier Blanket — RAS Rate Too High"
+        severity: "low"
+        causes:
+          - "RAS pumping rate so high that sludge can't concentrate in clarifier"
+          - "Low influent flow with RAS rate not reduced accordingly"
+          - "Blanket being continuously pulled into RAS before concentrating"
+        actions:
+          - "Reduce RAS rate — allow blanket to concentrate and deepen slightly"
+          - "Target RAS TSS of 3–6x MLSS as a concentration indicator"
+          - "Verify flow meter on RAS line is accurate"
+        note: >-
+          Counterintuitively, running RAS too fast can prevent the blanket from forming properly, resulting in dilute
+          RAS that doesn't effectively seed the aeration basin.
+      clar_ras_mechanical:
+        title: "RAS Pump Mechanical Failure"
+        severity: "high"
+        causes:
+          - "Pump motor failure"
+          - "Clogged impeller or valve failure"
+          - "Electrical fault"
+        actions:
+          - "Switch to standby RAS pump immediately"
+          - "Notify maintenance for immediate repair"
+          - "Monitor sludge blanket — it will deepen rapidly without RAS"
+          - "Consider reducing influent loading or diverting flow if blanket approaches weir"
+        note: >-
+          Loss of RAS is a plant emergency. MLSS will crash and solids will carry over within hours if not addressed.
+          Standby pumps should be exercised regularly.
+      clar_ras_thin:
+        title: "Thin / Watery RAS"
+        severity: "moderate"
+        causes:
+          - "Sludge not concentrating due to bulking or poor settling"
+          - "RAS rate too high, pulling clarified effluent"
+          - "Poor floc formation limiting blanket concentration"
+        actions:
+          - "Measure RAS TSS — if <2,000 mg/L, blanket is not concentrating"
+          - "Reduce RAS rate slightly to allow blanket to concentrate"
+          - "Check settleability (SVI) — high SVI means the problem is biological"
+          - "Review aeration basin for filamentous conditions"
+        note: >-
+          RAS TSS should typically be 3–6x the MLSS concentration. Thin RAS means you're diluting the aeration basin
+          rather than seeding it with concentrated biomass.
+      clar_ras_rate:
+        title: "RAS Rate Insufficient for Current Conditions"
+        severity: "moderate"
+        causes:
+          - "RAS flow set too low for current MLSS or loading"
+          - "High F/M requiring faster biomass return"
+          - "Peak flow event requiring elevated RAS"
+        actions:
+          - "Increase RAS rate — start with 50–100% of influent flow as a baseline"
+          - "Monitor blanket depth response after adjustment"
+          - "Verify RAS flow meter accuracy"
+        note: >-
+          RAS rate is the primary lever for managing sludge blanket depth. Operators should check blanket depth at
+          least once per shift under normal conditions.
+      clar_odor_blanket:
+        title: "Septic Odor — Anaerobic Sludge Blanket"
+        severity: "moderate"
+        causes:
+          - "Sludge held too long in clarifier becoming anaerobic and producing H2S"
+          - "Insufficient wasting creating excessive blanket depth"
+          - "Poor sludge collection mechanism"
+        actions:
+          - "Increase RAS rate to turn over the blanket faster"
+          - "Increase WAS to reduce total sludge inventory"
+          - "Inspect sludge collection mechanism (rakes, scrapers) for malfunction"
+          - "Check clarifier dead zones — sediment accumulation is often hidden"
+        note: >-
+          An anaerobic blanket produces H2S and degrades effluent quality. Keep sludge blanket below 3–4 feet in most
+          conventional clarifiers.
+      clar_odor_influent:
+        title: "Septic Odor — Carryover from Influent/Aeration"
+        severity: "low"
+        causes:
+          - "Septic influent bringing H2S into secondary treatment"
+          - "Sulfide-rich effluent passing through aeration without full oxidation"
+          - "Low DO in aeration basin allowing sulfides to persist"
+        actions:
+          - "Address septicity at influent / headworks"
+          - "Verify aeration is providing sufficient DO to oxidize sulfides"
+          - "Check primary clarifier performance if present"
+        note: >-
+          If aeration basin is functioning well, sulfides should be oxidized before reaching the secondary clarifier.
+          Persistent odor here usually indicates an upstream problem.
+      clar_scum_fog:
+        title: "FOG-Related Scum Accumulation on Clarifier"
+        severity: "moderate"
+        causes:
+          - "High oil and grease loading from influent passing through treatment"
+          - "Inadequate primary treatment grease removal"
+          - "Warm weather reducing grease viscosity and floatability"
+        actions:
+          - "Increase scum removal frequency"
+          - "Review grease trap enforcement for service area"
+          - "Improve primary treatment skimming if primary clarifiers are present"
+          - "Ensure scum is properly removed and not recirculated"
+        note: >-
+          Clarifier scum accumulation can cause weir fouling and localized short-circuiting. It should be removed
+          before it builds up significantly.
+      clar_scum_bio:
+        title: "Biological Foam / Scum on Clarifier Surface"
+        severity: "moderate"
+        causes:
+          - "Nocardia or Microthrix foam migrating from aeration basin"
+          - "Filamentous organisms accumulating at clarifier surface"
+        actions:
+          - "Address root cause in aeration basin (see foam diagnoses)"
+          - "Do not recirculate clarifier scum to aeration basin"
+          - "Waste foam directly if possible — do not let it accumulate"
+          - "Consider chlorinated foam spray to suppress surface growth"
+        note: >-
+          Clarifier scum that is brown, stable, and greasy to touch is almost always Nocardia or Microthrix. The
+          aeration basin is the source — treat there.
+      clar_shortcircuit_hydraulic:
+        title: "Hydraulic Short-Circuiting at Peak Flows"
+        severity: "moderate"
+        causes:
+          - "Inlet energy causing density currents bypassing settling zone"
+          - "Insufficient inlet baffle or energy dissipation"
+          - "High SOR during peak flows driving flow across surface"
+        actions:
+          - "Review inlet baffle design — energy dissipation is critical"
+          - "Consider flow equalization to reduce peak SOR"
+          - "Schedule peak flow dye tracing or tracer study to confirm short-circuiting"
+          - "Evaluate feasibility of adding baffles or internal launders"
+        note: >-
+          Short-circuiting is often invisible and underdiagnosed. If effluent quality spikes predictably at peak
+          flows, hydraulic short-circuiting is a prime suspect.
+      clar_shortcircuit_structural:
+        title: "Structural Short-Circuiting / Clarifier Dead Zones"
+        severity: "moderate"
+        causes:
+          - "Damaged or missing baffles"
+          - "Sludge blanket dead zones in corners or edges"
+          - "Corroded or plugged sludge collection arms"
+          - "Uneven weir causing flow to preferentially leave one side"
+        actions:
+          - "Inspect clarifier during planned shutdown — look for structural damage"
+          - "Check weir level and cleanliness"
+          - "Verify sludge collector mechanism is operating and all arms are moving"
+          - "Dye test to visualize flow patterns"
+        note: >-
+          Structural issues require a clarifier inspection, which means a planned dewatering and entry. Schedule
+          during low-flow season if possible.
+      clar_weir_level:
+        title: "Uneven Clarifier — Weir and Structural Leveling Issue"
+        severity: "moderate"
+        causes:
+          - "Settlement or construction variation causing clarifier to sit unlevel"
+          - "One weir section damaged or modified"
+          - "Uneven weir notches from corrosion or damage"
+        actions:
+          - "Survey clarifier weir elevation — measure at multiple points"
+          - "Add weir plates or adjust weir elevation to balance flow"
+          - "Schedule structural repair if clarifier is significantly out of level"
+          - "Redistribute influent piping if possible"
+        note: >-
+          Even a few millimeters of weir height difference can cause significantly uneven flow distribution. Weir
+          leveling is a routine maintenance item that is often overlooked.
+      clar_weir_algae:
+        title: "Weir Fouling — Algae or Biological Growth"
+        severity: "low"
+        causes:
+          - "Algae growing on wetted weir surfaces"
+          - "Biofilm or slime accumulating on weir plates"
+        actions:
+          - "Power wash weir surfaces during low-flow periods"
+          - "Apply algaecide to weir surfaces if algae growth is persistent"
+          - "Increase weir cleaning frequency — consider weekly schedule"
+          - "Check if weir material can be replaced with less-fouling surface"
+        note: >-
+          Algae and biofilm on weirs can create localized short-circuiting and affect effluent sampling accuracy.
+          Regular cleaning is the simple fix.

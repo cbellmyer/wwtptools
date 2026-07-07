@@ -83,9 +83,27 @@ repos:
           - stylelint@17.3.0
           - stylelint-config-standard@40.0.0
 
+  # SVG optimization (diagrams / schematics)
+  - repo: local
+    hooks:
+      - id: svgo
+        name: Optimize SVGs with SVGO
+        entry: svgo --final-newline
+        language: node
+        files: \.svg$
+        exclude: ^content/static/
+        additional_dependencies: ['svgo@3.3.2']
+
   # Local project hooks
   - repo: local
     hooks:
+      - id: check-image-sizes
+        name: Reject oversized images / raw GIFs
+        entry: bash scripts/check-image-sizes.sh
+        language: system
+        pass_filenames: true
+        files: \.(png|jpe?g|tiff?|bmp|gif)$
+        exclude: ^content/static/
       - id: update-hugo-checksum
         name: Update Hugo archive checksum
         entry: ./scripts/update-hugo-checksum.sh

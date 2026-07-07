@@ -1,0 +1,106 @@
+{{- /*
+  responsive-image.html — single image-processing engine for the whole site.
+
+  Called by:
+    - layouts/_default/_markup/render-image.html  (plain markdown ![alt](src))
+    - layouts/shortcodes/img.html                 ({{< img >}})
+    - layouts/shortcodes/figure.html              ({{< figure >}})
+
+  Behaviour:
+    - Raster sources (png/jpeg/tiff/bmp) -> <picture> with a WebP source plus an
+      original-format fallback, both width-described srcsets, with intrinsic
+      width/height and aspect-ratio to prevent layout shift (CLS).
+    - SVG, GIF, animated, or remote (http) sources -> plain <img> passthrough.
+      (SVG is already resolution-independent; GIFs should be converted to video
+      via {{< video >}} — see scripts/convert-images.sh.)
+
+  Accepts a context dict:
+    src      (string, required)  path relative to a page bundle or assets/
+    alt      (string, required)
+    title    (string)
+    class    (string)            extra classes appended to "responsive-img"
+    sizes    (string)            <img sizes>; sensible default if omitted
+    loading  (string)            "lazy" (default) or "eager"
+    page     (Page)              page context, so page-bundle resources resolve first
+*/ -}}
+
+{{- $src     := .src -}}
+{{- $alt     := .alt | default "" -}}
+{{- $title   := .title -}}
+{{- $class   := .class | default "" -}}
+{{- $sizes   := .sizes | default "(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px" -}}
+{{- $loading := .loading | default "lazy" -}}
+{{- $page    := .page -}}
+
+{{- $u := urls.Parse $src -}}
+
+{{- /* Remote images: passthrough, we can't process what we don't host. */ -}}
+{{- if $u.IsAbs -}}
+  <img src="{{ $src }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }}
+    {{- with $class }} class="responsive-img {{ . }}"{{ else }} class="responsive-img"{{ end }}
+    loading="{{ $loading }}" decoding="async">
+{{- else -}}
+
+  {{- $path := strings.TrimPrefix "./" $u.Path -}}
+  {{- $img := "" -}}
+  {{- with $page -}}
+    {{- $img = .Resources.GetMatch $path -}}
+  {{- end -}}
+  {{- with (resources.Get $path) -}}
+    {{- if not $img -}}{{- $img = . -}}{{- end -}}
+  {{- end -}}
+
+  {{- if not $img -}}
+    {{- warnf "responsive-image: source not found: %q" $src -}}
+  {{- else -}}
+
+    {{- $sub := $img.MediaType.SubType -}}
+    {{- $processable := in (slice "png" "jpeg" "tiff" "bmp") $sub -}}
+
+    {{- if not $processable -}}
+      {{- /* SVG / GIF / unknown: passthrough, no resizing. SVG resources don't
+             expose .Width/.Height, so we omit intrinsic dimensions here. */ -}}
+      <img src="{{ $img.RelPermalink }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }}
+        {{- with $class }} class="responsive-img {{ . }}"{{ else }} class="responsive-img"{{ end }}
+        loading="{{ $loading }}" decoding="async">
+    {{- else -}}
+
+      {{- $w := $img.Width -}}
+      {{- $h := $img.Height -}}
+      {{- /* Widths to emit; never upscale past the source. */ -}}
+      {{- $targets := slice 480 800 1200 1600 -}}
+      {{- $widths := slice -}}
+      {{- range $targets -}}
+        {{- if le . $w -}}{{- $widths = $widths | append . -}}{{- end -}}
+      {{- end -}}
+      {{- if not (in $widths $w) -}}{{- $widths = $widths | append $w -}}{{- end -}}
+
+      {{- $webpSet := slice -}}
+      {{- $fallbackSet := slice -}}
+      {{- range $widths -}}
+        {{- $webp := $img.Resize (printf "%dx webp q80" .) -}}
+        {{- $webpSet = $webpSet | append (printf "%s %dw" $webp.RelPermalink .) -}}
+        {{- $fb := $img.Resize (printf "%dx q82" .) -}}
+        {{- $fallbackSet = $fallbackSet | append (printf "%s %dw" $fb.RelPermalink .) -}}
+      {{- end -}}
+      {{- $fallback := $img.Resize (printf "%dx q82" (index $widths (sub (len $widths) 1))) -}}
+
+      <picture>
+        <source type="image/webp" srcset="{{ delimit $webpSet ", " }}" sizes="{{ $sizes }}">
+        <img
+          src="{{ $fallback.RelPermalink }}"
+          srcset="{{ delimit $fallbackSet ", " }}"
+          sizes="{{ $sizes }}"
+          alt="{{ $alt }}"
+          {{- with $title }} title="{{ . }}"{{ end }}
+          {{- with $class }} class="responsive-img {{ . }}"{{ else }} class="responsive-img"{{ end }}
+          loading="{{ $loading }}"
+          decoding="async"
+          width="{{ $w }}"
+          height="{{ $h }}"
+          style="aspect-ratio: {{ $w }} / {{ $h }};">
+      </picture>
+
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
