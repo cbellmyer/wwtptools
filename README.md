@@ -58,9 +58,9 @@ wwtptools/
 │   ├── layouts/              # Custom page layouts (override theme)
 │   │   ├── partials/         # Header, footer, head extensions
 │   │   └── *.html            # Page templates: home, toolkit, reference, guides, guide, matrix, about
-│   ├── assets/css/extended/  # Custom CSS
-│   │   ├── wwtptools.css     # Site styles, palette, and component styles
-│   │   └── toolkit.css       # Calculator interface (SCADA panel UI)
+│   ├── assets/css/           # Custom CSS
+│   │   ├── extended/wwtptools.css  # Site styles, design tokens (palette, radii, shadows, motion), components
+│   │   └── toolkit.css       # Calculator interface (card-based tool UI)
 │   └── themes/scada-theme/
 ├── build.sh
 ├── CHANGELOG.md

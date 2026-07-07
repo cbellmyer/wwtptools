@@ -18,7 +18,7 @@ body.toolkit {
 
 .toolkit-masthead {
   background: var(--theme);
-  border-bottom: 2px solid var(--border);
+  border-bottom: 1px solid var(--border-soft);
 }
 
 .toolkit-masthead-inner {
@@ -51,7 +51,7 @@ body.toolkit {
 
 .tk-masthead-tagline {
   font-family: 'Space Mono', monospace;
-  font-size: 0.52rem;
+  font-size: 0.62rem;
   color: var(--gray-dim);
   letter-spacing: 0.15em;
   margin-top: 0.5rem;
@@ -70,7 +70,7 @@ body.toolkit {
   align-items: center;
   gap: 0.5rem;
   font-family: 'Space Mono', monospace;
-  font-size: 0.52rem;
+  font-size: 0.62rem;
   color: var(--gray);
   letter-spacing: 0.1em;
 }
@@ -91,7 +91,7 @@ body.toolkit {
 
 .tk-clock {
   font-family: 'Space Mono', monospace;
-  font-size: 0.52rem;
+  font-size: 0.62rem;
   color: var(--gray-dim);
   letter-spacing: 0.1em;
 }
@@ -108,7 +108,10 @@ body.toolkit {
 
 .tk-weather-panel {
   background: var(--tk-panel);
-  border: 1px solid var(--tk-border);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
   margin-bottom: 2.5rem;
   transition: border-color 0.4s, box-shadow 0.4s;
 }
@@ -149,7 +152,7 @@ body.toolkit {
 
 .tk-weather-location {
   font-family: 'Space Mono', monospace;
-  font-size: 0.46rem;
+  font-size: 0.6rem;
   color: var(--gray-dim);
   letter-spacing: 0.1em;
   flex: 1;
@@ -160,7 +163,7 @@ body.toolkit {
   align-items: center;
   gap: 0.35rem;
   font-family: 'Space Mono', monospace;
-  font-size: 0.46rem;
+  font-size: 0.6rem;
   color: var(--teal-dim);
   letter-spacing: 0.1em;
   white-space: nowrap;
@@ -179,7 +182,7 @@ body.toolkit {
   padding: 2rem;
   text-align: center;
   font-family: 'Space Mono', monospace;
-  font-size: 0.5rem;
+  font-size: 0.62rem;
   color: var(--gray-dim);
   letter-spacing: 0.12em;
 }
@@ -216,20 +219,21 @@ body.toolkit {
 
 .tk-wx-feels {
   font-family: 'Space Mono', monospace;
-  font-size: 0.48rem;
+  font-size: 0.62rem;
   color: var(--gray);
   letter-spacing: 0.06em;
 }
 
 .tk-wx-advisory {
   font-family: 'Space Mono', monospace;
-  font-size: 0.48rem;
+  font-size: 0.62rem;
   letter-spacing: 0.1em;
   font-weight: bold;
   margin-top: 0.4rem;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.6rem;
   display: inline-block;
   width: fit-content;
+  border-radius: var(--radius-pill);
 }
 
 .tk-wx-alerts {
@@ -238,7 +242,7 @@ body.toolkit {
 
 .tk-wx-alerts-hdr {
   font-family: 'Space Mono', monospace;
-  font-size: 0.42rem;
+  font-size: 0.6rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--tk-label);
@@ -267,7 +271,7 @@ body.toolkit {
 
 .tk-wx-alert-event {
   font-family: 'Space Mono', monospace;
-  font-size: 0.48rem;
+  font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 700;
@@ -280,7 +284,7 @@ body.toolkit {
 
 .tk-wx-alert-headline {
   font-family: 'Space Mono', monospace;
-  font-size: 0.44rem;
+  font-size: 0.6rem;
   color: var(--tk-label);
   line-height: 1.5;
   letter-spacing: 0.03em;
@@ -289,13 +293,14 @@ body.toolkit {
 .tk-wx-alert-dismiss {
   background: none;
   border: 1px solid var(--tk-border);
+  border-radius: var(--radius-pill);
   color: var(--tk-label);
   cursor: pointer;
   font-size: 0.8rem;
   line-height: 1;
-  padding: 0.15rem 0.4rem;
+  padding: 0.15rem 0.45rem;
   flex-shrink: 0;
-  transition: color 0.15s, border-color 0.15s;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
 
 .tk-wx-alert-dismiss:hover {
@@ -319,7 +324,7 @@ body.toolkit {
 
 .tk-wx-cell-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.4rem;
+  font-size: 0.6rem;
   letter-spacing: 0.14em;
   color: var(--tk-label);
   text-transform: uppercase;
@@ -336,7 +341,7 @@ body.toolkit {
 
 .tk-wx-cell-unit {
   font-family: 'Space Mono', monospace;
-  font-size: 0.4rem;
+  font-size: 0.6rem;
   color: var(--gray-dim);
   letter-spacing: 0.08em;
   margin-top: 0.2rem;
@@ -357,7 +362,7 @@ body.toolkit {
 
 .tk-section-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.52rem;
+  font-size: 0.62rem;
   letter-spacing: 0.18em;
   color: var(--yellow);
   text-transform: uppercase;
@@ -377,18 +382,25 @@ body.toolkit {
 .tk-calc-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 1px;
-  background: var(--tk-border);
-  border: 1px solid var(--tk-border);
+  gap: 1.1rem;
 }
 
 /* ---- Calculator Card (rendered inside web component) ---- */
 
 .tk-calc-card {
   background: var(--tk-panel);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
+  transition: box-shadow var(--dur-med) var(--ease-out);
+}
+
+.tk-calc-card:hover,
+.tk-calc-card:focus-within {
+  box-shadow: var(--shadow-2);
 }
 
 .tk-calc-card-hdr {
@@ -399,7 +411,7 @@ body.toolkit {
 
 .tk-calc-id {
   font-family: 'Space Mono', monospace;
-  font-size: 0.4rem;
+  font-size: 0.6rem;
   letter-spacing: 0.15em;
   color: var(--teal-dim);
   text-transform: uppercase;
@@ -444,18 +456,19 @@ body.toolkit {
   width: 100%;
   background: var(--tk-input-bg);
   border: 1px solid var(--tk-border);
+  border-radius: var(--radius-sm);
   color: var(--primary);
-  padding: 0.38rem 0.6rem;
+  padding: 0.45rem 0.65rem;
   font-family: 'Space Mono', monospace;
   font-size: 0.75rem;
   box-sizing: border-box;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
 
 .tk-field-input:focus {
-  border-color: var(--yellow-dim);
+  border-color: var(--blue);
   outline: none;
-  box-shadow: 0 0 0 2px rgb(232 180 74 / 10%);
+  box-shadow: 0 0 0 3px rgb(56 189 248 / 15%);
 }
 
 .tk-calc-result {
@@ -522,7 +535,7 @@ body.toolkit {
 
 .tk-impact-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.38rem;
+  font-size: 0.6rem;
   letter-spacing: 0.15em;
   color: var(--teal-dim);
   text-transform: uppercase;
@@ -621,7 +634,7 @@ body.toolkit {
 
 .tk-pie-hint {
   font-family: 'Space Mono', monospace;
-  font-size: 0.44rem;
+  font-size: 0.6rem;
   color: var(--tk-label);
   letter-spacing: 0.06em;
   margin: 0.6rem 0 1rem;
@@ -631,15 +644,22 @@ body.toolkit {
 .tk-pie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1px;
-  background: var(--tk-border);
-  border: 1px solid var(--tk-border);
+  gap: 1.1rem;
 }
 
 .pw-card {
   background: var(--tk-panel);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: box-shadow var(--dur-med) var(--ease-out);
+}
+
+.pw-card:hover,
+.pw-card:focus-within {
+  box-shadow: var(--shadow-2);
 }
 
 .pw-svg {
@@ -697,7 +717,7 @@ body.toolkit {
 
 .pw-solve-for {
   font-family: 'Space Mono', monospace;
-  font-size: 0.4rem;
+  font-size: 0.6rem;
   color: var(--teal-dim);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -724,10 +744,10 @@ body.toolkit {
   font-family: 'Space Mono', monospace;
   font-size: 0.75rem;
   line-height: 1;
-  padding: 0.15rem 0.45rem;
+  padding: 0.15rem 0.5rem;
   cursor: pointer;
-  border-radius: 2px;
-  transition: color 0.15s, border-color 0.15s;
+  border-radius: var(--radius-pill);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
 
 .pw-reset:hover {

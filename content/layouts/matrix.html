@@ -29,6 +29,9 @@
                 <span class="matrix-status-desc">Activated Sludge zone live — additional treatment zones in development.</span>
             </div>
 
+            <!-- WEATHER WIDGET -->
+            <weather-widget></weather-widget>
+
             {{ $zone := index hugo.Data.matrix.zones 0 }}
 
             <div class="mx-tool-section">
@@ -115,9 +118,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- WEATHER WIDGET -->
-            <weather-widget></weather-widget>
 
             <div class="matrix-contribute">
                 <div class="matrix-overview-label">[ Help Build It ]</div>
