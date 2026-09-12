@@ -97,3 +97,7 @@ When contributing content, note that submitted content will be licensed under CC
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) for version history.
+
+---
+
+**Also hosted on GitLab:** https://gitlab.com/roryredpanda/wwtptools
